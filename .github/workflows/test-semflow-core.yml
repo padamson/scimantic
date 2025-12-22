@@ -1,0 +1,104 @@
+name: Test semflow-core
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'semflow-core/**'
+      - '.github/workflows/test-semflow-core.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'semflow-core/**'
+      - '.github/workflows/test-semflow-core.yml'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ['3.11', '3.12', '3.13']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      with:
+        enable-cache: true
+
+    - name: Set up Python ${{ matrix.python-version }}
+      run: uv python install ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        cd semflow-core
+        uv sync --all-extras
+
+    - name: Run tests with coverage
+      run: |
+        cd semflow-core
+        uv run pytest --cov=src/semflow --cov-report=xml --cov-report=term
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v5
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
+      with:
+        files: ./semflow-core/coverage.xml
+        flags: semflow-core
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: false
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      with:
+        enable-cache: true
+
+    - name: Set up Python
+      run: uv python install 3.12
+
+    - name: Install dependencies
+      run: |
+        cd semflow-core
+        uv sync --all-extras
+
+    - name: Run ruff linter
+      run: |
+        cd semflow-core
+        uv run ruff check src/ tests/
+
+    - name: Run ruff formatter check
+      run: |
+        cd semflow-core
+        uv run ruff format --check src/ tests/
+
+  type-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      with:
+        enable-cache: true
+
+    - name: Set up Python
+      run: uv python install 3.12
+
+    - name: Install dependencies
+      run: |
+        cd semflow-core
+        uv sync --all-extras
+
+    - name: Run mypy
+      run: |
+        cd semflow-core
+        uv run mypy src/semflow

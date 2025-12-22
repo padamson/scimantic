@@ -1,0 +1,76 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        exclude: ^(semflow-core/uv\.lock|uv\.lock)$
+      - id: check-toml
+      - id: check-yaml
+        args:
+          - --unsafe
+      - id: detect-private-key  # Prevents committing private keys
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  # Python linting and formatting with ruff
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.10
+    hooks:
+      - id: ruff
+        args:
+          - --fix
+        files: ^semflow-core/.*\.py$
+      - id: ruff-format
+        files: ^semflow-core/.*\.py$
+
+  # Type checking with mypy (strict mode)
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy (semflow-core)
+        entry: bash -c 'cd semflow-core && uv run mypy src/semflow'
+        language: system
+        files: ^semflow-core/src/semflow/.*\.py$
+        pass_filenames: false
+        require_serial: true
+
+  # Test suite with pytest
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest (semflow-core)
+        entry: bash -c 'cd semflow-core && uv run pytest'
+        language: system
+        files: ^semflow-core/(src/semflow/.*\.py|tests/.*\.py)$
+        pass_filenames: false
+        require_serial: true
+
+  # Security: Detect secrets and sensitive data
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        exclude: |
+            (?x)^(
+                .*\.lock$|
+                .*\.baseline$|
+                \.git/.*|
+                semflow-ext/node_modules/.*
+            )$
+
+  # VS Code Extension TypeScript checking (when implemented)
+  # Uncomment when semflow-ext has proper build setup
+  # - repo: local
+  #   hooks:
+  #     - id: typescript-check-ext
+  #       name: TypeScript Check (VS Code Extension)
+  #       entry: bash -c 'cd semflow-ext && npm run compile'
+  #       language: system
+  #       files: ^semflow-ext/src/.*\.ts$
+  #       pass_filenames: false
+
+ci:
+  autofix_commit_msg: 🎨 [pre-commit.ci] Auto format from pre-commit.com hooks
+  autoupdate_commit_msg: ⬆ [pre-commit.ci] pre-commit autoupdate
