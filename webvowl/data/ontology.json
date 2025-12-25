@@ -1,0 +1,706 @@
+{
+  "_comment" : "Created with OWL2VOWL (version 0.3.5), http://vowl.visualdataweb.org",
+  "header" : {
+    "languages" : [ "en", "undefined" ],
+    "baseIris" : [ "http://www.w3.org/1999/02/22-rdf-syntax-ns", "http://www.w3.org/2000/01/rdf-schema", "http://www.w3.org/ns/urref", "http://www.w3.org/ns/prov", "http://scimantic.io/ontology", "http://www.w3.org/2001/XMLSchema", "http://www.nanopub.org/nschema" ],
+    "title" : {
+      "en" : "Scimantic Ontology"
+    },
+    "iri" : "http://scimantic.io/ontology#",
+    "version" : "0.1.0",
+    "description" : {
+      "en" : "A minimal domain ontology for representing the scientific method as provenance chains."
+    },
+    "other" : {
+      "license" : [ {
+        "identifier" : "license",
+        "language" : "undefined",
+        "value" : "https://creativecommons.org/licenses/by/4.0/",
+        "type" : "iri"
+      } ],
+      "versionInfo" : [ {
+        "identifier" : "versionInfo",
+        "language" : "undefined",
+        "value" : "0.1.0",
+        "type" : "label"
+      } ],
+      "title" : [ {
+        "identifier" : "title",
+        "language" : "en",
+        "value" : "Scimantic Ontology",
+        "type" : "label"
+      } ],
+      "seeAlso" : [ {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "http://www.w3.org/ns/urref#",
+        "type" : "iri"
+      }, {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "http://www.w3.org/ns/prov#",
+        "type" : "iri"
+      } ]
+    }
+  },
+  "namespace" : [ ],
+  "class" : [ {
+    "id" : "0",
+    "type" : "owl:Class"
+  }, {
+    "id" : "11",
+    "type" : "owl:Class"
+  }, {
+    "id" : "5",
+    "type" : "owl:Class"
+  }, {
+    "id" : "6",
+    "type" : "owl:Class"
+  }, {
+    "id" : "7",
+    "type" : "owl:Class"
+  }, {
+    "id" : "3",
+    "type" : "owl:Class"
+  }, {
+    "id" : "15",
+    "type" : "owl:Class"
+  }, {
+    "id" : "17",
+    "type" : "owl:Class"
+  }, {
+    "id" : "26",
+    "type" : "owl:Class"
+  }, {
+    "id" : "12",
+    "type" : "owl:Class"
+  }, {
+    "id" : "13",
+    "type" : "owl:Class"
+  }, {
+    "id" : "27",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "46",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "47",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "10",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "29",
+    "type" : "rdfs:Literal"
+  }, {
+    "id" : "33",
+    "type" : "owl:Class"
+  }, {
+    "id" : "1",
+    "type" : "owl:Class"
+  }, {
+    "id" : "44",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "51",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "4",
+    "type" : "owl:Class"
+  }, {
+    "id" : "19",
+    "type" : "owl:Class"
+  }, {
+    "id" : "14",
+    "type" : "owl:Class"
+  }, {
+    "id" : "9",
+    "type" : "owl:Class"
+  }, {
+    "id" : "2",
+    "type" : "owl:Class"
+  }, {
+    "id" : "16",
+    "type" : "owl:Class"
+  }, {
+    "id" : "23",
+    "type" : "owl:Class"
+  } ],
+  "classAttribute" : [ {
+    "iri" : "http://www.w3.org/ns/prov#Activity",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Activity"
+    },
+    "subClasses" : [ "1", "2", "3", "4", "5", "6", "7" ],
+    "attributes" : [ "external" ],
+    "id" : "0"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#Entity",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Entity"
+    },
+    "subClasses" : [ "12", "13", "14", "9", "15", "16", "17" ],
+    "attributes" : [ "external" ],
+    "id" : "11"
+  }, {
+    "iri" : "http://scimantic.io/ontology#Assessment",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Assessment",
+      "en" : "Evidence Assessment"
+    },
+    "comment" : {
+      "en" : "The activity of evaluating credibility or relevance of Evidence."
+    },
+    "id" : "5",
+    "superClasses" : [ "0" ]
+  }, {
+    "iri" : "http://scimantic.io/ontology#QuestionFormation",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "QuestionFormation",
+      "en" : "Question Formation"
+    },
+    "comment" : {
+      "en" : "The activity of creating a Research Question."
+    },
+    "id" : "6",
+    "superClasses" : [ "0" ]
+  }, {
+    "iri" : "http://scimantic.io/ontology#DesignPlanning",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "DesignPlanning",
+      "en" : "Design Planning"
+    },
+    "comment" : {
+      "en" : "The activity of specifying a Design."
+    },
+    "id" : "7",
+    "superClasses" : [ "0" ]
+  }, {
+    "iri" : "http://scimantic.io/ontology#LiteratureSearch",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "LiteratureSearch",
+      "en" : "Literature Search"
+    },
+    "comment" : {
+      "en" : "The activity of searching for and extracting Evidence."
+    },
+    "id" : "3",
+    "superClasses" : [ "0" ]
+  }, {
+    "iri" : "http://scimantic.io/ontology#Evidence",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Evidence",
+      "en" : "Evidence"
+    },
+    "comment" : {
+      "en" : "A factual claim extracted from a source."
+    },
+    "id" : "15",
+    "superClasses" : [ "33", "11" ]
+  }, {
+    "iri" : "http://scimantic.io/ontology#Design",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Design",
+      "en" : "Study Design"
+    },
+    "comment" : {
+      "en" : "A specification of the experimental or computational method."
+    },
+    "id" : "17",
+    "superClasses" : [ "11", "23" ]
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#SoftwareAgent",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "SoftwareAgent"
+    },
+    "attributes" : [ "external" ],
+    "id" : "26"
+  }, {
+    "iri" : "http://scimantic.io/ontology#Parameter",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Parameter",
+      "en" : "Design Parameter"
+    },
+    "comment" : {
+      "en" : "A configured parameter within a Design."
+    },
+    "id" : "12",
+    "superClasses" : [ "11" ]
+  }, {
+    "iri" : "http://scimantic.io/ontology#Dataset",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Dataset",
+      "en" : "Dataset"
+    },
+    "comment" : {
+      "en" : "Raw data, observations, or measurements produced by execution."
+    },
+    "id" : "13",
+    "superClasses" : [ "11" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "27",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "46",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#boolean",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "47",
+    "label" : {
+      "IRI-based" : "boolean"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "10",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2000/01/rdf-schema#Literal",
+    "id" : "29",
+    "label" : {
+      "IRI-based" : "Literal",
+      "undefined" : "Literal"
+    }
+  }, {
+    "iri" : "http://www.nanopub.org/nschema#Nanopublication",
+    "baseIri" : "http://www.nanopub.org/nschema",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Nanopublication"
+    },
+    "subClasses" : [ "14", "15" ],
+    "attributes" : [ "external" ],
+    "id" : "33"
+  }, {
+    "iri" : "http://scimantic.io/ontology#HypothesisFormation",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "HypothesisFormation",
+      "en" : "Hypothesis Formation"
+    },
+    "comment" : {
+      "en" : "The activity of synthesizing Evidence into a Hypothesis."
+    },
+    "id" : "1",
+    "superClasses" : [ "0" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "44",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#anyURI",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "51",
+    "label" : {
+      "IRI-based" : "anyURI"
+    }
+  }, {
+    "iri" : "http://scimantic.io/ontology#Analysis",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Analysis",
+      "en" : "Analysis"
+    },
+    "comment" : {
+      "en" : "The activity of processing a Dataset to produce a Result."
+    },
+    "id" : "4",
+    "superClasses" : [ "0" ]
+  }, {
+    "iri" : "http://www.w3.org/ns/urref#UncertaintyEntity",
+    "baseIri" : "http://www.w3.org/ns/urref",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "UncertaintyEntity"
+    },
+    "attributes" : [ "external" ],
+    "id" : "19"
+  }, {
+    "iri" : "http://scimantic.io/ontology#Hypothesis",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Hypothesis",
+      "en" : "Hypothesis"
+    },
+    "comment" : {
+      "en" : "A testable claim derived from evidence."
+    },
+    "id" : "14",
+    "superClasses" : [ "33", "11" ]
+  }, {
+    "iri" : "http://scimantic.io/ontology#Result",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Result",
+      "en" : "Result"
+    },
+    "comment" : {
+      "en" : "The outcome of an analysis activity."
+    },
+    "id" : "9",
+    "superClasses" : [ "11" ]
+  }, {
+    "iri" : "http://scimantic.io/ontology#Execution",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Execution",
+      "en" : "Execution"
+    },
+    "comment" : {
+      "en" : "The activity of running a Design to produce a Dataset."
+    },
+    "id" : "2",
+    "superClasses" : [ "0" ]
+  }, {
+    "iri" : "http://scimantic.io/ontology#Question",
+    "baseIri" : "http://scimantic.io/ontology",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Question",
+      "en" : "Research Question"
+    },
+    "comment" : {
+      "en" : "An interrogative sentence representing the research query."
+    },
+    "id" : "16",
+    "superClasses" : [ "11" ]
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#Plan",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Plan"
+    },
+    "subClasses" : [ "17" ],
+    "attributes" : [ "external" ],
+    "id" : "23"
+  } ],
+  "property" : [ {
+    "id" : "8",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "18",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "20",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "21",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "22",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "24",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "25",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "28",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "30",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "31",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "32",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "34",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "35",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "36",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "37",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "38",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "39",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "40",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "41",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "42",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "43",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "45",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "48",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "49",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "50",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "52",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "53",
+    "type" : "owl:datatypeProperty"
+  } ],
+  "propertyAttribute" : [ {
+    "iri" : "http://scimantic.io/ontology#unit",
+    "baseIri" : "http://scimantic.io/ontology",
+    "range" : "10",
+    "label" : {
+      "IRI-based" : "unit",
+      "en" : "unit"
+    },
+    "domain" : "9",
+    "attributes" : [ "datatype" ],
+    "id" : "8"
+  }, {
+    "iri" : "http://scimantic.io/ontology#hasUncertainty",
+    "baseIri" : "http://scimantic.io/ontology",
+    "range" : "19",
+    "label" : {
+      "IRI-based" : "hasUncertainty",
+      "en" : "has uncertainty"
+    },
+    "domain" : "11",
+    "comment" : {
+      "en" : "Links an entity to its uncertainty model."
+    },
+    "attributes" : [ "object" ],
+    "id" : "18"
+  }, {
+    "range" : "11",
+    "domain" : "16",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "20"
+  }, {
+    "range" : "11",
+    "domain" : "15",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "21"
+  }, {
+    "range" : "23",
+    "domain" : "17",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "22"
+  }, {
+    "range" : "11",
+    "domain" : "17",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "24"
+  }, {
+    "iri" : "http://scimantic.io/ontology#commitHash",
+    "baseIri" : "http://scimantic.io/ontology",
+    "range" : "27",
+    "label" : {
+      "IRI-based" : "commitHash",
+      "en" : "commit hash"
+    },
+    "domain" : "26",
+    "attributes" : [ "datatype" ],
+    "id" : "25"
+  }, {
+    "iri" : "http://scimantic.io/ontology#value",
+    "baseIri" : "http://scimantic.io/ontology",
+    "range" : "29",
+    "label" : {
+      "IRI-based" : "value",
+      "en" : "value"
+    },
+    "domain" : "9",
+    "attributes" : [ "datatype" ],
+    "id" : "28"
+  }, {
+    "iri" : "http://scimantic.io/ontology#parameter",
+    "baseIri" : "http://scimantic.io/ontology",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "parameter",
+      "en" : "parameter"
+    },
+    "domain" : "17",
+    "attributes" : [ "object" ],
+    "id" : "30"
+  }, {
+    "range" : "11",
+    "domain" : "14",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "31"
+  }, {
+    "range" : "11",
+    "domain" : "13",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "32"
+  }, {
+    "range" : "11",
+    "domain" : "9",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "34"
+  }, {
+    "range" : "33",
+    "domain" : "14",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "35"
+  }, {
+    "range" : "0",
+    "domain" : "7",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "36"
+  }, {
+    "range" : "11",
+    "domain" : "12",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "37"
+  }, {
+    "range" : "33",
+    "domain" : "15",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "38"
+  }, {
+    "range" : "0",
+    "domain" : "4",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "39"
+  }, {
+    "range" : "0",
+    "domain" : "6",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "40"
+  }, {
+    "range" : "0",
+    "domain" : "5",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "41"
+  }, {
+    "iri" : "http://scimantic.io/ontology#expectedOutcome",
+    "baseIri" : "http://scimantic.io/ontology",
+    "range" : "14",
+    "label" : {
+      "IRI-based" : "expectedOutcome",
+      "en" : "expected outcome"
+    },
+    "domain" : "17",
+    "attributes" : [ "object" ],
+    "id" : "42"
+  }, {
+    "iri" : "http://scimantic.io/ontology#accessLevel",
+    "baseIri" : "http://scimantic.io/ontology",
+    "range" : "44",
+    "label" : {
+      "IRI-based" : "accessLevel",
+      "en" : "access level"
+    },
+    "domain" : "33",
+    "comment" : {
+      "en" : "Publishing scope (e.g., local, institutional, public)."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "43"
+  }, {
+    "iri" : "http://scimantic.io/ontology#method",
+    "baseIri" : "http://scimantic.io/ontology",
+    "range" : "46",
+    "label" : {
+      "IRI-based" : "method",
+      "en" : "method"
+    },
+    "domain" : "17",
+    "attributes" : [ "datatype" ],
+    "id" : "45"
+  }, {
+    "range" : "0",
+    "domain" : "1",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "48"
+  }, {
+    "range" : "0",
+    "domain" : "2",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "49"
+  }, {
+    "range" : "0",
+    "domain" : "3",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "50"
+  }, {
+    "iri" : "http://scimantic.io/ontology#publishable",
+    "baseIri" : "http://scimantic.io/ontology",
+    "range" : "47",
+    "label" : {
+      "IRI-based" : "publishable",
+      "en" : "publishable"
+    },
+    "domain" : "33",
+    "comment" : {
+      "en" : "Flag indicating readiness for public promotion."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "52"
+  }, {
+    "iri" : "http://scimantic.io/ontology#codeRepository",
+    "baseIri" : "http://scimantic.io/ontology",
+    "range" : "51",
+    "label" : {
+      "IRI-based" : "codeRepository",
+      "en" : "code repository"
+    },
+    "domain" : "26",
+    "attributes" : [ "datatype" ],
+    "id" : "53"
+  } ]
+}

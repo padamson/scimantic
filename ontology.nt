@@ -1,0 +1,220 @@
+<http://scimantic.io/ontology#> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://scimantic.io/ontology#> <http://purl.org/dc/terms/description> "A minimal domain ontology for representing the scientific method as provenance chains."@en .
+<http://scimantic.io/ontology#> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<http://scimantic.io/ontology#> <http://purl.org/dc/terms/title> "Scimantic Ontology"@en .
+<http://scimantic.io/ontology#> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://www.w3.org/ns/prov#> .
+<http://scimantic.io/ontology#> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://www.w3.org/ns/urref#> .
+<http://scimantic.io/ontology#> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .
+# 
+# 
+# #################################################################
+# #
+# #    Annotation properties
+# #
+# #################################################################
+# 
+# 
+# http://purl.org/dc/terms/description
+<http://purl.org/dc/terms/description> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# http://purl.org/dc/terms/license
+<http://purl.org/dc/terms/license> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# http://purl.org/dc/terms/title
+<http://purl.org/dc/terms/title> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://scimantic.io/ontology#expectedOutcome
+<http://scimantic.io/ontology#expectedOutcome> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://scimantic.io/ontology#expectedOutcome> <http://www.w3.org/2000/01/rdf-schema#domain> <http://scimantic.io/ontology#Design> .
+<http://scimantic.io/ontology#expectedOutcome> <http://www.w3.org/2000/01/rdf-schema#range> <http://scimantic.io/ontology#Hypothesis> .
+<http://scimantic.io/ontology#expectedOutcome> <http://www.w3.org/2000/01/rdf-schema#label> "expected outcome"@en .
+# 
+# http://scimantic.io/ontology#hasUncertainty
+<http://scimantic.io/ontology#hasUncertainty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://scimantic.io/ontology#hasUncertainty> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/prov#Entity> .
+<http://www.w3.org/ns/prov#Entity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#hasUncertainty> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/urref#UncertaintyEntity> .
+<http://www.w3.org/ns/urref#UncertaintyEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#hasUncertainty> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an entity to its uncertainty model."@en .
+<http://scimantic.io/ontology#hasUncertainty> <http://www.w3.org/2000/01/rdf-schema#label> "has uncertainty"@en .
+# 
+# http://scimantic.io/ontology#parameter
+<http://scimantic.io/ontology#parameter> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://scimantic.io/ontology#parameter> <http://www.w3.org/2000/01/rdf-schema#domain> <http://scimantic.io/ontology#Design> .
+<http://scimantic.io/ontology#parameter> <http://www.w3.org/2000/01/rdf-schema#range> <http://scimantic.io/ontology#Parameter> .
+<http://scimantic.io/ontology#parameter> <http://www.w3.org/2000/01/rdf-schema#label> "parameter"@en .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Data properties
+# #
+# #################################################################
+# 
+# 
+# http://scimantic.io/ontology#accessLevel
+<http://scimantic.io/ontology#accessLevel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/ontology#accessLevel> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.nanopub.org/nschema#Nanopublication> .
+<http://www.nanopub.org/nschema#Nanopublication> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#accessLevel> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://scimantic.io/ontology#accessLevel> <http://www.w3.org/2000/01/rdf-schema#comment> "Publishing scope (e.g., local, institutional, public)."@en .
+<http://scimantic.io/ontology#accessLevel> <http://www.w3.org/2000/01/rdf-schema#label> "access level"@en .
+# 
+# http://scimantic.io/ontology#codeRepository
+<http://scimantic.io/ontology#codeRepository> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/ontology#codeRepository> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/prov#SoftwareAgent> .
+<http://www.w3.org/ns/prov#SoftwareAgent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#codeRepository> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#anyURI> .
+<http://scimantic.io/ontology#codeRepository> <http://www.w3.org/2000/01/rdf-schema#label> "code repository"@en .
+# 
+# http://scimantic.io/ontology#commitHash
+<http://scimantic.io/ontology#commitHash> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/ontology#commitHash> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/ns/prov#SoftwareAgent> .
+<http://scimantic.io/ontology#commitHash> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://scimantic.io/ontology#commitHash> <http://www.w3.org/2000/01/rdf-schema#label> "commit hash"@en .
+# 
+# http://scimantic.io/ontology#method
+<http://scimantic.io/ontology#method> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/ontology#method> <http://www.w3.org/2000/01/rdf-schema#domain> <http://scimantic.io/ontology#Design> .
+<http://scimantic.io/ontology#method> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://scimantic.io/ontology#method> <http://www.w3.org/2000/01/rdf-schema#label> "method"@en .
+# 
+# http://scimantic.io/ontology#publishable
+<http://scimantic.io/ontology#publishable> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/ontology#publishable> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.nanopub.org/nschema#Nanopublication> .
+<http://scimantic.io/ontology#publishable> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#boolean> .
+<http://scimantic.io/ontology#publishable> <http://www.w3.org/2000/01/rdf-schema#comment> "Flag indicating readiness for public promotion."@en .
+<http://scimantic.io/ontology#publishable> <http://www.w3.org/2000/01/rdf-schema#label> "publishable"@en .
+# 
+# http://scimantic.io/ontology#unit
+<http://scimantic.io/ontology#unit> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/ontology#unit> <http://www.w3.org/2000/01/rdf-schema#domain> <http://scimantic.io/ontology#Result> .
+<http://scimantic.io/ontology#unit> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://scimantic.io/ontology#unit> <http://www.w3.org/2000/01/rdf-schema#label> "unit"@en .
+# 
+# http://scimantic.io/ontology#value
+<http://scimantic.io/ontology#value> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/ontology#value> <http://www.w3.org/2000/01/rdf-schema#domain> <http://scimantic.io/ontology#Result> .
+<http://scimantic.io/ontology#value> <http://www.w3.org/2000/01/rdf-schema#label> "value"@en .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://scimantic.io/ontology#Analysis
+<http://scimantic.io/ontology#Analysis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Analysis> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://www.w3.org/ns/prov#Activity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Analysis> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of processing a Dataset to produce a Result."@en .
+<http://scimantic.io/ontology#Analysis> <http://www.w3.org/2000/01/rdf-schema#label> "Analysis"@en .
+# 
+# http://scimantic.io/ontology#Assessment
+<http://scimantic.io/ontology#Assessment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Assessment> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/ontology#Assessment> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of evaluating credibility or relevance of Evidence."@en .
+<http://scimantic.io/ontology#Assessment> <http://www.w3.org/2000/01/rdf-schema#label> "Evidence Assessment"@en .
+# 
+# http://scimantic.io/ontology#Dataset
+<http://scimantic.io/ontology#Dataset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Dataset> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/ontology#Dataset> <http://www.w3.org/2000/01/rdf-schema#comment> "Raw data, observations, or measurements produced by execution."@en .
+<http://scimantic.io/ontology#Dataset> <http://www.w3.org/2000/01/rdf-schema#label> "Dataset"@en .
+# 
+# http://scimantic.io/ontology#Design
+<http://scimantic.io/ontology#Design> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Design> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/ontology#Design> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Plan> .
+<http://www.w3.org/ns/prov#Plan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Design> <http://www.w3.org/2000/01/rdf-schema#comment> "A specification of the experimental or computational method."@en .
+<http://scimantic.io/ontology#Design> <http://www.w3.org/2000/01/rdf-schema#label> "Study Design"@en .
+# 
+# http://scimantic.io/ontology#DesignPlanning
+<http://scimantic.io/ontology#DesignPlanning> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#DesignPlanning> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/ontology#DesignPlanning> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of specifying a Design."@en .
+<http://scimantic.io/ontology#DesignPlanning> <http://www.w3.org/2000/01/rdf-schema#label> "Design Planning"@en .
+# 
+# http://scimantic.io/ontology#Evidence
+<http://scimantic.io/ontology#Evidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Evidence> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.nanopub.org/nschema#Nanopublication> .
+<http://scimantic.io/ontology#Evidence> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/ontology#Evidence> <http://www.w3.org/2000/01/rdf-schema#comment> "A factual claim extracted from a source."@en .
+<http://scimantic.io/ontology#Evidence> <http://www.w3.org/2000/01/rdf-schema#label> "Evidence"@en .
+# 
+# http://scimantic.io/ontology#Execution
+<http://scimantic.io/ontology#Execution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Execution> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/ontology#Execution> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of running a Design to produce a Dataset."@en .
+<http://scimantic.io/ontology#Execution> <http://www.w3.org/2000/01/rdf-schema#label> "Execution"@en .
+# 
+# http://scimantic.io/ontology#Hypothesis
+<http://scimantic.io/ontology#Hypothesis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Hypothesis> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.nanopub.org/nschema#Nanopublication> .
+<http://scimantic.io/ontology#Hypothesis> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/ontology#Hypothesis> <http://www.w3.org/2000/01/rdf-schema#comment> "A testable claim derived from evidence."@en .
+<http://scimantic.io/ontology#Hypothesis> <http://www.w3.org/2000/01/rdf-schema#label> "Hypothesis"@en .
+# 
+# http://scimantic.io/ontology#HypothesisFormation
+<http://scimantic.io/ontology#HypothesisFormation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#HypothesisFormation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/ontology#HypothesisFormation> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of synthesizing Evidence into a Hypothesis."@en .
+<http://scimantic.io/ontology#HypothesisFormation> <http://www.w3.org/2000/01/rdf-schema#label> "Hypothesis Formation"@en .
+# 
+# http://scimantic.io/ontology#LiteratureSearch
+<http://scimantic.io/ontology#LiteratureSearch> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#LiteratureSearch> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/ontology#LiteratureSearch> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of searching for and extracting Evidence."@en .
+<http://scimantic.io/ontology#LiteratureSearch> <http://www.w3.org/2000/01/rdf-schema#label> "Literature Search"@en .
+# 
+# http://scimantic.io/ontology#Parameter
+<http://scimantic.io/ontology#Parameter> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Parameter> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/ontology#Parameter> <http://www.w3.org/2000/01/rdf-schema#comment> "A configured parameter within a Design."@en .
+<http://scimantic.io/ontology#Parameter> <http://www.w3.org/2000/01/rdf-schema#label> "Design Parameter"@en .
+# 
+# http://scimantic.io/ontology#Question
+<http://scimantic.io/ontology#Question> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Question> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/ontology#Question> <http://www.w3.org/2000/01/rdf-schema#comment> "An interrogative sentence representing the research query."@en .
+<http://scimantic.io/ontology#Question> <http://www.w3.org/2000/01/rdf-schema#label> "Research Question"@en .
+# 
+# http://scimantic.io/ontology#QuestionFormation
+<http://scimantic.io/ontology#QuestionFormation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#QuestionFormation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/ontology#QuestionFormation> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of creating a Research Question."@en .
+<http://scimantic.io/ontology#QuestionFormation> <http://www.w3.org/2000/01/rdf-schema#label> "Question Formation"@en .
+# 
+# http://scimantic.io/ontology#Result
+<http://scimantic.io/ontology#Result> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ontology#Result> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/ontology#Result> <http://www.w3.org/2000/01/rdf-schema#comment> "The outcome of an analysis activity."@en .
+<http://scimantic.io/ontology#Result> <http://www.w3.org/2000/01/rdf-schema#label> "Result"@en .
+# 
+# http://www.nanopub.org/nschema#Nanopublication
+# 
+# http://www.w3.org/ns/prov#Activity
+# 
+# http://www.w3.org/ns/prov#Entity
+# 
+# http://www.w3.org/ns/prov#Plan
+# 
+# http://www.w3.org/ns/prov#SoftwareAgent
+# 
+# http://www.w3.org/ns/urref#UncertaintyEntity
+# 
+# Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/
