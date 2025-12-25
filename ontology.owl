@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="http://scimantic.io/ontology#"
-     xml:base="http://scimantic.io/ontology"
+<rdf:RDF xmlns="http://scimantic.io/"
+     xml:base="http://scimantic.io/"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:terms="http://purl.org/dc/terms/">
-    <owl:Ontology rdf:about="http://scimantic.io/ontology#">
+    <owl:Ontology rdf:about="http://scimantic.io/">
         <terms:description xml:lang="en">A minimal domain ontology for representing the scientific method as provenance chains.</terms:description>
         <terms:license rdf:resource="https://creativecommons.org/licenses/by/4.0/"/>
         <terms:title xml:lang="en">Scimantic Ontology</terms:title>
@@ -63,21 +63,21 @@
     
 
 
-    <!-- http://scimantic.io/ontology#expectedOutcome -->
+    <!-- http://scimantic.io/expectedOutcome -->
 
 
-    <owl:ObjectProperty rdf:about="http://scimantic.io/ontology#expectedOutcome">
-        <rdfs:domain rdf:resource="http://scimantic.io/ontology#Design"/>
-        <rdfs:range rdf:resource="http://scimantic.io/ontology#Hypothesis"/>
+    <owl:ObjectProperty rdf:about="http://scimantic.io/expectedOutcome">
+        <rdfs:domain rdf:resource="http://scimantic.io/Design"/>
+        <rdfs:range rdf:resource="http://scimantic.io/Hypothesis"/>
         <rdfs:label xml:lang="en">expected outcome</rdfs:label>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://scimantic.io/ontology#hasUncertainty -->
+    <!-- http://scimantic.io/hasUncertainty -->
 
 
-    <owl:ObjectProperty rdf:about="http://scimantic.io/ontology#hasUncertainty">
+    <owl:ObjectProperty rdf:about="http://scimantic.io/hasUncertainty">
         <rdfs:domain rdf:resource="http://www.w3.org/ns/prov#Entity"/>
         <rdfs:range rdf:resource="http://www.w3.org/ns/urref#UncertaintyEntity"/>
         <rdfs:comment xml:lang="en">Links an entity to its uncertainty model.</rdfs:comment>
@@ -86,12 +86,12 @@
     
 
 
-    <!-- http://scimantic.io/ontology#parameter -->
+    <!-- http://scimantic.io/parameter -->
 
 
-    <owl:ObjectProperty rdf:about="http://scimantic.io/ontology#parameter">
-        <rdfs:domain rdf:resource="http://scimantic.io/ontology#Design"/>
-        <rdfs:range rdf:resource="http://scimantic.io/ontology#Parameter"/>
+    <owl:ObjectProperty rdf:about="http://scimantic.io/parameter">
+        <rdfs:domain rdf:resource="http://scimantic.io/Design"/>
+        <rdfs:range rdf:resource="http://scimantic.io/Parameter"/>
         <rdfs:label xml:lang="en">parameter</rdfs:label>
     </owl:ObjectProperty>
     
@@ -109,10 +109,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#accessLevel -->
+    <!-- http://scimantic.io/accessLevel -->
 
 
-    <owl:DatatypeProperty rdf:about="http://scimantic.io/ontology#accessLevel">
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/accessLevel">
         <rdfs:domain rdf:resource="http://www.nanopub.org/nschema#Nanopublication"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:comment xml:lang="en">Publishing scope (e.g., local, institutional, public).</rdfs:comment>
@@ -121,10 +121,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#codeRepository -->
+    <!-- http://scimantic.io/codeRepository -->
 
 
-    <owl:DatatypeProperty rdf:about="http://scimantic.io/ontology#codeRepository">
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/codeRepository">
         <rdfs:domain rdf:resource="http://www.w3.org/ns/prov#SoftwareAgent"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
         <rdfs:label xml:lang="en">code repository</rdfs:label>
@@ -132,10 +132,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#commitHash -->
+    <!-- http://scimantic.io/commitHash -->
 
 
-    <owl:DatatypeProperty rdf:about="http://scimantic.io/ontology#commitHash">
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/commitHash">
         <rdfs:domain rdf:resource="http://www.w3.org/ns/prov#SoftwareAgent"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:label xml:lang="en">commit hash</rdfs:label>
@@ -143,21 +143,21 @@
     
 
 
-    <!-- http://scimantic.io/ontology#method -->
+    <!-- http://scimantic.io/method -->
 
 
-    <owl:DatatypeProperty rdf:about="http://scimantic.io/ontology#method">
-        <rdfs:domain rdf:resource="http://scimantic.io/ontology#Design"/>
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/method">
+        <rdfs:domain rdf:resource="http://scimantic.io/Design"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:label xml:lang="en">method</rdfs:label>
     </owl:DatatypeProperty>
     
 
 
-    <!-- http://scimantic.io/ontology#publishable -->
+    <!-- http://scimantic.io/publishable -->
 
 
-    <owl:DatatypeProperty rdf:about="http://scimantic.io/ontology#publishable">
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/publishable">
         <rdfs:domain rdf:resource="http://www.nanopub.org/nschema#Nanopublication"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
         <rdfs:comment xml:lang="en">Flag indicating readiness for public promotion.</rdfs:comment>
@@ -166,22 +166,22 @@
     
 
 
-    <!-- http://scimantic.io/ontology#unit -->
+    <!-- http://scimantic.io/unit -->
 
 
-    <owl:DatatypeProperty rdf:about="http://scimantic.io/ontology#unit">
-        <rdfs:domain rdf:resource="http://scimantic.io/ontology#Result"/>
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/unit">
+        <rdfs:domain rdf:resource="http://scimantic.io/Result"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:label xml:lang="en">unit</rdfs:label>
     </owl:DatatypeProperty>
     
 
 
-    <!-- http://scimantic.io/ontology#value -->
+    <!-- http://scimantic.io/value -->
 
 
-    <owl:DatatypeProperty rdf:about="http://scimantic.io/ontology#value">
-        <rdfs:domain rdf:resource="http://scimantic.io/ontology#Result"/>
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/value">
+        <rdfs:domain rdf:resource="http://scimantic.io/Result"/>
         <rdfs:label xml:lang="en">value</rdfs:label>
     </owl:DatatypeProperty>
     
@@ -199,10 +199,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#Analysis -->
+    <!-- http://scimantic.io/Analysis -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#Analysis">
+    <owl:Class rdf:about="http://scimantic.io/Analysis">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
         <rdfs:comment xml:lang="en">The activity of processing a Dataset to produce a Result.</rdfs:comment>
         <rdfs:label xml:lang="en">Analysis</rdfs:label>
@@ -210,10 +210,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#Assessment -->
+    <!-- http://scimantic.io/Assessment -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#Assessment">
+    <owl:Class rdf:about="http://scimantic.io/Assessment">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
         <rdfs:comment xml:lang="en">The activity of evaluating credibility or relevance of Evidence.</rdfs:comment>
         <rdfs:label xml:lang="en">Evidence Assessment</rdfs:label>
@@ -221,10 +221,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#Dataset -->
+    <!-- http://scimantic.io/Dataset -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#Dataset">
+    <owl:Class rdf:about="http://scimantic.io/Dataset">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
         <rdfs:comment xml:lang="en">Raw data, observations, or measurements produced by execution.</rdfs:comment>
         <rdfs:label xml:lang="en">Dataset</rdfs:label>
@@ -232,10 +232,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#Design -->
+    <!-- http://scimantic.io/Design -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#Design">
+    <owl:Class rdf:about="http://scimantic.io/Design">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Plan"/>
         <rdfs:comment xml:lang="en">A specification of the experimental or computational method.</rdfs:comment>
@@ -244,10 +244,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#DesignPlanning -->
+    <!-- http://scimantic.io/DesignPlanning -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#DesignPlanning">
+    <owl:Class rdf:about="http://scimantic.io/DesignPlanning">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
         <rdfs:comment xml:lang="en">The activity of specifying a Design.</rdfs:comment>
         <rdfs:label xml:lang="en">Design Planning</rdfs:label>
@@ -255,10 +255,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#Evidence -->
+    <!-- http://scimantic.io/Evidence -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#Evidence">
+    <owl:Class rdf:about="http://scimantic.io/Evidence">
         <rdfs:subClassOf rdf:resource="http://www.nanopub.org/nschema#Nanopublication"/>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
         <rdfs:comment xml:lang="en">A factual claim extracted from a source.</rdfs:comment>
@@ -267,10 +267,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#Execution -->
+    <!-- http://scimantic.io/Execution -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#Execution">
+    <owl:Class rdf:about="http://scimantic.io/Execution">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
         <rdfs:comment xml:lang="en">The activity of running a Design to produce a Dataset.</rdfs:comment>
         <rdfs:label xml:lang="en">Execution</rdfs:label>
@@ -278,10 +278,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#Hypothesis -->
+    <!-- http://scimantic.io/Hypothesis -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#Hypothesis">
+    <owl:Class rdf:about="http://scimantic.io/Hypothesis">
         <rdfs:subClassOf rdf:resource="http://www.nanopub.org/nschema#Nanopublication"/>
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
         <rdfs:comment xml:lang="en">A testable claim derived from evidence.</rdfs:comment>
@@ -290,10 +290,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#HypothesisFormation -->
+    <!-- http://scimantic.io/HypothesisFormation -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#HypothesisFormation">
+    <owl:Class rdf:about="http://scimantic.io/HypothesisFormation">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
         <rdfs:comment xml:lang="en">The activity of synthesizing Evidence into a Hypothesis.</rdfs:comment>
         <rdfs:label xml:lang="en">Hypothesis Formation</rdfs:label>
@@ -301,10 +301,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#LiteratureSearch -->
+    <!-- http://scimantic.io/LiteratureSearch -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#LiteratureSearch">
+    <owl:Class rdf:about="http://scimantic.io/LiteratureSearch">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
         <rdfs:comment xml:lang="en">The activity of searching for and extracting Evidence.</rdfs:comment>
         <rdfs:label xml:lang="en">Literature Search</rdfs:label>
@@ -312,10 +312,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#Parameter -->
+    <!-- http://scimantic.io/Parameter -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#Parameter">
+    <owl:Class rdf:about="http://scimantic.io/Parameter">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
         <rdfs:comment xml:lang="en">A configured parameter within a Design.</rdfs:comment>
         <rdfs:label xml:lang="en">Design Parameter</rdfs:label>
@@ -323,10 +323,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#Question -->
+    <!-- http://scimantic.io/Question -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#Question">
+    <owl:Class rdf:about="http://scimantic.io/Question">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
         <rdfs:comment xml:lang="en">An interrogative sentence representing the research query.</rdfs:comment>
         <rdfs:label xml:lang="en">Research Question</rdfs:label>
@@ -334,10 +334,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#QuestionFormation -->
+    <!-- http://scimantic.io/QuestionFormation -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#QuestionFormation">
+    <owl:Class rdf:about="http://scimantic.io/QuestionFormation">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
         <rdfs:comment xml:lang="en">The activity of creating a Research Question.</rdfs:comment>
         <rdfs:label xml:lang="en">Question Formation</rdfs:label>
@@ -345,10 +345,10 @@
     
 
 
-    <!-- http://scimantic.io/ontology#Result -->
+    <!-- http://scimantic.io/Result -->
 
 
-    <owl:Class rdf:about="http://scimantic.io/ontology#Result">
+    <owl:Class rdf:about="http://scimantic.io/Result">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
         <rdfs:comment xml:lang="en">The outcome of an analysis activity.</rdfs:comment>
         <rdfs:label xml:lang="en">Result</rdfs:label>

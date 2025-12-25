@@ -7,7 +7,7 @@
 @prefix urref: <http://www.w3.org/ns/urref#> .
 @prefix np: <http://www.nanopub.org/nschema#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix scimantic: <http://scimantic.io/ontology#> .
+@prefix scimantic: <http://scimantic.io/> .
 
 # ------------------------------------------------------------------------------
 # Ontology Metadata

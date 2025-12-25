@@ -1,18 +1,18 @@
-@prefix : <http://scimantic.io/ontology#> .
+@prefix : <http://scimantic.io/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://scimantic.io/ontology#> .
+@base <http://scimantic.io/> .
 
-<http://scimantic.io/ontology#> rdf:type owl:Ontology ;
-                                 <http://purl.org/dc/terms/description> "A minimal domain ontology for representing the scientific method as provenance chains."@en ;
-                                 <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> ;
-                                 <http://purl.org/dc/terms/title> "Scimantic Ontology"@en ;
-                                 rdfs:seeAlso <http://www.w3.org/ns/prov#> ,
-                                              <http://www.w3.org/ns/urref#> ;
-                                 owl:versionInfo "0.1.0" .
+<http://scimantic.io/> rdf:type owl:Ontology ;
+                        <http://purl.org/dc/terms/description> "A minimal domain ontology for representing the scientific method as provenance chains."@en ;
+                        <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> ;
+                        <http://purl.org/dc/terms/title> "Scimantic Ontology"@en ;
+                        rdfs:seeAlso <http://www.w3.org/ns/prov#> ,
+                                     <http://www.w3.org/ns/urref#> ;
+                        owl:versionInfo "0.1.0" .
 
 #################################################################
 #    Annotation properties
@@ -34,14 +34,14 @@
 #    Object Properties
 #################################################################
 
-###  http://scimantic.io/ontology#expectedOutcome
+###  http://scimantic.io/expectedOutcome
 :expectedOutcome rdf:type owl:ObjectProperty ;
                  rdfs:domain :Design ;
                  rdfs:range :Hypothesis ;
                  rdfs:label "expected outcome"@en .
 
 
-###  http://scimantic.io/ontology#hasUncertainty
+###  http://scimantic.io/hasUncertainty
 :hasUncertainty rdf:type owl:ObjectProperty ;
                 rdfs:domain <http://www.w3.org/ns/prov#Entity> ;
                 rdfs:range <http://www.w3.org/ns/urref#UncertaintyEntity> ;
@@ -49,7 +49,7 @@
                 rdfs:label "has uncertainty"@en .
 
 
-###  http://scimantic.io/ontology#parameter
+###  http://scimantic.io/parameter
 :parameter rdf:type owl:ObjectProperty ;
            rdfs:domain :Design ;
            rdfs:range :Parameter ;
@@ -60,7 +60,7 @@
 #    Data properties
 #################################################################
 
-###  http://scimantic.io/ontology#accessLevel
+###  http://scimantic.io/accessLevel
 :accessLevel rdf:type owl:DatatypeProperty ;
              rdfs:domain <http://www.nanopub.org/nschema#Nanopublication> ;
              rdfs:range xsd:string ;
@@ -68,28 +68,28 @@
              rdfs:label "access level"@en .
 
 
-###  http://scimantic.io/ontology#codeRepository
+###  http://scimantic.io/codeRepository
 :codeRepository rdf:type owl:DatatypeProperty ;
                 rdfs:domain <http://www.w3.org/ns/prov#SoftwareAgent> ;
                 rdfs:range xsd:anyURI ;
                 rdfs:label "code repository"@en .
 
 
-###  http://scimantic.io/ontology#commitHash
+###  http://scimantic.io/commitHash
 :commitHash rdf:type owl:DatatypeProperty ;
             rdfs:domain <http://www.w3.org/ns/prov#SoftwareAgent> ;
             rdfs:range xsd:string ;
             rdfs:label "commit hash"@en .
 
 
-###  http://scimantic.io/ontology#method
+###  http://scimantic.io/method
 :method rdf:type owl:DatatypeProperty ;
         rdfs:domain :Design ;
         rdfs:range xsd:string ;
         rdfs:label "method"@en .
 
 
-###  http://scimantic.io/ontology#publishable
+###  http://scimantic.io/publishable
 :publishable rdf:type owl:DatatypeProperty ;
              rdfs:domain <http://www.nanopub.org/nschema#Nanopublication> ;
              rdfs:range xsd:boolean ;
@@ -97,14 +97,14 @@
              rdfs:label "publishable"@en .
 
 
-###  http://scimantic.io/ontology#unit
+###  http://scimantic.io/unit
 :unit rdf:type owl:DatatypeProperty ;
       rdfs:domain :Result ;
       rdfs:range xsd:string ;
       rdfs:label "unit"@en .
 
 
-###  http://scimantic.io/ontology#value
+###  http://scimantic.io/value
 :value rdf:type owl:DatatypeProperty ;
        rdfs:domain :Result ;
        rdfs:label "value"@en .
@@ -114,28 +114,28 @@
 #    Classes
 #################################################################
 
-###  http://scimantic.io/ontology#Analysis
+###  http://scimantic.io/Analysis
 :Analysis rdf:type owl:Class ;
           rdfs:subClassOf <http://www.w3.org/ns/prov#Activity> ;
           rdfs:comment "The activity of processing a Dataset to produce a Result."@en ;
           rdfs:label "Analysis"@en .
 
 
-###  http://scimantic.io/ontology#Assessment
+###  http://scimantic.io/Assessment
 :Assessment rdf:type owl:Class ;
             rdfs:subClassOf <http://www.w3.org/ns/prov#Activity> ;
             rdfs:comment "The activity of evaluating credibility or relevance of Evidence."@en ;
             rdfs:label "Evidence Assessment"@en .
 
 
-###  http://scimantic.io/ontology#Dataset
+###  http://scimantic.io/Dataset
 :Dataset rdf:type owl:Class ;
          rdfs:subClassOf <http://www.w3.org/ns/prov#Entity> ;
          rdfs:comment "Raw data, observations, or measurements produced by execution."@en ;
          rdfs:label "Dataset"@en .
 
 
-###  http://scimantic.io/ontology#Design
+###  http://scimantic.io/Design
 :Design rdf:type owl:Class ;
         rdfs:subClassOf <http://www.w3.org/ns/prov#Entity> ,
                         <http://www.w3.org/ns/prov#Plan> ;
@@ -143,14 +143,14 @@
         rdfs:label "Study Design"@en .
 
 
-###  http://scimantic.io/ontology#DesignPlanning
+###  http://scimantic.io/DesignPlanning
 :DesignPlanning rdf:type owl:Class ;
                 rdfs:subClassOf <http://www.w3.org/ns/prov#Activity> ;
                 rdfs:comment "The activity of specifying a Design."@en ;
                 rdfs:label "Design Planning"@en .
 
 
-###  http://scimantic.io/ontology#Evidence
+###  http://scimantic.io/Evidence
 :Evidence rdf:type owl:Class ;
           rdfs:subClassOf <http://www.nanopub.org/nschema#Nanopublication> ,
                           <http://www.w3.org/ns/prov#Entity> ;
@@ -158,14 +158,14 @@
           rdfs:label "Evidence"@en .
 
 
-###  http://scimantic.io/ontology#Execution
+###  http://scimantic.io/Execution
 :Execution rdf:type owl:Class ;
            rdfs:subClassOf <http://www.w3.org/ns/prov#Activity> ;
            rdfs:comment "The activity of running a Design to produce a Dataset."@en ;
            rdfs:label "Execution"@en .
 
 
-###  http://scimantic.io/ontology#Hypothesis
+###  http://scimantic.io/Hypothesis
 :Hypothesis rdf:type owl:Class ;
             rdfs:subClassOf <http://www.nanopub.org/nschema#Nanopublication> ,
                             <http://www.w3.org/ns/prov#Entity> ;
@@ -173,42 +173,42 @@
             rdfs:label "Hypothesis"@en .
 
 
-###  http://scimantic.io/ontology#HypothesisFormation
+###  http://scimantic.io/HypothesisFormation
 :HypothesisFormation rdf:type owl:Class ;
                      rdfs:subClassOf <http://www.w3.org/ns/prov#Activity> ;
                      rdfs:comment "The activity of synthesizing Evidence into a Hypothesis."@en ;
                      rdfs:label "Hypothesis Formation"@en .
 
 
-###  http://scimantic.io/ontology#LiteratureSearch
+###  http://scimantic.io/LiteratureSearch
 :LiteratureSearch rdf:type owl:Class ;
                   rdfs:subClassOf <http://www.w3.org/ns/prov#Activity> ;
                   rdfs:comment "The activity of searching for and extracting Evidence."@en ;
                   rdfs:label "Literature Search"@en .
 
 
-###  http://scimantic.io/ontology#Parameter
+###  http://scimantic.io/Parameter
 :Parameter rdf:type owl:Class ;
            rdfs:subClassOf <http://www.w3.org/ns/prov#Entity> ;
            rdfs:comment "A configured parameter within a Design."@en ;
            rdfs:label "Design Parameter"@en .
 
 
-###  http://scimantic.io/ontology#Question
+###  http://scimantic.io/Question
 :Question rdf:type owl:Class ;
           rdfs:subClassOf <http://www.w3.org/ns/prov#Entity> ;
           rdfs:comment "An interrogative sentence representing the research query."@en ;
           rdfs:label "Research Question"@en .
 
 
-###  http://scimantic.io/ontology#QuestionFormation
+###  http://scimantic.io/QuestionFormation
 :QuestionFormation rdf:type owl:Class ;
                    rdfs:subClassOf <http://www.w3.org/ns/prov#Activity> ;
                    rdfs:comment "The activity of creating a Research Question."@en ;
                    rdfs:label "Question Formation"@en .
 
 
-###  http://scimantic.io/ontology#Result
+###  http://scimantic.io/Result
 :Result rdf:type owl:Class ;
         rdfs:subClassOf <http://www.w3.org/ns/prov#Entity> ;
         rdfs:comment "The outcome of an analysis activity."@en ;

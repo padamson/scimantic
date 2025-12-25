@@ -8,7 +8,7 @@
   "@id" : "http://purl.org/dc/terms/title",
   "@type" : [ "http://www.w3.org/2002/07/owl#AnnotationProperty" ]
 }, {
-  "@id" : "http://scimantic.io/ontology#",
+  "@id" : "http://scimantic.io/",
   "@type" : [ "http://www.w3.org/2002/07/owl#Ontology" ],
   "http://purl.org/dc/terms/description" : [ {
     "@language" : "en",
@@ -30,7 +30,7 @@
     "@value" : "0.1.0"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#Analysis",
+  "@id" : "http://scimantic.io/Analysis",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -44,7 +44,7 @@
     "@id" : "http://www.w3.org/ns/prov#Activity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#Assessment",
+  "@id" : "http://scimantic.io/Assessment",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -58,7 +58,7 @@
     "@id" : "http://www.w3.org/ns/prov#Activity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#Dataset",
+  "@id" : "http://scimantic.io/Dataset",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -72,7 +72,7 @@
     "@id" : "http://www.w3.org/ns/prov#Entity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#Design",
+  "@id" : "http://scimantic.io/Design",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -88,7 +88,7 @@
     "@id" : "http://www.w3.org/ns/prov#Plan"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#DesignPlanning",
+  "@id" : "http://scimantic.io/DesignPlanning",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -102,7 +102,7 @@
     "@id" : "http://www.w3.org/ns/prov#Activity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#Evidence",
+  "@id" : "http://scimantic.io/Evidence",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -118,7 +118,7 @@
     "@id" : "http://www.w3.org/ns/prov#Entity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#Execution",
+  "@id" : "http://scimantic.io/Execution",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -132,7 +132,7 @@
     "@id" : "http://www.w3.org/ns/prov#Activity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#Hypothesis",
+  "@id" : "http://scimantic.io/Hypothesis",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -148,7 +148,7 @@
     "@id" : "http://www.w3.org/ns/prov#Entity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#HypothesisFormation",
+  "@id" : "http://scimantic.io/HypothesisFormation",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -162,7 +162,7 @@
     "@id" : "http://www.w3.org/ns/prov#Activity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#LiteratureSearch",
+  "@id" : "http://scimantic.io/LiteratureSearch",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -176,7 +176,7 @@
     "@id" : "http://www.w3.org/ns/prov#Activity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#Parameter",
+  "@id" : "http://scimantic.io/Parameter",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -190,7 +190,7 @@
     "@id" : "http://www.w3.org/ns/prov#Entity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#Question",
+  "@id" : "http://scimantic.io/Question",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -204,7 +204,7 @@
     "@id" : "http://www.w3.org/ns/prov#Entity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#QuestionFormation",
+  "@id" : "http://scimantic.io/QuestionFormation",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -218,7 +218,7 @@
     "@id" : "http://www.w3.org/ns/prov#Activity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#Result",
+  "@id" : "http://scimantic.io/Result",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -232,7 +232,7 @@
     "@id" : "http://www.w3.org/ns/prov#Entity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#accessLevel",
+  "@id" : "http://scimantic.io/accessLevel",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -249,7 +249,7 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#codeRepository",
+  "@id" : "http://scimantic.io/codeRepository",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
     "@id" : "http://www.w3.org/ns/prov#SoftwareAgent"
@@ -262,7 +262,7 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#anyURI"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#commitHash",
+  "@id" : "http://scimantic.io/commitHash",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
     "@id" : "http://www.w3.org/ns/prov#SoftwareAgent"
@@ -275,20 +275,20 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#expectedOutcome",
+  "@id" : "http://scimantic.io/expectedOutcome",
   "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "http://scimantic.io/ontology#Design"
+    "@id" : "http://scimantic.io/Design"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@language" : "en",
     "@value" : "expected outcome"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#range" : [ {
-    "@id" : "http://scimantic.io/ontology#Hypothesis"
+    "@id" : "http://scimantic.io/Hypothesis"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#hasUncertainty",
+  "@id" : "http://scimantic.io/hasUncertainty",
   "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -305,10 +305,10 @@
     "@id" : "http://www.w3.org/ns/urref#UncertaintyEntity"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#method",
+  "@id" : "http://scimantic.io/method",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "http://scimantic.io/ontology#Design"
+    "@id" : "http://scimantic.io/Design"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@language" : "en",
@@ -318,20 +318,20 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#parameter",
+  "@id" : "http://scimantic.io/parameter",
   "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "http://scimantic.io/ontology#Design"
+    "@id" : "http://scimantic.io/Design"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@language" : "en",
     "@value" : "parameter"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#range" : [ {
-    "@id" : "http://scimantic.io/ontology#Parameter"
+    "@id" : "http://scimantic.io/Parameter"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#publishable",
+  "@id" : "http://scimantic.io/publishable",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
     "@language" : "en",
@@ -348,10 +348,10 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#boolean"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#unit",
+  "@id" : "http://scimantic.io/unit",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "http://scimantic.io/ontology#Result"
+    "@id" : "http://scimantic.io/Result"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@language" : "en",
@@ -361,10 +361,10 @@
     "@id" : "http://www.w3.org/2001/XMLSchema#string"
   } ]
 }, {
-  "@id" : "http://scimantic.io/ontology#value",
+  "@id" : "http://scimantic.io/value",
   "@type" : [ "http://www.w3.org/2002/07/owl#DatatypeProperty" ],
   "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
-    "@id" : "http://scimantic.io/ontology#Result"
+    "@id" : "http://scimantic.io/Result"
   } ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
     "@language" : "en",
