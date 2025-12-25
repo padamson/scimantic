@@ -13,15 +13,15 @@
 - Cannot query across papers programmatically
 - Difficult for AI agents to assist with research
 
-**The Vision**: SemFlow captures literature as semantic RDF from the very first search, creating:
+**The Vision**: Scimantic captures literature as semantic RDF from the very first search, creating:
 - **Queryable knowledge graph**: SPARQL queries across all evidence
-- **W3C standards-based**: Built on PROV-O for provenance, enabling interoperability with existing semantic web tools
+- **W3C standards-based**: Built on **nanopublications** and PROV-O, enabling interoperability
 - **Provenance from day one**: Every piece of evidence linked to its source with metadata
 - **Hypothesis traceability**: Later hypotheses can be explicitly derived from specific evidence nodes via `prov:wasDerivedFrom`
 - **AI-assisted research**: MCP agents can search, summarize, and populate the graph
 - **Visualization**: VS Code extension shows the growing evidence landscape
 
-**Why This Matters**: This is the foundation of SemFlow's semantic publishing vision—research that is machine-readable from the very first literature search, not retrofitted at publication time.
+**Why This Matters**: This is the foundation of Scimantic's semantic publishing vision—research that is machine-readable from the very first literature search, not retrofitted at publication time.
 
 ### Scientific Method Stage
 - [x] Literature Review
@@ -41,44 +41,48 @@
 **Why This Slice:** Establishes the foundation for semantic literature review. Without machine-readable evidence capture, the rest of the workflow cannot provide provenance traceability.
 
 **Components:**
-- [x] semflow-core
-- [ ] examples/semflow-paper (manual validation - deferred to Slice 2/3 with UI)
+- [ ] scimantic-core
+- [ ] examples/scimantic-paper (manual validation - deferred to Slice 2/3 with UI)
+
+**Note**: Existing code in `scimantic-core` and `scimantic-ext` is considered a **code spike**. These criteria are pending re-implementation after the formal `scimantic` ontology is defined.
 
 #### ✅ Acceptance Criteria
 
 **What the system does:**
-- [x] AI agent can add evidence via MCP tool with citation, content, and source
-- [x] Evidence is persisted to `project.ttl` in Turtle format
-- [x] Multiple evidence entries accumulate in the graph (append, not overwrite)
+- [ ] AI agent can add evidence via MCP tool with citation, content, and source
+- [ ] Evidence is persisted to `project.ttl` in Turtle format
+- [ ] Multiple evidence entries accumulate in the graph (append, not overwrite)
 
 **What RDF structure exists:**
-- [x] Evidence entity with types `semflow:Evidence` and `prov:Entity` (PROV-O provenance)
-- [x] Citation stored as `dcterms:bibliographicCitation`
-- [x] Content (summary/findings) stored as `semflow:content`
-- [x] Source (DOI/URL) stored as `dcterms:source`
-- [x] Creation timestamp stored as `prov:generatedAtTime` (PROV-O standard)
+- [ ] Evidence entity (Assertion graph of a Nanopublication)
+- [ ] Types `scimantic:Evidence` and `prov:Entity`
+- [ ] Claim/Fact stored as `rdfs:label`
+- [ ] Summary/Details stored as `scimantic:content` (optional)
+- [ ] Source (DOI/URL) stored as `dcterms:source`
+- [ ] Uncertainty initialized (e.g., via `scimantic:hasUncertainty`)
+- [ ] Creation timestamp in Publication Info graph (`dcterms:created`)
 
 **What provenance is captured:**
-- [x] Agent attribution via `prov:wasAttributedTo` (AI or human)
-- [x] Queryable via SPARQL: "Who added this evidence and when?"
+- [ ] Agent attribution via `prov:wasAttributedTo` (AI or human)
+- [ ] Queryable via SPARQL: "Who added this evidence and when?"
 
 **What queries work:**
-- [x] Find all evidence from papers published after date X
-- [x] Find all evidence added by agent Y
-- [x] Count total evidence entries in graph
+- [ ] Find all evidence from papers published after date X
+- [ ] Find all evidence added by agent Y
+- [ ] Count total evidence entries in graph
 
 #### 🛠️ Implementation Tasks
 
-**Backend (semflow-core)**:
-- [x] Models: `Evidence` entity with RDF persistence
-- [x] Provenance: PROV-O tracking for evidence creation
-- [x] MCP Tools: `add_evidence` tool for AI agent access
-- [x] Tests: Unit tests for Evidence model
-- [x] Tests: Integration test for MCP tool → RDF persistence
+**Backend (scimantic-core)**:
+- [ ] Models: `Evidence` entity with RDF persistence
+- [ ] Provenance: PROV-O tracking for evidence creation
+- [ ] MCP Tools: `add_evidence` tool for AI agent access
+- [ ] Tests: Unit tests for Evidence model
+- [ ] Tests: Integration test for MCP tool → RDF persistence
 
 **Validation**:
-- [x] SPARQL queries return expected evidence structure
-- [x] Multiple evidence entries coexist in graph
+- [ ] SPARQL queries return expected evidence structure
+- [ ] Multiple evidence entries coexist in graph
 
 ---
 
@@ -88,9 +92,9 @@
 **Why This Slice:** Visualization helps researchers understand the literature landscape they're building. Seeing evidence accumulate provides confidence and helps identify gaps or redundancies.
 
 **Components:**
-- [ ] semflow-core (MCP graph provider)
-- [ ] semflow-ext
-- [ ] examples/semflow-paper (validation)
+- [ ] scimantic-core (MCP graph provider)
+- [ ] scimantic-ext (tree view + detail view)
+- [ ] examples/scimantic-paper (validation)
 
 #### ✅ Acceptance Criteria
 
@@ -106,95 +110,179 @@
 - [ ] New evidence appears in tree view without manual refresh
 
 **What queries are supported:**
-- [ ] Filter evidence by date range
-- [ ] Filter evidence by source
+- [ ] **Group by Source**: Toggle to group evidence by `dcterms:source` (Paper/URL).
+- [ ] **Paper Visualization**: Graph view renders "Paper" nodes linking to multiple "Evidence" nodes.
+- [ ] Filter evidence by date range (deferred to future enhancement)
+- [ ] Filter evidence by source (deferred to future enhancement)
 
 **What user confirmation workflow exists:**
-- [ ] Before adding evidence, show preview modal with citation, content, and source
-- [ ] User can edit suggested evidence content, citation, or source before accepting
-- [ ] User can cancel without adding to knowledge graph
-- [ ] Only after user clicks "Add to Graph" does `add_evidence()` get called
-- [ ] Similar to Claude Code's "ask before edits" - human approval required for all graph modifications
+- [ ] Before adding evidence, show preview modal with citation, content, and source (deferred to Slice 3)
+- [ ] User can edit suggested evidence content, citation, or source before accepting (deferred to Slice 3)
+- [ ] User can cancel without adding to knowledge graph (deferred to Slice 3)
+- [ ] Only after user clicks "Add to Graph" does `add_evidence()` get called (deferred to Slice 3)
+- [ ] Similar to Claude Code's "ask before edits" - human approval required for all graph modifications (deferred to Slice 3)
+
+**Note:** User confirmation workflow is deferred to Slice 3 (Agentic Literature Search) where AI agent interactions make it most relevant.
 
 #### 🛠️ Implementation Tasks
 
-**Backend (semflow-core)**:
-- [ ] MCP Tools: `get_provenance_graph` tool returns graph as JSON
+**Backend (scimantic-core)**:
+- [ ] MCP Tools: `get_provenance_graph_json()` function returns graph as JSON
 - [ ] Tests: MCP tool returns correct graph structure
+- [ ] Configuration: Centralized namespace URIs in `config.py`
 
-**Frontend (semflow-ext)**:
-- [ ] UI: Evidence tree view provider
+**Frontend (scimantic-ext)**:
+- [ ] UI: Evidence tree view provider (`EvidenceTreeDataProvider`)
 - [ ] UI: Detail view webview for selected evidence
-- [ ] UI: Evidence preview/edit modal for user confirmation before adding
-- [ ] MCP Client: Connection to semflow-core subprocess
-- [ ] Commands: `semflow.refreshGraph`, `semflow.showEvidence`, `semflow.addEvidenceWithConfirmation`
+- [ ] UI: Evidence preview/edit modal for user confirmation before adding (deferred to Slice 3)
+- [ ] MCP Client: Connection to scimantic-core subprocess via `uv run python`
+- [ ] Commands: `scimantic.refreshGraph`, `scimantic.showEvidence`, `scimantic.openSource`
 - [ ] Tests: Tree view renders correctly
-- [ ] Tests: Confirmation modal shows and allows editing
+- [ ] Tests: MCP client integration tests
 
 **Validation**:
-- [ ] Manual testing shows evidence from examples/semflow-paper/project.ttl
+- [ ] Manual testing shows evidence from examples/scimantic-paper/project.ttl
 - [ ] Adding new evidence updates view automatically
+
+#### 📋 Manual Testing Instructions
+
+**Prerequisites:**
+1. Ensure `uv` is installed and scimantic-core dependencies are installed
+2. Open VS Code in the scimantic monorepo workspace
+3. Have the scimantic-ext extension loaded in development mode
+
+**Test 1: View existing evidence**
+```bash
+# From monorepo root
+cd examples/scimantic-paper
+
+# Add some test evidence using scimantic-core
+uv run python -c "
+from scimantic.mcp import add_evidence
+add_evidence(
+    content='Nanopublications are the smallest unit of publishable information.',
+    citation='Kuhn, T., et al. (2016). Decentralized provenance-aware publishing with nanopublications.',
+    source='https://doi.org/10.7717/peerj-cs.78',
+    agent='http://example.org/agent/manual-test',
+    project_path='project.ttl'
+)
+"
+```
+
+**Expected:**
+- Scimantic panel appears in VS Code activity bar (graph icon)
+- "Knowledge Graph" tree view shows the evidence entry
+- Citation is displayed as the label
+- Timestamp is shown as description
+- Clicking the entry opens a webview with full content and clickable source link
+
+**Test 2: Auto-refresh on file change**
+```bash
+# Add another evidence entry
+uv run python -c "
+from scimantic.mcp import add_evidence
+add_evidence(
+    content='RDF provides a semantic framework for knowledge representation.',
+    citation='Lassila, O., & Swick, R. R. (1999). Resource Description Framework.',
+    source='https://www.w3.org/TR/rdf-primer/',
+    agent='http://example.org/agent/manual-test',
+    project_path='project.ttl'
+)
+"
+```
+
+**Expected:**
+- Tree view automatically refreshes
+- New evidence appears without manual action
+- File watcher detects change to project.ttl
+
+**Test 3: Manual refresh**
+- Click the refresh icon in the tree view toolbar
+
+**Expected:**
+- Tree view reloads from project.ttl
+- All evidence entries are displayed correctly
+
+**Test 4: Detail view**
+- Click on any evidence entry in the tree
+
+**Expected:**
+- Webview panel opens showing:
+  - Citation as heading
+  - Full content text
+  - Clickable source URL
+  - Metadata (URI, timestamp, agent)
+- Clicking source URL opens in external browser
+
+**Known Limitations (to be addressed in Slice 3):**
+- No filtering by date or source yet
+- No user confirmation workflow for adding evidence
+- MCP client uses direct subprocess instead of proper MCP protocol
 
 ---
 
-### Slice 3: Conversational Literature Search
-**Goal:** Researchers converse with an AI agent to search literature and automatically populate the evidence graph.
+### Slice 3: Agentic Literature Search
+**Goal:** Researchers use their preferred AI agent (Claude, Cursor, etc.) to search literature and populate the evidence graph.
 
-**Why This Slice:** Conversational search drastically reduces the manual effort of literature review. The AI agent searches, summarizes, and populates the graph—all while maintaining full provenance.
+**Why This Slice:** Leveraging existing powerful agents via MCP avoids building a custom chat interface while enabling complex reasoning and search workflows.
 
 **Components:**
-- [ ] semflow-core (literature search MCP tool)
-- [ ] semflow-ext (chat interface)
-- [ ] examples/semflow-paper (validation)
+- [ ] scimantic-core (literature search MCP tool)
+- [ ] scimantic-ext (passive visualization only)
+- [ ] examples/scimantic-paper (validation)
 
 #### ✅ Acceptance Criteria
 
 **What the user does:**
-- [ ] Types natural language query in VS Code chat (e.g., "Find papers on O2 ionization cross sections")
-- [ ] Sees progress updates: "Searching... Found 5 papers... Adding 3 to graph..."
-- [ ] Refines search with follow-up: "Focus on DCS calculations"
+- [ ] Prompts their agent: "Find papers on O2 ionization cross sections and add the key evidence."
+- [ ] Agent performs search, summarizes findings, and calls `add_evidence` tool.
 
-**What the agent does:**
-- [ ] Searches Semantic Scholar API (or similar) for top N papers
-- [ ] For each relevant paper, calls `add_evidence` with citation and summary
-- [ ] Skips irrelevant results based on abstract content
+**What the agent does (via MCP):**
+- [ ] Calls `search_literature` (Semantic Scholar API).
+- [ ] Summarizes findings into RDF-compatible text.
+- [ ] Calls `add_evidence` for selected items.
 
 **What appears in the graph:**
-- [ ] Evidence nodes appear in tree view in real-time
-- [ ] Each evidence has provenance: agent attribution, search query source
-- [ ] Queryable: "Find all evidence from search query X"
+- [ ] Evidence nodes appear in the "Knowledge Graph" panel in real-time.
+- [ ] Provenance tracks the Agent URI (e.g., `urn:agent:claude`).
 
-**What queries work:**
-- [ ] Find all evidence added during a specific chat session
-- [ ] Find all evidence from papers on topic Y
-
-**What user confirmation workflow exists:**
-- [ ] Agent finds papers and extracts evidence, but does NOT automatically add to graph
-- [ ] Shows user preview: "I found 5 papers. Here's evidence from the first: [citation/content preview]"
-- [ ] User can review, edit suggested evidence, or skip individual papers
-- [ ] User explicitly approves each addition: "Add this evidence" or "Add all 5"
-- [ ] Conversational editing: User can say "Change the summary to..." and agent updates before adding
-- [ ] Human-in-the-loop: All graph modifications require explicit user approval
+**Visual Feedback / User Confirmation:**
+- [ ] Since the Chat UI is external, Scimantic does not control the "preview card".
+- [ ] Scimantic provides a `preview_evidence_batch` tool that agents CAN use to show structured data if they choose.
+- [ ] Primary feedback is the **Knowledge Graph Panel** updating in real-time.
 
 #### 🛠️ Implementation Tasks
 
-**Backend (semflow-core)**:
-- [ ] MCP Tools: `search_literature` tool integrates with Semantic Scholar API
-- [ ] Dependencies: HTTP client for API calls
-- [ ] Tests: Mocked API responses for unit tests
+**Backend (scimantic-core)**:
+- [ ] MCP Tools: `search_literature` tool integrates with Semantic Scholar API.
+- [ ] MCP Tools: `preview_knowledge_graph_update` (dry run).
+- [ ] Dependencies: `requests` or `httpx` for API calls.
 
-**Frontend (semflow-ext)**:
-- [ ] UI: Chat panel with input and message history
-- [ ] UI: Evidence preview cards in chat with "Add" / "Edit" / "Skip" buttons
-- [ ] MCP Client: Multi-tool orchestration (search → preview → user approval → add_evidence)
-- [ ] UI: Progress indicators during search
-- [ ] Commands: `semflow.startLiteratureSearch`, `semflow.previewEvidence`
-- [ ] Tests: Chat workflow integration test
-- [ ] Tests: User can edit evidence before approval
+**Frontend (scimantic-ext)**:
+- [ ] UI: Ensure Graph View handles rapid batch updates smoothly.
+- [ ] No custom chat UI required.
 
 **Validation**:
-- [ ] End-to-end test: user query → agent search → evidence in graph
-- [ ] Manual testing with real Semantic Scholar queries
+- [ ] End-to-end test using an MCP client (e.g. Claude Desktop or a mock script) to drive the search-and-add loop.
+
+---
+
+### Slice 4: PDF Visualization & Retrieval (Advanced)
+**Goal**: Visualizing the source PDF directly within the IDE, enabling researchers to verify evidence in its original context.
+
+**Features**:
+- [ ] **PDF Viewer**: Embed a PDF viewer (e.g., PDF.js) in a VS Code Webview.
+- [ ] **Document Retrieval**: Download/cache PDFs from open access sources (ArXiv, etc.) linked to the Evidence.
+- [ ] **Page Navigation**: Clicking evidence in the Graph Panel jumps to the specific page in the PDF.
+
+### Slice 5: Human-AI Grounding (Advanced)
+**Goal**: Bi-directional linking between the structured Knowledge Graph and the unstructured PDF text.
+
+**Features**:
+- [ ] **Visual Grounding**: Highlight the specific sentence/paragraph in the PDF that corresponds to the `scimantic:Evidence`.
+- [ ] **Coordinate Mapping**: Store PDF coordinates (page, bounding box) in the RDF data (e.g., using Web Annotation Data Model).
+- [ ] **Contextual Verification**: User approves AI extraction by seeing the highlighted text in the source PDF.
+- [ ] **Highlight-to-Evidence Workflow**: User highlights text in PDF -> "Add as Evidence" context menu -> Agent drafts `scimantic:Evidence` with citation and content pre-filled from highlight.
 
 ---
 
@@ -254,7 +342,7 @@
 - [Semantic Scholar API Docs](https://api.semanticscholar.org/)
 - [CrossRef REST API](https://www.crossref.org/documentation/retrieve-metadata/rest-api/)
 
-**SemFlow Documentation**:
+**Scimantic Documentation**:
 - [CLAUDE.md](../../CLAUDE.md) - Developer guide, TDD patterns
 - [README.md](../../README.md) - Project overview
 
@@ -273,29 +361,44 @@
 **What RDF triples should exist** for each Evidence entity:
 
 ```turtle
-@prefix semflow: <http://semflow.io/ontology#> .
+@prefix scimantic: <http://scimantic.io/ontology#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix np: <http://www.nanopub.org/nschema#> .
 
-# Example Evidence entity (following semflow-core/ontology/semflow.ttl)
-<http://example.org/research/semflow-paper/evidence/001> a semflow:Evidence, prov:Entity ;
-    semflow:content "Nanopublications are the smallest unit of publishable information: an assertion with provenance and publication metadata." ;
-    dcterms:bibliographicCitation "Kuhn, T., et al. (2016). Decentralized provenance-aware publishing with nanopublications. PeerJ Computer Science 2:e78." ;
-    dcterms:source <https://doi.org/10.7717/peerj-cs.78> ;
-    prov:generatedAtTime "2025-12-21T10:30:00Z"^^xsd:dateTime ;
-    prov:wasAttributedTo <http://example.org/agent/claude> .
+# 1. Assertion Graph
+:assertion_001 {
+    :evidence_001 a scimantic:Evidence, prov:Entity ;
+        rdfs:label "Nanopublications are the smallest unit of publishable information." ;
+        scimantic:content "Nanopublications allow for decentralized provenance-aware publishing..." ;
+        dcterms:source <https://doi.org/10.7717/peerj-cs.78> ;
+        scimantic:hasUncertainty :uncertainty_001 .
+}
+
+# 2. Provenance Graph
+:provenance_001 {
+    :assertion_001 prov:wasGeneratedBy :literature_search_001 .
+    :literature_search_001 a scimantic:LiteratureSearch, prov:Activity ;
+        prov:wasAssociatedWith :ai_agent_claude .
+}
+
+# 3. PubInfo Graph
+:pubinfo_001 {
+    :np_001 a np:Nanopublication ;
+        np:hasAssertion :assertion_001 ;
+        np:hasProvenance :provenance_001 ;
+        dcterms:created "2025-12-21T10:30:00Z"^^xsd:dateTime ;
+        dcterms:bibliographicCitation "Kuhn, T. (2016)..." .
+}
 ```
 
 **Why these properties:**
-- `semflow:Evidence`, `prov:Entity`: Dual typing enables both SemFlow-specific queries and standard PROV-O provenance tracking
-- `semflow:content`: Searchable summary extracted from paper (SemFlow-specific property)
-- `dcterms:bibliographicCitation`: Standard formatted citation for interoperability
-- `dcterms:source`: DOI/URL linking to original publication
-- `prov:generatedAtTime`: W3C PROV-O standard for temporal provenance
-- `prov:wasAttributedTo`: W3C PROV-O standard for agent attribution
-
-**Design note**: Evidence is a `prov:Entity` subclass (see `semflow-core/ontology/semflow.ttl`), enabling full PROV-O provenance chains from evidence → hypothesis → design → results.
+- **Nanopub Structure**: Architecture mandates Nanopublications (Assertion/Provenance/PubInfo).
+- `scimantic:Evidence`: The core entity in the assertion.
+- `rdfs:label`: The primary claim/fact (compatible with standard display tools).
+- `scimantic:LiteratureSearch`: The specific activity type (subclass of `prov:Activity`).
 
 ### Expected SPARQL Queries
 
@@ -303,12 +406,12 @@
 
 ```sparql
 # Find recent evidence
-PREFIX semflow: <http://semflow.io/ontology#>
+PREFIX scimantic: <http://scimantic.io/ontology#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 
 SELECT ?evidence ?citation ?timestamp WHERE {
-    ?evidence a semflow:Evidence, prov:Entity ;
+    ?evidence a scimantic:Evidence, prov:Entity ;
               dcterms:bibliographicCitation ?citation ;
               prov:generatedAtTime ?timestamp .
     FILTER(?timestamp > "2025-01-01T00:00:00Z"^^xsd:dateTime)
@@ -318,11 +421,11 @@ ORDER BY DESC(?timestamp)
 
 ```sparql
 # Find evidence by agent
-PREFIX semflow: <http://semflow.io/ontology#>
+PREFIX scimantic: <http://scimantic.io/ontology#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 
 SELECT ?evidence ?citation WHERE {
-    ?evidence a semflow:Evidence ;
+    ?evidence a scimantic:Evidence ;
               dcterms:bibliographicCitation ?citation ;
               prov:wasAttributedTo ?agent .
     FILTER(CONTAINS(STR(?agent), "claude"))
@@ -332,7 +435,7 @@ SELECT ?evidence ?citation WHERE {
 **Why these queries matter:**
 - Temporal filtering supports "what evidence informed this hypothesis?"
 - Agent filtering supports "what did AI contribute vs. manual entry?"
-- PROV-O compatibility enables standard provenance tools to understand SemFlow graphs
+- PROV-O compatibility enables standard provenance tools to understand Scimantic graphs
 - These queries validate that the RDF structure follows W3C standards while supporting research workflows
 
-**Schema Reference**: See [semflow-core/ontology/semflow.ttl](../../semflow-core/ontology/semflow.ttl) for the complete ontology definition.
+**Schema Reference**: See [scimantic-core/ontology/scimantic.ttl](../../scimantic-core/ontology/scimantic.ttl) for the complete ontology definition.

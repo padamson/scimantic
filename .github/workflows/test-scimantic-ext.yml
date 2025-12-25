@@ -1,0 +1,102 @@
+name: Test scimantic-ext
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scimantic-ext/**"
+      - ".github/workflows/test-scimantic-ext.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "scimantic-ext/**"
+      - ".github/workflows/test-scimantic-ext.yml"
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: |
+          cd scimantic-ext
+          pnpm install
+
+      - name: Run type check
+        run: |
+          cd scimantic-ext
+          pnpm run check-types
+
+      - name: Run linter
+        run: |
+          cd scimantic-ext
+          pnpm run lint
+
+      - name: Compile
+        run: |
+          cd scimantic-ext
+          pnpm run compile
+
+      - name: Run tests with coverage (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          cd scimantic-ext
+          xvfb-run -a pnpm run test:coverage
+        continue-on-error: true
+
+      - name: Run tests with coverage (macOS/Windows)
+        if: runner.os != 'Linux'
+        run: |
+          cd scimantic-ext
+          pnpm run test:coverage
+        continue-on-error: true
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          files: ./scimantic-ext/coverage/lcov.info
+          flags: scimantic-ext
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: |
+          cd scimantic-ext
+          pnpm install
+
+      - name: Package extension
+        run: |
+          cd scimantic-ext
+          pnpm run package

@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "scimantic"
+version = "0.1.0"
+description = "A Semantic Research Framework for orchestrating GSP workflows via MCP."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "P.E. Adamson", email = "padamson@example.com" },
+]
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "nanopub>=1.0.0",
+    "rdflib>=6.0.0",
+    "mcp>=0.1.0",
+    "cclib>=1.7",
+    "prov>=2.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0"
+]
+
+[project.scripts]
+scimantic = "scimantic.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/scimantic"]

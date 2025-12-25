@@ -29,9 +29,9 @@
 **Why This Slice:** [WHY is this valuable? How does it support the research workflow or enable semantic publishing?]
 
 **Components:** [Which parts of the monorepo need work?]
-- [ ] semflow-core
-- [ ] semflow-ext
-- [ ] examples/semflow-paper
+- [ ] scimantic-core
+- [ ] scimantic-ext
+- [ ] examples/scimantic-paper
 
 #### ✅ Acceptance Criteria
 [Describe WHAT the system should do from the user's perspective. Be specific about observable behavior and outcomes.]
@@ -44,20 +44,20 @@
 #### 🛠️ Implementation Tasks
 [List WHAT needs to be built, not HOW to build it. The tests and code will show the how.]
 
-**Backend (semflow-core)**:
+**Backend (scimantic-core)**:
 - [ ] Models: Evidence/Hypothesis/Design entity with RDF persistence
 - [ ] Provenance: PROV-O tracking for entity creation
 - [ ] MCP Tools: Agent-accessible tool for [operation]
 - [ ] Tests: Unit and integration tests for [component]
 
-**Frontend (semflow-ext)**:
+**Frontend (scimantic-ext)**:
 - [ ] UI: [What view/panel] displaying [what information]
-- [ ] MCP Client: Integration with semflow-core
+- [ ] MCP Client: Integration with scimantic-core
 - [ ] Visualization: [What graph/tree] rendering [what data]
 - [ ] Commands: VS Code command for [what action]
 
 **Validation**:
-- [ ] Manual testing with examples/semflow-paper demonstrates [what workflow]
+- [ ] Manual testing with examples/scimantic-paper demonstrates [what workflow]
 - [ ] RDF output validates with SPARQL queries for [what structure]
 
 ---
@@ -66,8 +66,8 @@
 **Goal:** [What value does this slice deliver?]
 
 **Components:**
-- [ ] semflow-core
-- [ ] semflow-ext
+- [ ] scimantic-core
+- [ ] scimantic-ext
 - [ ] examples/scics
 
 #### ✅ Acceptance Criteria
@@ -109,6 +109,6 @@
 - [RDFLib Documentation](https://rdflib.readthedocs.io/)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 - [VS Code Extension API](https://code.visualstudio.com/api)
-- [SemFlow Ontology Documentation](../../semflow-core/ontology/) (if applicable)
+- [Scimantic Ontology Documentation](../../scimantic-core/ontology/) (if applicable)
 - [CLAUDE.md](../../CLAUDE.md) (Developer guide)
 - Related features in [docs/features/](./)

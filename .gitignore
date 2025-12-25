@@ -1,3 +1,40 @@
+# Python (scimantic-core)
 .pytest_cache
 __pycache__
 .venv
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Node.js / TypeScript (scimantic-ext)
+node_modules/
+dist/
+out/
+*.vsix
+*.log
+package-lock.json
+yarn.lock
+
+# IDE / Editors
+.vscode-test/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Testing
+coverage/
+.nyc_output/
+
+# Build artifacts
+*.js.map
+*.d.ts.map

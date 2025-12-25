@@ -1,10 +1,95 @@
-# Guide for AI Assistants: SemFlow Development
+# Guide for AI Assistants: Scimantic Development
 
-This document provides context and guidelines for AI assistants (like Claude) working on the SemFlow codebase.
+This document provides context and guidelines for AI assistants (like Claude) working on the Scimantic codebase.
+
+## Documentation Structure: Why, What, How
+
+Scimantic uses a **multi-layered documentation approach** to separate concerns:
+
+### 1. Vision Layer (WHY)
+**File**: [VISION.md](docs/00-why-vision.md)
+
+**Purpose**: Explains the problem we're solving and the value proposition
+
+**Content**:
+- Problem statement: What's broken in current scientific workflows?
+- Scimantic's unique approach: Semantic-first, not semantic-retrofitted
+- User personas and pain points
+- Success metrics and guiding principles
+- **Four-tier publishing model**: Legal/copyright considerations for extracted evidence
+- Future vision: Collaborative extraction with publisher consent
+
+**Audience**: Potential users, collaborators, funders
+
+**When to read**: Before starting any new feature, to understand the "why"
+
+### 2. Architecture Layer (WHAT - System Design)
+**File**: [ARCHITECTURE.md](docs/01.1-what-architecture.md)
+
+**Purpose**: Specifies the technical system we're building
+
+**Content**:
+- Semantic model: RDF/OWL ontologies, W3C PROV-O patterns, nanopublication structure
+- Research entity types (Evidence, Hypothesis, Design, Analysis) with examples
+- Provenance patterns (extraction, hypothesis formation, computation)
+- Uncertainty representation and propagation rules
+- **Four-tier publishing model**: Technical implementation with tier-agnostic schema
+- **Tier mobility**: How evidence moves between tiers as contexts change
+- MCP integration architecture
+- Design decisions and trade-offs
+
+**Audience**: Developers, researchers evaluating semantic models
+
+**When to read**: Before implementing core models or provenance logic
+
+### 3. Roadmap Layer (WHAT - Implementation Sequence)
+**File**: [ROADMAP.md](docs/02-when-roadmap.md)
+
+**Purpose**: Defines WHEN we build capabilities, ordered to deliver value incrementally
+
+**Content**:
+- **Milestones 1-8**: Ordered by value and dependencies
+- Features per milestone (linked to `docs/features/*.md`)
+- Acceptance criteria (user-observable behavior)
+- Current status and next steps
+- **Future milestone**: Publisher partnerships for sanctioned extraction (3-5 years)
+
+**Audience**: Developers planning work, project managers
+
+**When to read**: To understand implementation priorities and dependencies
+
+### 4. Feature Layer (WHAT - Individual Features)
+**Files**: `docs/features/*.md`
+
+**Purpose**: Specifies individual features using vertical slices
+
+**Content**:
+- User story: Who, what, why
+- Acceptance criteria: Observable behavior
+- Implementation tasks: Backend (Python/RDF), Frontend (TypeScript), Tests
+- Vertical slices: End-to-end value delivery
+
+**Audience**: Developers implementing specific features
+
+**When to read**: Before starting work on a specific feature
+
+### 5. Code Layer (HOW)
+**Files**: `scimantic-core/src/**/*.py`, `scimantic-ext/src/**/*.ts`, tests
+
+**Purpose**: Shows how the system actually works
+
+**Content**:
+- Tests specify behavior (executable specifications)
+- Implementation is self-documenting with clear naming
+- Comments explain "why" decisions were made, not "what" code does
+
+**Audience**: Developers reading/writing code
+
+**When to read**: Always! Code is the source of truth for "how"
 
 ## Project Philosophy
 
-SemFlow is built on the principle that **the entire scientific research process should be machine-readable from the start**. We're not retrofitting semantics onto existing workflows; we're building a framework where semantics are native.
+Scimantic is built on the principle that **the entire scientific research process should be machine-readable from the start**. We're not retrofitting semantics onto existing workflows; we're building a framework where semantics are native.
 
 ### Core Principles
 
@@ -13,16 +98,22 @@ SemFlow is built on the principle that **the entire scientific research process 
 3. **Uncertainty is Explicit**: All measurements, hypotheses, and conclusions carry uncertainty metadata
 4. **Nanopublications are Atomic**: The smallest publishable unit is a nanopublication (assertion + provenance + metadata)
 5. **AI as Research Partner**: MCP integration allows AI agents to participate in the research process
+6. **Four-Tier Publishing**: Balance open science with legal/copyright realities
+   - **Tier 1**: Local (private, always safe)
+   - **Tier 2**: Institutional (controlled sharing, low risk)
+   - **Tier 3**: Public (original contributions, no risk)
+   - **Tier 4**: Public essential evidence (selective, medium risk with safeguards)
+7. **Tier Mobility**: Evidence can move between tiers as contexts change (data model stays constant)
 
 ## Architecture
 
 ### Monorepo Structure
 
 ```
-semflow/                   # Monorepo root
-├── semflow-core/          # Python package workspace member
+scimantic/                   # Monorepo root
+├── scimantic-core/          # Python package workspace member
 │   ├── src/               # Source layout (modern Python best practice)
-│   │   └── semflow/       # Importable package
+│   │   └── scimantic/       # Importable package
 │   │       ├── models.py      # Evidence, Hypothesis, Design, Entity classes
 │   │       ├── provenance.py  # W3C PROV-O tracker and decorators
 │   │       ├── publish.py     # Nanopublication generation
@@ -35,13 +126,13 @@ semflow/                   # Monorepo root
 │   │   └── integration/
 │   │       └── test_agent_flow.py  # Agent simulation tests
 │   └── pyproject.toml
-├── semflow-ext/           # TypeScript VS Code extension
+├── scimantic-ext/           # TypeScript VS Code extension
 │   └── src/
 │       ├── providers/     # MCP client, graph visualization
 │       └── commands/      # Extension commands
 ├── examples/
-│   └── semflow-paper/     # Reference implementation (manual testing)
-│       ├── project.ttl    # SemFlow knowledge graph
+│   └── scimantic-paper/     # Reference implementation (manual testing)
+│       ├── project.ttl    # Scimantic knowledge graph
 │       └── ...            # Additional content varies by project
 └── docs/
     └── features/         # Feature specifications (vertical slices)
@@ -55,16 +146,16 @@ semflow/                   # Monorepo root
 
 ### Technology Stack
 
-**semflow-core (Python)**:
+**scimantic-core (Python)**:
 - **RDFLib**: RDF graph manipulation, SPARQL queries, Turtle serialization
 - **W3C PROV-O**: Provenance ontology (Activities, Entities, Agents)
 - **Nanopublications**: Trusty URIs, signed assertions
 - **MCP SDK**: Model Context Protocol server implementation
 - **pytest**: Test-driven development
 
-**semflow-ext (TypeScript)**:
+**scimantic-ext (TypeScript)**:
 - **VS Code Extension API**: Webviews, tree views, commands
-- **MCP Client**: Communication with semflow-core MCP server
+- **MCP Client**: Communication with scimantic-core MCP server
 - **Visualization**: Knowledge graph rendering (consider vis.js, cytoscape, or D3)
 
 ### Key Ontologies and Vocabularies
@@ -72,11 +163,11 @@ semflow/                   # Monorepo root
 - **PROV-O** (`http://www.w3.org/ns/prov#`): Provenance
 - **DC Terms** (`http://purl.org/dc/terms/`): Metadata
 - **FOAF** (`http://xmlns.com/foaf/0.1/`): Agents (researchers)
-- **Custom SemFlow Ontology** (`http://semflow.io/ontology#`): Hypothesis, Design, Evidence, etc.
+- **Custom Scimantic Ontology** (`http://scimantic.io/ontology#`): Hypothesis, Design, Evidence, etc.
 
 ## Development Workflow: Test-Driven Development
 
-SemFlow follows **traditional Test-Driven Development** practices for both `semflow-core` (Python) and `semflow-ext` (TypeScript). Feature implementation is tracked in `docs/features/*.md` files, not in task lists.
+Scimantic follows **traditional Test-Driven Development** practices for both `scimantic-core` (Python) and `scimantic-ext` (TypeScript). Feature implementation is tracked in `docs/features/*.md` files, not in task lists.
 
 ### Documentation Philosophy: Why, What, How
 
@@ -102,22 +193,22 @@ SemFlow follows **traditional Test-Driven Development** practices for both `semf
 3. **Refactor - Improve**: Clean up code while keeping tests green
 4. **Repeat**: Continue for next piece of functionality
 
-### Python Package Testing (semflow-core)
+### Python Package Testing (scimantic-core)
 
 **Unit Tests**:
 - Test individual classes and functions in isolation
 - Mock external dependencies (RDFLib graphs, MCP clients, file I/O)
 - Fast execution (milliseconds per test)
-- Location: `semflow-core/tests/test_*.py`
+- Location: `scimantic-core/tests/test_*.py`
 
 **Integration Tests**:
 - Test component interactions (models + provenance, MCP tools + RDF persistence)
 - Use temporary directories for file I/O
-- Location: `semflow-core/tests/integration/test_*.py`
+- Location: `scimantic-core/tests/integration/test_*.py`
 
 **Test Organization**:
 ```
-semflow-core/tests/
+scimantic-core/tests/
 ├── test_models.py          # Unit tests for Evidence, Hypothesis, etc.
 ├── test_provenance.py      # Unit tests for PROV-O tracking
 ├── test_publish.py         # Unit tests for nanopublication generation
@@ -132,26 +223,26 @@ semflow-core/tests/
 - Refactor while keeping tests green
 - The tests and code document the "how"
 
-### TypeScript Extension Testing (semflow-ext)
+### TypeScript Extension Testing (scimantic-ext)
 
 **Unit Tests**:
 - Test individual functions and classes (providers, commands)
 - Mock VS Code API and MCP client
 - Use Jest or VS Code's test framework
-- Location: `semflow-ext/src/test/unit/`
+- Location: `scimantic-ext/src/test/unit/`
 
 **Integration Tests**:
 - Test extension activation, command execution, MCP communication
 - Use VS Code Extension Test Runner
-- Location: `semflow-ext/src/test/integration/`
+- Location: `scimantic-ext/src/test/integration/`
 
-### Manual Testing with examples/semflow-paper
+### Manual Testing with examples/scimantic-paper
 
-The `examples/semflow-paper` directory contains **example usage** and serves as a **manual testing** playground:
-- Demonstrates real-world usage of semflow-core APIs
+The `examples/scimantic-paper` directory contains **example usage** and serves as a **manual testing** playground:
+- Demonstrates real-world usage of scimantic-core APIs
 - Used to verify end-to-end workflows manually
 - NOT a substitute for automated tests
-- Dogfooding of SemFlow through researching design and implementation of SemFlow itself
+- Dogfooding of Scimantic through researching design and implementation of Scimantic itself
 
 ### Feature Implementation Tracking
 
@@ -173,8 +264,8 @@ The tests and code answer:
 
 ### Test Coverage Goals
 
-- **semflow-core**: Aim for >80% code coverage
-- **semflow-ext**: Aim for >70% code coverage (UI testing is harder)
+- **scimantic-core**: Aim for >80% code coverage
+- **scimantic-ext**: Aim for >70% code coverage (UI testing is harder)
 - All public APIs must have unit tests
 - All MCP tools must have integration tests
 
@@ -182,7 +273,7 @@ The tests and code answer:
 
 ### Nanopublication Structure
 
-Every assertion in SemFlow should be wrapped as a nanopublication:
+Every assertion in Scimantic should be wrapped as a nanopublication:
 
 ```turtle
 @prefix : <http://example.org/np/> .
@@ -190,9 +281,9 @@ Every assertion in SemFlow should be wrapped as a nanopublication:
 @prefix prov: <http://www.w3.org/ns/prov#> .
 
 :assertion_graph {
-    :hypothesis_001 a semflow:Hypothesis ;
+    :hypothesis_001 a scimantic:Hypothesis ;
         rdfs:label "DCS can be computed using MQDO" ;
-        semflow:uncertainty "0.15"^^xsd:float ;
+        scimantic:uncertainty "0.15"^^xsd:float ;
         prov:wasDerivedFrom :evidence_001 .
 }
 
@@ -214,7 +305,7 @@ Every assertion in SemFlow should be wrapped as a nanopublication:
 Use the `@activity` decorator for all computational steps:
 
 ```python
-from semflow.provenance import provenance_tracker
+from scimantic.provenance import provenance_tracker
 
 @provenance_tracker.activity(name="compute_dcs")
 def compute_cross_section(input_file, method="MQDO"):
@@ -240,11 +331,11 @@ New features are specified in `docs/features/*.md` using vertical slices. Each s
 
 **Slice 1 - What**: AI agent can add evidence to knowledge graph
 - Acceptance: Evidence persisted as RDF with provenance metadata
-- Components: semflow-core models, MCP tools, integration tests
+- Components: scimantic-core models, MCP tools, integration tests
 
 **Slice 2 - What**: Researchers visualize evidence in VS Code
 - Acceptance: Tree view displays evidence, updates automatically
-- Components: semflow-ext UI, MCP client
+- Components: scimantic-ext UI, MCP client
 
 The feature document describes what these slices deliver. The code shows how.
 
@@ -273,12 +364,12 @@ Learn by reading the code, not documentation.
 # Load project.ttl
 from rdflib import Graph
 g = Graph()
-g.parse("examples/semflow-paper/project.ttl", format="turtle")
+g.parse("examples/scimantic-paper/project.ttl", format="turtle")
 
 # SPARQL query
 results = g.query("""
     SELECT ?s ?p ?o WHERE {
-        ?s a semflow:Hypothesis .
+        ?s a scimantic:Hypothesis .
         ?s ?p ?o .
     }
 """)
@@ -307,7 +398,7 @@ import { MCPClient } from '@modelcontextprotocol/client';
 
 const client = new MCPClient({
     serverPath: 'uv',
-    serverArgs: ['run', 'python', '-m', 'semflow.mcp']
+    serverArgs: ['run', 'python', '-m', 'scimantic.mcp']
 });
 
 // Call MCP tool
@@ -324,7 +415,7 @@ Use webviews to render the RDF graph. Fetch data via MCP `get_provenance_graph` 
 ## Best Practices
 
 1. **Always Write Tests First**: TDD is non-negotiable
-2. **Use Meaningful URIs**: `http://example.org/research/semflow-paper/hypothesis_001`, not generic IDs
+2. **Use Meaningful URIs**: `http://example.org/research/scimantic-paper/hypothesis_001`, not generic IDs
 3. **Annotate Uncertainty**: Every hypothesis and measurement should have uncertainty metadata
 4. **Link Everything**: Use PROV-O to connect all entities and activities
 5. **Validate RDF**: Use `rdflib.Graph().serialize()` to ensure valid Turtle syntax
@@ -341,7 +432,7 @@ Use webviews to render the RDF graph. Fetch data via MCP `get_provenance_graph` 
 ## Questions?
 
 When uncertain about design decisions:
-1. Check existing patterns in `src/semflow/models.py` and `src/semflow/provenance.py`
+1. Check existing patterns in `src/scimantic/models.py` and `src/scimantic/provenance.py`
 2. Refer to W3C PROV-O examples
 3. Consider: "Is this machine-readable and queryable via SPARQL?"
 4. Ask: "Can an AI agent understand this without human interpretation?"
@@ -352,21 +443,21 @@ When uncertain about design decisions:
 # From monorepo root: Install all workspace members
 uv sync
 
-# From semflow-core: Install with dev dependencies
-cd semflow-core && uv sync --extra dev
+# From scimantic-core: Install with dev dependencies
+cd scimantic-core && uv sync --extra dev
 
 # Run tests
-cd semflow-core && uv run pytest -v
+cd scimantic-core && uv run pytest -v
 
 # Run tests with coverage
-cd semflow-core && uv run pytest --cov=semflow --cov-report=html
+cd scimantic-core && uv run pytest --cov=scimantic --cov-report=html
 
 # Start MCP server
-cd semflow-core && uv run python -m semflow.mcp
+cd scimantic-core && uv run python -m scimantic.mcp
 
 # Format code
-cd semflow-core && uv run black src/semflow tests/
+cd scimantic-core && uv run black src/scimantic tests/
 
 # Lint code
-cd semflow-core && uv run flake8 src/semflow tests/
+cd scimantic-core && uv run flake8 src/scimantic tests/
 ```

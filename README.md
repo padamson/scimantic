@@ -1,10 +1,10 @@
-# SemFlow
+# Scimantic
 
-**SemFlow** is a Semantic Research Orchestration framework that enables machine-readable scientific research from inception through publication.
+**Scimantic** is a Semantic Research Orchestration framework that enables machine-readable scientific research from inception through publication.
 
 ## Vision
 
-SemFlow transforms the traditional scientific workflow into a fully semantic, machine-readable process by capturing the complete research lifecycle as linked data. By integrating nanopublications, RDF/OWL ontologies, W3C PROV provenance, and uncertainty quantification from the very beginning of research, SemFlow enables:
+Scimantic transforms the traditional scientific workflow into a fully semantic, machine-readable process by capturing the complete research lifecycle as linked data. By integrating nanopublications, RDF/OWL ontologies, W3C PROV provenance, and uncertainty quantification from the very beginning of research, Scimantic enables:
 
 - **Semantic Publishing from Day One**: Every research artifact (literature notes, hypotheses, experimental designs, data, analyses) is captured as machine-readable linked data
 - **Complete Provenance**: Full traceability from initial literature review through final publication using W3C PROV-O
@@ -14,7 +14,7 @@ SemFlow transforms the traditional scientific workflow into a fully semantic, ma
 
 ## The Scientific Method as Linked Data
 
-SemFlow maps the scientific method to semantic web standards:
+Scimantic maps the scientific method to semantic web standards:
 
 1. **Literature Review** → Evidence entities linked via nanopublications
 2. **Hypothesis Formation** → Hypothesis entities derived from evidence with uncertainty bounds
@@ -25,21 +25,21 @@ SemFlow maps the scientific method to semantic web standards:
 
 ## Components
 
-*   **[semflow-core](./semflow-core)**: Python framework for semantic workflow orchestration
+*   **[scimantic-core](./scimantic-core)**: Python framework for semantic workflow orchestration
     - RDF/OWL-based knowledge graph (RDFLib)
     - W3C PROV-O provenance tracking
     - Nanopublication generation and management
     - Uncertainty representation and propagation
     - MCP server for AI agent integration
 
-*   **[semflow-ext](./semflow-ext)**: VS Code Extension for research visualization
+*   **[scimantic-ext](./scimantic-ext)**: VS Code Extension for research visualization
     - Interactive knowledge graph visualization
     - Real-time provenance graph updates
     - AI-assisted literature search (MCP client)
     - Hypothesis minting and design specification UI
 
 *   **[examples](./examples)**: Reference implementations
-    - **semflow-paper**: Dogfooding SemFlow by researching design and implementation of SemFlow itself
+    - **scimantic-paper**: Dogfooding Scimantic by researching design and implementation of Scimantic itself
 
 ## Key Technologies
 
@@ -58,10 +58,10 @@ This repository is a `uv` workspace.
 uv sync
 
 # Run tests
-cd semflow-core && uv run pytest
+cd scimantic-core && uv run pytest
 
 # Start MCP server (for VS Code extension)
-cd semflow-core && uv run python -m semflow.mcp
+cd scimantic-core && uv run python -m scimantic.mcp
 ```
 
 ## Documentation

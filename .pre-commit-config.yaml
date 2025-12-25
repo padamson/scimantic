@@ -1,16 +1,17 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+fail_fast: true
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
       - id: check-added-large-files
-        exclude: ^(semflow-core/uv\.lock|uv\.lock)$
+        exclude: ^(scimantic-core/uv\.lock|uv\.lock)$
       - id: check-toml
       - id: check-yaml
         args:
           - --unsafe
-      - id: detect-private-key  # Prevents committing private keys
+      - id: detect-private-key # Prevents committing private keys
       - id: end-of-file-fixer
       - id: trailing-whitespace
 
@@ -21,18 +22,18 @@ repos:
       - id: ruff
         args:
           - --fix
-        files: ^semflow-core/.*\.py$
+        files: ^scimantic-core/.*\.py$
       - id: ruff-format
-        files: ^semflow-core/.*\.py$
+        files: ^scimantic-core/.*\.py$
 
   # Type checking with mypy (strict mode)
   - repo: local
     hooks:
       - id: mypy
-        name: mypy (semflow-core)
-        entry: bash -c 'cd semflow-core && uv run mypy src/semflow'
+        name: mypy (scimantic-core)
+        entry: bash -c 'cd scimantic-core && uv run mypy src/scimantic'
         language: system
-        files: ^semflow-core/src/semflow/.*\.py$
+        files: ^scimantic-core/src/scimantic/.*\.py$
         pass_filenames: false
         require_serial: true
 
@@ -40,10 +41,29 @@ repos:
   - repo: local
     hooks:
       - id: pytest
-        name: pytest (semflow-core)
-        entry: bash -c 'cd semflow-core && uv run pytest'
+        name: pytest (scimantic-core)
+        entry: bash -c 'cd scimantic-core && uv run pytest'
         language: system
-        files: ^semflow-core/(src/semflow/.*\.py|tests/.*\.py)$
+        files: ^scimantic-core/(src/scimantic/.*\.py|tests/.*\.py)$
+        pass_filenames: false
+        require_serial: true
+
+  # VS Code Extension checks
+  - repo: local
+    hooks:
+      - id: typescript-check-ext
+        name: TypeScript check (scimantic-ext)
+        entry: bash -c 'cd scimantic-ext && pnpm run check-types'
+        language: system
+        files: ^scimantic-ext/src/.*\.ts$
+        pass_filenames: false
+        require_serial: true
+
+      - id: eslint-ext
+        name: ESLint (scimantic-ext)
+        entry: bash -c 'cd scimantic-ext && pnpm run lint'
+        language: system
+        files: ^scimantic-ext/src/.*\.ts$
         pass_filenames: false
         require_serial: true
 
@@ -53,23 +73,13 @@ repos:
     hooks:
       - id: detect-secrets
         exclude: |
-            (?x)^(
-                .*\.lock$|
-                .*\.baseline$|
-                \.git/.*|
-                semflow-ext/node_modules/.*
-            )$
-
-  # VS Code Extension TypeScript checking (when implemented)
-  # Uncomment when semflow-ext has proper build setup
-  # - repo: local
-  #   hooks:
-  #     - id: typescript-check-ext
-  #       name: TypeScript Check (VS Code Extension)
-  #       entry: bash -c 'cd semflow-ext && npm run compile'
-  #       language: system
-  #       files: ^semflow-ext/src/.*\.ts$
-  #       pass_filenames: false
+          (?x)^(
+              .*\.lock$|
+              .*pnpm-lock.yaml$|
+              .*\.baseline$|
+              \.git/.*|
+              scimantic-ext/node_modules/.*
+          )$
 
 ci:
   autofix_commit_msg: 🎨 [pre-commit.ci] Auto format from pre-commit.com hooks

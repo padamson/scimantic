@@ -1,0 +1,77 @@
+{
+	"folders": [
+		{
+			"name": "scimantic",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/__pycache__": true,
+			"**/.pytest_cache": true,
+			"**/node_modules": true
+		},
+		"search.exclude": {
+			"**/node_modules": true,
+			"**/.venv": true,
+			"**/dist": true,
+			"**/out": true
+		}
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Run Extension (scimantic-ext)",
+				"type": "extensionHost",
+				"request": "launch",
+				"args": [
+					"--extensionDevelopmentPath=${workspaceFolder:scimantic}/scimantic-ext"
+				],
+				"outFiles": [
+					"${workspaceFolder:scimantic}/scimantic-ext/dist/**/*.js"
+				],
+				"preLaunchTask": "pnpm: compile - scimantic-ext"
+			},
+			{
+				"name": "Python: Current File (scimantic-core)",
+				"type": "debugpy",
+				"request": "launch",
+				"program": "${file}",
+				"console": "integratedTerminal",
+				"cwd": "${workspaceFolder:scimantic}/scimantic-core"
+			}
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"type": "shell",
+				"command": "pnpm",
+				"args": ["run", "compile"],
+				"options": {
+					"cwd": "${workspaceFolder:scimantic}/scimantic-ext"
+				},
+				"group": "build",
+				"problemMatcher": [],
+				"label": "pnpm: compile - scimantic-ext",
+				"presentation": {
+					"reveal": "silent"
+				}
+			},
+			{
+				"type": "shell",
+				"command": "pnpm",
+				"args": ["run", "watch"],
+				"options": {
+					"cwd": "${workspaceFolder:scimantic}/scimantic-ext"
+				},
+				"isBackground": true,
+				"problemMatcher": "$tsc-watch",
+				"group": "build",
+				"label": "watch (scimantic-ext)"
+			}
+		]
+	}
+}
