@@ -81,7 +81,7 @@
     "id" : "27",
     "type" : "rdfs:Datatype"
   }, {
-    "id" : "44",
+    "id" : "46",
     "type" : "rdfs:Datatype"
   }, {
     "id" : "47",
@@ -99,7 +99,7 @@
     "id" : "1",
     "type" : "owl:Class"
   }, {
-    "id" : "46",
+    "id" : "44",
     "type" : "rdfs:Datatype"
   }, {
     "id" : "51",
@@ -269,7 +269,7 @@
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "44",
+    "id" : "46",
     "label" : {
       "IRI-based" : "string"
     }
@@ -320,7 +320,7 @@
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "46",
+    "id" : "44",
     "label" : {
       "IRI-based" : "string"
     }
@@ -526,22 +526,22 @@
   }, {
     "range" : "11",
     "domain" : "16",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "20"
   }, {
     "range" : "11",
     "domain" : "15",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "21"
   }, {
     "range" : "23",
     "domain" : "17",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "22"
   }, {
     "range" : "11",
     "domain" : "17",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "24"
   }, {
     "iri" : "http://scimantic.io/ontology#commitHash",
@@ -579,52 +579,52 @@
   }, {
     "range" : "11",
     "domain" : "14",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "31"
   }, {
     "range" : "11",
     "domain" : "13",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "32"
   }, {
     "range" : "11",
     "domain" : "9",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "34"
   }, {
     "range" : "33",
     "domain" : "14",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "35"
   }, {
     "range" : "0",
     "domain" : "7",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "36"
   }, {
     "range" : "11",
     "domain" : "12",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "37"
   }, {
     "range" : "33",
     "domain" : "15",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "38"
   }, {
     "range" : "0",
     "domain" : "4",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "39"
   }, {
     "range" : "0",
     "domain" : "6",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "40"
   }, {
     "range" : "0",
     "domain" : "5",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "41"
   }, {
     "iri" : "http://scimantic.io/ontology#expectedOutcome",
@@ -638,20 +638,9 @@
     "attributes" : [ "object" ],
     "id" : "42"
   }, {
-    "iri" : "http://scimantic.io/ontology#method",
-    "baseIri" : "http://scimantic.io/ontology",
-    "range" : "44",
-    "label" : {
-      "IRI-based" : "method",
-      "en" : "method"
-    },
-    "domain" : "17",
-    "attributes" : [ "datatype" ],
-    "id" : "43"
-  }, {
     "iri" : "http://scimantic.io/ontology#accessLevel",
     "baseIri" : "http://scimantic.io/ontology",
-    "range" : "46",
+    "range" : "44",
     "label" : {
       "IRI-based" : "accessLevel",
       "en" : "access level"
@@ -661,21 +650,32 @@
       "en" : "Publishing scope (e.g., local, institutional, public)."
     },
     "attributes" : [ "datatype" ],
+    "id" : "43"
+  }, {
+    "iri" : "http://scimantic.io/ontology#method",
+    "baseIri" : "http://scimantic.io/ontology",
+    "range" : "46",
+    "label" : {
+      "IRI-based" : "method",
+      "en" : "method"
+    },
+    "domain" : "17",
+    "attributes" : [ "datatype" ],
     "id" : "45"
   }, {
     "range" : "0",
     "domain" : "1",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "48"
   }, {
     "range" : "0",
     "domain" : "2",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "49"
   }, {
     "range" : "0",
     "domain" : "3",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "50"
   }, {
     "iri" : "http://scimantic.io/ontology#publishable",

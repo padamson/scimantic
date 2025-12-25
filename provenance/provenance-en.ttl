@@ -4,8 +4,8 @@
 @prefix : <> .
 <..\index-en.html> a prov:Entity;
 	 dc:title "Scimantic Ontology";
-	 prov:wasAttributedTo <https://github.com/padamson/scimantic>;
-	 dc:creator <https://github.com/padamson/scimantic>;
+	 prov:wasAttributedTo <https://scimantic.io>;
+	 dc:creator <https://scimantic.io>;
 	 prov:wasAttributedTo <https://github.com/dgarijo/Widoco/>,<http://www.essepuntato.it/lode/>;
 	 prov:wasGeneratedAt "Date created";
 .
