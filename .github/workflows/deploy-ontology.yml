@@ -1,0 +1,88 @@
+name: Deploy Ontology
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "scimantic-core/ontology/**"
+      - ".github/workflows/deploy-ontology.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ------------------------------------------------------------------------
+      # 1. Validation (SHACL)
+      # ------------------------------------------------------------------------
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: |
+          cd scimantic-core
+          uv sync --all-extras
+
+      - name: Validate Ontology Syntax & SHACL
+        run: |
+          cd scimantic-core
+          # Syntax check
+          uv run python -c "from rdflib import Graph; Graph().parse('ontology/scimantic.ttl', format='turtle')"
+          # SHACL check
+          uv run pyshacl -s ontology/shacl/scimantic-shapes.ttl -df turtle ontology/scimantic.ttl
+
+      # ------------------------------------------------------------------------
+      # 2. Documentation Generation (Widoco)
+      # ------------------------------------------------------------------------
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Download Widoco
+        run: |
+          wget https://github.com/dgarijo/Widoco/releases/download/v1.4.25/widoco-1.4.25-jar-with-dependencies_JDK-17.jar -O widoco.jar
+
+      - name: Run Widoco
+        run: |
+          java -jar widoco.jar \
+            -ontFile scimantic-core/ontology/scimantic.ttl \
+            -outFolder public \
+            -confFile scimantic-core/ontology/widoco.conf \
+            -uniteSections \
+            -rewriteAll \
+            -webVowl \
+            -lang en
+
+      - name: Copy source TTL to public root
+        run: cp scimantic-core/ontology/scimantic.ttl public/index.ttl
+
+      - name: Create .nojekyll and CNAME and index.html
+        run: |
+          touch public/.nojekyll
+          echo "scimantic.io" > public/CNAME
+          # Widoco usually produces index-en.html. Copy it to index.html if it exists.
+          if [ -f public/index-en.html ]; then
+            cp public/index-en.html public/index.html
+          fi
+
+      # ------------------------------------------------------------------------
+      # 3. Deployment
+      # ------------------------------------------------------------------------
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          cname: scimantic.io

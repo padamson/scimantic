@@ -67,6 +67,16 @@ repos:
         pass_filenames: false
         require_serial: true
 
+  # Ontology Validation
+  - repo: local
+    hooks:
+      - id: validate-ontology
+        name: Validate Ontology (Syntax)
+        entry: bash -c 'cd scimantic-core && uv run python -c "from rdflib import Graph; g=Graph(); g.parse(\"ontology/scimantic.ttl\", format=\"turtle\")"'
+        language: system
+        files: ^scimantic-core/ontology/.*\.ttl$
+        pass_filenames: false
+
   # Security: Detect secrets and sensitive data
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0

@@ -250,20 +250,16 @@ Observational data or experimental measurements.
     prov:generatedAtTime "2025-12-23T16:30:00Z"^^xsd:dateTime .
 ```
 
-### Analysis
+### Result
 
 Results of computational or statistical analysis.
 
 ```turtle
-:analysis_001 a scimantic:Analysis, prov:Entity ;
+:result_001 a scimantic:Result, prov:Entity ;
     rdfs:label "MQDO result for p + 12C" ;
-    scimantic:result [
-        a scimantic:Result ;
-        rdfs:label "DCS" ;
-        scimantic:value "148.5"^^xsd:float ;
-        scimantic:unit "mb" ;
-        scimantic:hasUncertainty :uncertainty_result_001
-    ] ;
+    scimantic:value "148.5"^^xsd:float ;
+    scimantic:unit "mb" ;
+    scimantic:hasUncertainty :uncertainty_result_001 ;
     prov:wasGeneratedBy :mqdo_computation ;
     prov:used :design_001, :input_data_001 ;
     prov:generatedAtTime "2025-12-23T17:00:00Z"^^xsd:dateTime .
@@ -322,7 +318,7 @@ Running the experiment or simulation.
 ### 7. Analysis
 Processing data into findings.
 - **Input**: `scimantic:Dataset`
-- **Output**: `scimantic:Result` (or `scimantic:Analysis` entity containing result)
+- **Output**: `scimantic:Result`
 - **Class**: `scimantic:Analysis`
 
 ## Provenance Patterns
@@ -392,13 +388,13 @@ Processing data into findings.
     scimantic:codeRepository <https://github.com/example/mqdo> ;
     scimantic:commitHash "a1b2c3d4" .
 
-# Generated Entity (Analysis)
-:analysis_001 a scimantic:Analysis, prov:Entity ;
+# Generated Entity (Result)
+:result_001 a scimantic:Result, prov:Entity ;
     rdfs:label "MQDO result" ;
     prov:wasGeneratedBy :mqdo_computation_001 .
 ```
 
-**Pattern**: `Activity (computation) --used--> Design + Data --generatedBy--> Analysis`
+**Pattern**: `Activity (computation) --used--> Design + Data --generatedBy--> Result`
 
 **Critical**: Software agents have `scimantic:codeRepository` and `scimantic:commitHash` for reproducibility.
 

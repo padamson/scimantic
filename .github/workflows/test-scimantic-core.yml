@@ -5,11 +5,13 @@ on:
     branches: [main]
     paths:
       - "scimantic-core/**"
+      - "!scimantic-core/ontology/**"
       - ".github/workflows/test-scimantic-core.yml"
   pull_request:
     branches: [main]
     paths:
       - "scimantic-core/**"
+      - "!scimantic-core/ontology/**"
       - ".github/workflows/test-scimantic-core.yml"
 
 jobs:
