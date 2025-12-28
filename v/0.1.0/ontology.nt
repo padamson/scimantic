@@ -1,0 +1,383 @@
+<http://scimantic.io/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://scimantic.io/> <http://www.w3.org/2002/07/owl#versionIRI> <http://scimantic.io/v/0.1.0/ontology.ttl> .
+<http://scimantic.io/> <http://www.w3.org/2002/07/owl#imports> <http://scimantic.io/v/0.1.0/shacl/scimantic-shapes.ttl> .
+<http://scimantic.io/> <http://www.w3.org/2002/07/owl#imports> <http://scimantic.io/v/0.1.0/shacl/urref-shapes.ttl> .
+<http://scimantic.io/> <http://purl.org/dc/terms/description> "A minimal domain ontology for representing the scientific method as provenance chains."@en .
+<http://scimantic.io/> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<http://scimantic.io/> <http://purl.org/dc/terms/title> "Scimantic Ontology"@en .
+<http://scimantic.io/> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://www.w3.org/ns/prov#> .
+<http://scimantic.io/> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#> .
+<http://scimantic.io/> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .
+# 
+# 
+# #################################################################
+# #
+# #    Annotation properties
+# #
+# #################################################################
+# 
+# 
+# http://purl.org/dc/terms/description
+<http://purl.org/dc/terms/description> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# http://purl.org/dc/terms/license
+<http://purl.org/dc/terms/license> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# http://purl.org/dc/terms/title
+<http://purl.org/dc/terms/title> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://scimantic.io/contradicts
+<http://scimantic.io/contradicts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://scimantic.io/contradicts> <http://www.w3.org/2000/01/rdf-schema#domain> _:genid1 .
+_:genid1 <http://www.w3.org/2002/07/owl#unionOf> _:genid3 .
+_:genid3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid2 .
+_:genid2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://scimantic.io/Result> .
+_:genid2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://scimantic.io/Evidence> .
+_:genid3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/contradicts> <http://www.w3.org/2000/01/rdf-schema#range> <http://scimantic.io/Hypothesis> .
+<http://scimantic.io/contradicts> <http://www.w3.org/2000/01/rdf-schema#comment> "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis."@en .
+<http://scimantic.io/contradicts> <http://www.w3.org/2000/01/rdf-schema#label> "contradicts"@en .
+# 
+# http://scimantic.io/hasUncertainty
+<http://scimantic.io/hasUncertainty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://scimantic.io/hasUncertainty> <http://www.w3.org/2000/01/rdf-schema#domain> _:genid4 .
+_:genid4 <http://www.w3.org/2002/07/owl#unionOf> _:genid7 .
+_:genid7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid6 .
+_:genid6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid5 .
+_:genid5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://scimantic.io/Result> .
+_:genid5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://scimantic.io/Evidence> .
+_:genid6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://scimantic.io/Dataset> .
+_:genid7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/hasUncertainty> <http://www.w3.org/2000/01/rdf-schema#range> <https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel> .
+<https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/hasUncertainty> <http://www.w3.org/2000/01/rdf-schema#comment> "Links an entity to its reified uncertainty model."@en .
+<http://scimantic.io/hasUncertainty> <http://www.w3.org/2000/01/rdf-schema#label> "has uncertainty"@en .
+# 
+# http://scimantic.io/motivates
+<http://scimantic.io/motivates> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://scimantic.io/motivates> <http://www.w3.org/2000/01/rdf-schema#domain> <http://scimantic.io/Question> .
+<http://scimantic.io/motivates> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/prov#Activity> .
+<http://www.w3.org/ns/prov#Activity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/motivates> <http://www.w3.org/2000/01/rdf-schema#comment> "A Question that triggers or motivates an Activity (e.g., Literature Search)."@en .
+<http://scimantic.io/motivates> <http://www.w3.org/2000/01/rdf-schema#label> "motivates"@en .
+# 
+# http://scimantic.io/parameter
+<http://scimantic.io/parameter> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://scimantic.io/parameter> <http://www.w3.org/2000/01/rdf-schema#domain> <http://scimantic.io/ExperimentalMethod> .
+<http://scimantic.io/parameter> <http://www.w3.org/2000/01/rdf-schema#range> <http://scimantic.io/Parameter> .
+<http://scimantic.io/parameter> <http://www.w3.org/2000/01/rdf-schema#comment> "Structured configuration parameter."@en .
+<http://scimantic.io/parameter> <http://www.w3.org/2000/01/rdf-schema#label> "parameter"@en .
+# 
+# http://scimantic.io/refines
+<http://scimantic.io/refines> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://scimantic.io/refines> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.w3.org/ns/prov#wasDerivedFrom> .
+<http://www.w3.org/ns/prov#wasDerivedFrom> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://scimantic.io/refines> <http://www.w3.org/2000/01/rdf-schema#domain> <http://scimantic.io/Result> .
+<http://scimantic.io/refines> <http://www.w3.org/2000/01/rdf-schema#range> <http://scimantic.io/Hypothesis> .
+<http://scimantic.io/refines> <http://www.w3.org/2000/01/rdf-schema#comment> "A Result that suggests a specific modification to a Hypothesis (Feedback capability)."@en .
+<http://scimantic.io/refines> <http://www.w3.org/2000/01/rdf-schema#label> "refines"@en .
+# 
+# http://scimantic.io/supports
+<http://scimantic.io/supports> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://scimantic.io/supports> <http://www.w3.org/2000/01/rdf-schema#domain> _:genid8 .
+_:genid8 <http://www.w3.org/2002/07/owl#unionOf> _:genid10 .
+_:genid10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid9 .
+_:genid9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://scimantic.io/Result> .
+_:genid9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://scimantic.io/Evidence> .
+_:genid10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/supports> <http://www.w3.org/2000/01/rdf-schema#range> <http://scimantic.io/Hypothesis> .
+<http://scimantic.io/supports> <http://www.w3.org/2000/01/rdf-schema#comment> "An Entity (Evidence/Result) that provides positive evidence for a Hypothesis."@en .
+<http://scimantic.io/supports> <http://www.w3.org/2000/01/rdf-schema#label> "supports"@en .
+# 
+# http://www.w3.org/ns/prov#used
+<http://www.w3.org/ns/prov#used> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+# 
+# http://www.w3.org/ns/prov#wasDerivedFrom
+# 
+# http://www.w3.org/ns/prov#wasGeneratedBy
+<http://www.w3.org/ns/prov#wasGeneratedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+# 
+# http://www.w3.org/ns/prov#wasInformedBy
+<http://www.w3.org/ns/prov#wasInformedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Data properties
+# #
+# #################################################################
+# 
+# 
+# http://scimantic.io/accessLevel
+<http://scimantic.io/accessLevel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/accessLevel> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.nanopub.org/nschema#Nanopublication> .
+<http://www.nanopub.org/nschema#Nanopublication> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/accessLevel> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://scimantic.io/accessLevel> <http://www.w3.org/2000/01/rdf-schema#comment> "Publishing scope (e.g., local, institutional, public, public_essential_evidence)."@en .
+<http://scimantic.io/accessLevel> <http://www.w3.org/2000/01/rdf-schema#label> "access level"@en .
+# 
+# http://scimantic.io/method
+<http://scimantic.io/method> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/method> <http://www.w3.org/2000/01/rdf-schema#domain> <http://scimantic.io/ExperimentalMethod> .
+<http://scimantic.io/method> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://scimantic.io/method> <http://www.w3.org/2000/01/rdf-schema#comment> "Name or description of the method."@en .
+<http://scimantic.io/method> <http://www.w3.org/2000/01/rdf-schema#label> "method"@en .
+# 
+# http://scimantic.io/publishable
+<http://scimantic.io/publishable> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/publishable> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.nanopub.org/nschema#Nanopublication> .
+<http://scimantic.io/publishable> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#boolean> .
+<http://scimantic.io/publishable> <http://www.w3.org/2000/01/rdf-schema#comment> "Flag indicating if this is ready for public promotion."@en .
+<http://scimantic.io/publishable> <http://www.w3.org/2000/01/rdf-schema#label> "publishable"@en .
+# 
+# http://scimantic.io/unit
+<http://scimantic.io/unit> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/unit> <http://www.w3.org/2000/01/rdf-schema#domain> <http://scimantic.io/Result> .
+<http://scimantic.io/unit> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://scimantic.io/unit> <http://www.w3.org/2000/01/rdf-schema#comment> "Unit of measurement."@en .
+<http://scimantic.io/unit> <http://www.w3.org/2000/01/rdf-schema#label> "unit"@en .
+# 
+# http://scimantic.io/value
+<http://scimantic.io/value> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://scimantic.io/value> <http://www.w3.org/2000/01/rdf-schema#domain> <http://scimantic.io/Result> .
+<http://scimantic.io/value> <http://www.w3.org/2000/01/rdf-schema#comment> "The numeric or categorical result."@en .
+<http://scimantic.io/value> <http://www.w3.org/2000/01/rdf-schema#label> "value"@en .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://scimantic.io/Analysis
+<http://scimantic.io/Analysis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/Analysis> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/Analysis> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid11 .
+_:genid11 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/Dataset> .
+_:genid11 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#used> .
+_:genid11 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Analysis> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid12 .
+_:genid12 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/Experimentation> .
+_:genid12 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasInformedBy> .
+_:genid12 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Analysis> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of processing a Dataset to produce a Result."@en .
+<http://scimantic.io/Analysis> <http://www.w3.org/2000/01/rdf-schema#label> "Analysis"@en .
+# 
+# http://scimantic.io/Dataset
+<http://scimantic.io/Dataset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/Dataset> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/dcat#Dataset> .
+<http://www.w3.org/ns/dcat#Dataset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/Dataset> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://www.w3.org/ns/prov#Entity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/Dataset> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid13 .
+_:genid13 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/ExperimentalMethod> .
+_:genid13 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasDerivedFrom> .
+_:genid13 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Dataset> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid14 .
+_:genid14 <http://www.w3.org/2002/07/owl#allValuesFrom> <http://scimantic.io/Experimentation> .
+_:genid14 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+_:genid14 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Dataset> <http://www.w3.org/2000/01/rdf-schema#comment> "Raw data, observations, or measurements produced by experimentation."@en .
+<http://scimantic.io/Dataset> <http://www.w3.org/2000/01/rdf-schema#label> "Dataset"@en .
+# 
+# http://scimantic.io/DesignOfExperiment
+<http://scimantic.io/DesignOfExperiment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/DesignOfExperiment> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/DesignOfExperiment> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid15 .
+_:genid15 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/Hypothesis> .
+_:genid15 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#used> .
+_:genid15 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/DesignOfExperiment> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid16 .
+_:genid16 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/HypothesisFormation> .
+_:genid16 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasInformedBy> .
+_:genid16 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/DesignOfExperiment> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of creating an ExperimentalMethod from a Hypothesis."@en .
+<http://scimantic.io/DesignOfExperiment> <http://www.w3.org/2000/01/rdf-schema#label> "Design of Experiment"@en .
+# 
+# http://scimantic.io/Evidence
+<http://scimantic.io/Evidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/Evidence> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.nanopub.org/nschema#Nanopublication> .
+<http://scimantic.io/Evidence> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/Evidence> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Evidence> .
+<https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Evidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/Evidence> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid17 .
+_:genid17 <http://www.w3.org/2002/07/owl#allValuesFrom> <http://scimantic.io/LiteratureSearch> .
+_:genid17 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+_:genid17 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Evidence> <http://www.w3.org/2000/01/rdf-schema#comment> "A factual claim extracted from a source."@en .
+<http://scimantic.io/Evidence> <http://www.w3.org/2000/01/rdf-schema#label> "Evidence"@en .
+# 
+# http://scimantic.io/EvidenceAssessment
+<http://scimantic.io/EvidenceAssessment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/EvidenceAssessment> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/EvidenceAssessment> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid18 .
+_:genid18 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/Evidence> .
+_:genid18 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#used> .
+_:genid18 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/EvidenceAssessment> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid19 .
+_:genid19 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/LiteratureSearch> .
+_:genid19 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasInformedBy> .
+_:genid19 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/EvidenceAssessment> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of evaluating credibility or relevance of Evidence."@en .
+<http://scimantic.io/EvidenceAssessment> <http://www.w3.org/2000/01/rdf-schema#label> "Evidence Assessment"@en .
+# 
+# http://scimantic.io/ExperimentalMethod
+<http://scimantic.io/ExperimentalMethod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ExperimentalMethod> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/ExperimentalMethod> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Plan> .
+<http://www.w3.org/ns/prov#Plan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ExperimentalMethod> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid20 .
+_:genid20 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/Hypothesis> .
+_:genid20 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasDerivedFrom> .
+_:genid20 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/ExperimentalMethod> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid21 .
+_:genid21 <http://www.w3.org/2002/07/owl#allValuesFrom> <http://scimantic.io/DesignOfExperiment> .
+_:genid21 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+_:genid21 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/ExperimentalMethod> <http://www.w3.org/2000/01/rdf-schema#comment> "A specification of the experimental or computational method to be executed."@en .
+<http://scimantic.io/ExperimentalMethod> <http://www.w3.org/2000/01/rdf-schema#label> "Experimental Method"@en .
+# 
+# http://scimantic.io/Experimentation
+<http://scimantic.io/Experimentation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/Experimentation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/Experimentation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid22 .
+_:genid22 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/ExperimentalMethod> .
+_:genid22 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#used> .
+_:genid22 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Experimentation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid23 .
+_:genid23 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/DesignOfExperiment> .
+_:genid23 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasInformedBy> .
+_:genid23 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Experimentation> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of running an ExperimentalMethod to produce a Dataset."@en .
+<http://scimantic.io/Experimentation> <http://www.w3.org/2000/01/rdf-schema#label> "Experimentation"@en .
+# 
+# http://scimantic.io/Hypothesis
+<http://scimantic.io/Hypothesis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/Hypothesis> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.nanopub.org/nschema#Nanopublication> .
+<http://scimantic.io/Hypothesis> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/Hypothesis> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid24 .
+_:genid24 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/Evidence> .
+_:genid24 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasDerivedFrom> .
+_:genid24 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Hypothesis> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid25 .
+_:genid25 <http://www.w3.org/2002/07/owl#allValuesFrom> <http://scimantic.io/HypothesisFormation> .
+_:genid25 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+_:genid25 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Hypothesis> <http://www.w3.org/2000/01/rdf-schema#comment> "A testable claim derived from evidence."@en .
+<http://scimantic.io/Hypothesis> <http://www.w3.org/2000/01/rdf-schema#label> "Hypothesis"@en .
+# 
+# http://scimantic.io/HypothesisFormation
+<http://scimantic.io/HypothesisFormation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/HypothesisFormation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/HypothesisFormation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid26 .
+_:genid26 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/Evidence> .
+_:genid26 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#used> .
+_:genid26 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/HypothesisFormation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid27 .
+_:genid27 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/EvidenceAssessment> .
+_:genid27 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasInformedBy> .
+_:genid27 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/HypothesisFormation> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of synthesizing Evidence into a Hypothesis."@en .
+<http://scimantic.io/HypothesisFormation> <http://www.w3.org/2000/01/rdf-schema#label> "Hypothesis Formation"@en .
+# 
+# http://scimantic.io/LiteratureSearch
+<http://scimantic.io/LiteratureSearch> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/LiteratureSearch> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/LiteratureSearch> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of searching for and extracting Evidence."@en .
+<http://scimantic.io/LiteratureSearch> <http://www.w3.org/2000/01/rdf-schema#label> "Literature Search"@en .
+# 
+# http://scimantic.io/Parameter
+<http://scimantic.io/Parameter> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/Parameter> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/Parameter> <http://www.w3.org/2000/01/rdf-schema#comment> "A configured parameter within an Experimental Method."@en .
+<http://scimantic.io/Parameter> <http://www.w3.org/2000/01/rdf-schema#label> "Design Parameter"@en .
+# 
+# http://scimantic.io/Question
+<http://scimantic.io/Question> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/Question> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/Question> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid28 .
+_:genid28 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/LiteratureSearch> .
+_:genid28 <http://www.w3.org/2002/07/owl#onProperty> <http://scimantic.io/motivates> .
+_:genid28 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Question> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid29 .
+_:genid29 <http://www.w3.org/2002/07/owl#allValuesFrom> <http://scimantic.io/QuestionFormation> .
+_:genid29 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+_:genid29 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Question> <http://www.w3.org/2000/01/rdf-schema#comment> "An interrogative sentence representing the research query."@en .
+<http://scimantic.io/Question> <http://www.w3.org/2000/01/rdf-schema#label> "Research Question"@en .
+# 
+# http://scimantic.io/QuestionFormation
+<http://scimantic.io/QuestionFormation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/QuestionFormation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/QuestionFormation> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of creating a Research Question."@en .
+<http://scimantic.io/QuestionFormation> <http://www.w3.org/2000/01/rdf-schema#label> "Question Formation"@en .
+# 
+# http://scimantic.io/Result
+<http://scimantic.io/Result> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/Result> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.nanopub.org/nschema#Nanopublication> .
+<http://scimantic.io/Result> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<http://scimantic.io/Result> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Evidence> .
+<http://scimantic.io/Result> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid30 .
+_:genid30 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/Dataset> .
+_:genid30 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasDerivedFrom> .
+_:genid30 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Result> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid31 .
+_:genid31 <http://www.w3.org/2002/07/owl#allValuesFrom> <http://scimantic.io/Analysis> .
+_:genid31 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+_:genid31 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/Result> <http://www.w3.org/2000/01/rdf-schema#comment> "The outcome of an analysis activity."@en .
+<http://scimantic.io/Result> <http://www.w3.org/2000/01/rdf-schema#label> "Result"@en .
+# 
+# http://scimantic.io/ResultAssessment
+<http://scimantic.io/ResultAssessment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://scimantic.io/ResultAssessment> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Activity> .
+<http://scimantic.io/ResultAssessment> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid32 .
+_:genid32 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/Result> .
+_:genid32 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#used> .
+_:genid32 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/ResultAssessment> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid33 .
+_:genid33 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://scimantic.io/Analysis> .
+_:genid33 <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/ns/prov#wasInformedBy> .
+_:genid33 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://scimantic.io/ResultAssessment> <http://www.w3.org/2000/01/rdf-schema#comment> "The activity of comparing a Result to the original Hypothesis."@en .
+<http://scimantic.io/ResultAssessment> <http://www.w3.org/2000/01/rdf-schema#label> "Result Assessment"@en .
+# 
+# http://www.nanopub.org/nschema#Nanopublication
+# 
+# http://www.w3.org/ns/dcat#Dataset
+# 
+# http://www.w3.org/ns/prov#Activity
+# 
+# http://www.w3.org/ns/prov#Entity
+# 
+# http://www.w3.org/ns/prov#Plan
+# 
+# https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Evidence
+# 
+# https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel
+<https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+# 
+# Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/

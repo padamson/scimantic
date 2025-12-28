@@ -1,0 +1,1135 @@
+{
+  "_comment" : "Created with OWL2VOWL (version 0.3.5), http://vowl.visualdataweb.org",
+  "header" : {
+    "languages" : [ "en", "undefined" ],
+    "baseIris" : [ "http://www.w3.org/1999/02/22-rdf-syntax-ns", "http://www.w3.org/2000/01/rdf-schema", "https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl", "http://www.w3.org/ns/prov", "http://scimantic.io", "http://www.w3.org/2001/XMLSchema", "http://www.w3.org/ns/dcat", "http://www.nanopub.org/nschema" ],
+    "title" : {
+      "en" : "Scimantic Ontology"
+    },
+    "iri" : "http://scimantic.io/",
+    "version" : "0.1.0",
+    "description" : {
+      "en" : "A minimal domain ontology for representing the scientific method as provenance chains."
+    },
+    "other" : {
+      "license" : [ {
+        "identifier" : "license",
+        "language" : "undefined",
+        "value" : "https://creativecommons.org/licenses/by/4.0/",
+        "type" : "iri"
+      } ],
+      "versionInfo" : [ {
+        "identifier" : "versionInfo",
+        "language" : "undefined",
+        "value" : "0.1.0",
+        "type" : "label"
+      } ],
+      "title" : [ {
+        "identifier" : "title",
+        "language" : "en",
+        "value" : "Scimantic Ontology",
+        "type" : "label"
+      } ],
+      "seeAlso" : [ {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#",
+        "type" : "iri"
+      }, {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "http://www.w3.org/ns/prov#",
+        "type" : "iri"
+      } ]
+    }
+  },
+  "namespace" : [ ],
+  "class" : [ {
+    "id" : "3",
+    "type" : "rdfs:Literal"
+  }, {
+    "id" : "2",
+    "type" : "owl:Class"
+  }, {
+    "id" : "16",
+    "type" : "owl:Class"
+  }, {
+    "id" : "18",
+    "type" : "owl:Class"
+  }, {
+    "id" : "25",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "26",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "29",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "24",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "30",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "31",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "34",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "6",
+    "type" : "owl:Class"
+  }, {
+    "id" : "22",
+    "type" : "owl:Class"
+  }, {
+    "id" : "17",
+    "type" : "owl:Class"
+  }, {
+    "id" : "4",
+    "type" : "owl:Class"
+  }, {
+    "id" : "5",
+    "type" : "owl:Class"
+  }, {
+    "id" : "10",
+    "type" : "owl:Class"
+  }, {
+    "id" : "28",
+    "type" : "owl:Class"
+  }, {
+    "id" : "9",
+    "type" : "owl:Class"
+  }, {
+    "id" : "7",
+    "type" : "owl:Class"
+  }, {
+    "id" : "8",
+    "type" : "owl:Class"
+  }, {
+    "id" : "21",
+    "type" : "owl:Class"
+  }, {
+    "id" : "14",
+    "type" : "owl:Class"
+  }, {
+    "id" : "13",
+    "type" : "owl:Class"
+  }, {
+    "id" : "37",
+    "type" : "owl:Class"
+  }, {
+    "id" : "19",
+    "type" : "owl:Class"
+  }, {
+    "id" : "20",
+    "type" : "owl:Class"
+  }, {
+    "id" : "51",
+    "type" : "owl:Class"
+  }, {
+    "id" : "1",
+    "type" : "owl:Class"
+  }, {
+    "id" : "11",
+    "type" : "owl:Class"
+  } ],
+  "classAttribute" : [ {
+    "iri" : "http://www.w3.org/2000/01/rdf-schema#Literal",
+    "id" : "3",
+    "label" : {
+      "IRI-based" : "Literal",
+      "undefined" : "Literal"
+    }
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#Activity",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Activity"
+    },
+    "subClasses" : [ "4", "5", "6", "7", "8", "9", "10", "11" ],
+    "attributes" : [ "external" ],
+    "id" : "2"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Evidence",
+    "baseIri" : "https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Evidence"
+    },
+    "subClasses" : [ "13", "17" ],
+    "attributes" : [ "external" ],
+    "id" : "16"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#Entity",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Entity"
+    },
+    "subClasses" : [ "19", "20", "21", "22", "14", "13", "17", "1" ],
+    "attributes" : [ "external" ],
+    "id" : "18"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "25",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#boolean",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "26",
+    "label" : {
+      "IRI-based" : "boolean"
+    }
+  }, {
+    "instances" : 0,
+    "union" : [ "13", "17" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "29"
+  }, {
+    "instances" : 0,
+    "union" : [ "22", "13", "17" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "24"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "30",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "31",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "instances" : 0,
+    "union" : [ "13", "17" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "34"
+  }, {
+    "iri" : "http://scimantic.io/EvidenceAssessment",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "EvidenceAssessment",
+      "en" : "Evidence Assessment"
+    },
+    "comment" : {
+      "en" : "The activity of evaluating credibility or relevance of Evidence."
+    },
+    "id" : "6",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://scimantic.io/Dataset",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Dataset",
+      "en" : "Dataset"
+    },
+    "comment" : {
+      "en" : "Raw data, observations, or measurements produced by experimentation."
+    },
+    "id" : "22",
+    "superClasses" : [ "18", "37" ]
+  }, {
+    "iri" : "http://scimantic.io/Evidence",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Evidence",
+      "en" : "Evidence"
+    },
+    "comment" : {
+      "en" : "A factual claim extracted from a source."
+    },
+    "id" : "17",
+    "superClasses" : [ "28", "16", "18" ]
+  }, {
+    "iri" : "http://scimantic.io/LiteratureSearch",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "LiteratureSearch",
+      "en" : "Literature Search"
+    },
+    "comment" : {
+      "en" : "The activity of searching for and extracting Evidence."
+    },
+    "id" : "4",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://scimantic.io/Analysis",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Analysis",
+      "en" : "Analysis"
+    },
+    "comment" : {
+      "en" : "The activity of processing a Dataset to produce a Result."
+    },
+    "id" : "5",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://scimantic.io/DesignOfExperiment",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "DesignOfExperiment",
+      "en" : "Design of Experiment"
+    },
+    "comment" : {
+      "en" : "The activity of creating an ExperimentalMethod from a Hypothesis."
+    },
+    "id" : "10",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.nanopub.org/nschema#Nanopublication",
+    "baseIri" : "http://www.nanopub.org/nschema",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Nanopublication"
+    },
+    "subClasses" : [ "14", "13", "17" ],
+    "attributes" : [ "external" ],
+    "id" : "28"
+  }, {
+    "iri" : "http://scimantic.io/HypothesisFormation",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "HypothesisFormation",
+      "en" : "Hypothesis Formation"
+    },
+    "comment" : {
+      "en" : "The activity of synthesizing Evidence into a Hypothesis."
+    },
+    "id" : "9",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://scimantic.io/QuestionFormation",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "QuestionFormation",
+      "en" : "Question Formation"
+    },
+    "comment" : {
+      "en" : "The activity of creating a Research Question."
+    },
+    "id" : "7",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://scimantic.io/Experimentation",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Experimentation",
+      "en" : "Experimentation"
+    },
+    "comment" : {
+      "en" : "The activity of running an ExperimentalMethod to produce a Dataset."
+    },
+    "id" : "8",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://scimantic.io/Parameter",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Parameter",
+      "en" : "Design Parameter"
+    },
+    "comment" : {
+      "en" : "A configured parameter within an Experimental Method."
+    },
+    "id" : "21",
+    "superClasses" : [ "18" ]
+  }, {
+    "iri" : "http://scimantic.io/Hypothesis",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Hypothesis",
+      "en" : "Hypothesis"
+    },
+    "comment" : {
+      "en" : "A testable claim derived from evidence."
+    },
+    "id" : "14",
+    "superClasses" : [ "28", "18" ]
+  }, {
+    "iri" : "http://scimantic.io/Result",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Result",
+      "en" : "Result"
+    },
+    "comment" : {
+      "en" : "The outcome of an analysis activity."
+    },
+    "id" : "13",
+    "superClasses" : [ "28", "16", "18" ]
+  }, {
+    "iri" : "http://www.w3.org/ns/dcat#Dataset",
+    "baseIri" : "http://www.w3.org/ns/dcat",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Dataset"
+    },
+    "subClasses" : [ "22" ],
+    "attributes" : [ "external" ],
+    "id" : "37"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel",
+    "baseIri" : "https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "UncertaintyModel"
+    },
+    "attributes" : [ "external" ],
+    "id" : "19",
+    "superClasses" : [ "18" ]
+  }, {
+    "iri" : "http://scimantic.io/ExperimentalMethod",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "ExperimentalMethod",
+      "en" : "Experimental Method"
+    },
+    "comment" : {
+      "en" : "A specification of the experimental or computational method to be executed."
+    },
+    "id" : "20",
+    "superClasses" : [ "18", "51" ]
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#Plan",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Plan"
+    },
+    "subClasses" : [ "20" ],
+    "attributes" : [ "external" ],
+    "id" : "51"
+  }, {
+    "iri" : "http://scimantic.io/Question",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Question",
+      "en" : "Research Question"
+    },
+    "comment" : {
+      "en" : "An interrogative sentence representing the research query."
+    },
+    "id" : "1",
+    "superClasses" : [ "18" ]
+  }, {
+    "iri" : "http://scimantic.io/ResultAssessment",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "ResultAssessment",
+      "en" : "Result Assessment"
+    },
+    "comment" : {
+      "en" : "The activity of comparing a Result to the original Hypothesis."
+    },
+    "id" : "11",
+    "superClasses" : [ "2" ]
+  } ],
+  "property" : [ {
+    "id" : "0",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "12",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "23",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "27",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "32",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "33",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "35",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "36",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "38",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "39",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "40",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "41",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "42",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "43",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "44",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "45",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "46",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "47",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "48",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "49",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "50",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "52",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "53",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "54",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "55",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "56",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "57",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "58",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "59",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "60",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "61",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "62",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "63",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "64",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "65",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "66",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "67",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "68",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "69",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "70",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "71",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "72",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "73",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "74",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "75",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "76",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "77",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "78",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "79",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "80",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "81",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "82",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "83",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "84",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "85",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "86",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "87",
+    "type" : "rdfs:SubClassOf"
+  } ],
+  "propertyAttribute" : [ {
+    "iri" : "http://scimantic.io/motivates",
+    "baseIri" : "http://scimantic.io",
+    "range" : "2",
+    "label" : {
+      "IRI-based" : "motivates",
+      "en" : "motivates"
+    },
+    "domain" : "1",
+    "comment" : {
+      "en" : "A Question that triggers or motivates an Activity (e.g., Literature Search)."
+    },
+    "attributes" : [ "object" ],
+    "id" : "0"
+  }, {
+    "iri" : "http://scimantic.io/refines",
+    "baseIri" : "http://scimantic.io",
+    "range" : "14",
+    "label" : {
+      "IRI-based" : "refines",
+      "en" : "refines"
+    },
+    "superproperty" : [ "15" ],
+    "domain" : "13",
+    "comment" : {
+      "en" : "A Result that suggests a specific modification to a Hypothesis (Feedback capability)."
+    },
+    "attributes" : [ "object" ],
+    "id" : "12"
+  }, {
+    "iri" : "http://scimantic.io/hasUncertainty",
+    "baseIri" : "http://scimantic.io",
+    "range" : "19",
+    "label" : {
+      "IRI-based" : "hasUncertainty",
+      "en" : "has uncertainty"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Links an entity to its reified uncertainty model."
+    },
+    "attributes" : [ "object" ],
+    "id" : "23"
+  }, {
+    "iri" : "http://scimantic.io/publishable",
+    "baseIri" : "http://scimantic.io",
+    "range" : "26",
+    "label" : {
+      "IRI-based" : "publishable",
+      "en" : "publishable"
+    },
+    "domain" : "28",
+    "comment" : {
+      "en" : "Flag indicating if this is ready for public promotion."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "27"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasInformedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "5",
+    "label" : {
+      "IRI-based" : "wasInformedBy"
+    },
+    "domain" : "11",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "32"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasGeneratedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "5",
+    "label" : {
+      "IRI-based" : "wasGeneratedBy"
+    },
+    "domain" : "13",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "33"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#used",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "13",
+    "label" : {
+      "IRI-based" : "used"
+    },
+    "domain" : "11",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "35"
+  }, {
+    "iri" : "http://scimantic.io/unit",
+    "baseIri" : "http://scimantic.io",
+    "range" : "25",
+    "label" : {
+      "IRI-based" : "unit",
+      "en" : "unit"
+    },
+    "domain" : "13",
+    "comment" : {
+      "en" : "Unit of measurement."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "36"
+  }, {
+    "iri" : "http://scimantic.io/contradicts",
+    "baseIri" : "http://scimantic.io",
+    "range" : "14",
+    "label" : {
+      "IRI-based" : "contradicts",
+      "en" : "contradicts"
+    },
+    "domain" : "34",
+    "comment" : {
+      "en" : "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis."
+    },
+    "attributes" : [ "object" ],
+    "id" : "38"
+  }, {
+    "iri" : "http://scimantic.io/motivates",
+    "baseIri" : "http://scimantic.io",
+    "range" : "4",
+    "label" : {
+      "IRI-based" : "motivates",
+      "en" : "motivates"
+    },
+    "domain" : "1",
+    "comment" : {
+      "en" : "A Question that triggers or motivates an Activity (e.g., Literature Search)."
+    },
+    "attributes" : [ "object", "someValues" ],
+    "id" : "39"
+  }, {
+    "iri" : "http://scimantic.io/value",
+    "baseIri" : "http://scimantic.io",
+    "range" : "3",
+    "label" : {
+      "IRI-based" : "value",
+      "en" : "value"
+    },
+    "domain" : "13",
+    "comment" : {
+      "en" : "The numeric or categorical result."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "40"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasGeneratedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "7",
+    "label" : {
+      "IRI-based" : "wasGeneratedBy"
+    },
+    "domain" : "1",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "41"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasDerivedFrom",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "22",
+    "label" : {
+      "IRI-based" : "wasDerivedFrom"
+    },
+    "domain" : "13",
+    "subproperty" : [ "12" ],
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "42"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasGeneratedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "9",
+    "label" : {
+      "IRI-based" : "wasGeneratedBy"
+    },
+    "domain" : "14",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "43"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasDerivedFrom",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "17",
+    "label" : {
+      "IRI-based" : "wasDerivedFrom"
+    },
+    "domain" : "14",
+    "subproperty" : [ "12" ],
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "44"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#used",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "17",
+    "label" : {
+      "IRI-based" : "used"
+    },
+    "domain" : "9",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "45"
+  }, {
+    "iri" : "http://scimantic.io/parameter",
+    "baseIri" : "http://scimantic.io",
+    "range" : "21",
+    "label" : {
+      "IRI-based" : "parameter",
+      "en" : "parameter"
+    },
+    "domain" : "20",
+    "comment" : {
+      "en" : "Structured configuration parameter."
+    },
+    "attributes" : [ "object" ],
+    "id" : "46"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasInformedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "6",
+    "label" : {
+      "IRI-based" : "wasInformedBy"
+    },
+    "domain" : "9",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "47"
+  }, {
+    "iri" : "http://scimantic.io/method",
+    "baseIri" : "http://scimantic.io",
+    "range" : "30",
+    "label" : {
+      "IRI-based" : "method",
+      "en" : "method"
+    },
+    "domain" : "20",
+    "comment" : {
+      "en" : "Name or description of the method."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "48"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasGeneratedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "10",
+    "label" : {
+      "IRI-based" : "wasGeneratedBy"
+    },
+    "domain" : "20",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "49"
+  }, {
+    "range" : "51",
+    "domain" : "20",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "50"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasInformedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "10",
+    "label" : {
+      "IRI-based" : "wasInformedBy"
+    },
+    "domain" : "8",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "52"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#used",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "20",
+    "label" : {
+      "IRI-based" : "used"
+    },
+    "domain" : "8",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "53"
+  }, {
+    "range" : "28",
+    "domain" : "13",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "54"
+  }, {
+    "range" : "37",
+    "domain" : "22",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "55"
+  }, {
+    "range" : "28",
+    "domain" : "17",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "56"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasGeneratedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "8",
+    "label" : {
+      "IRI-based" : "wasGeneratedBy"
+    },
+    "domain" : "22",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "57"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasDerivedFrom",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "20",
+    "label" : {
+      "IRI-based" : "wasDerivedFrom"
+    },
+    "domain" : "22",
+    "subproperty" : [ "12" ],
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "58"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasInformedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "9",
+    "label" : {
+      "IRI-based" : "wasInformedBy"
+    },
+    "domain" : "10",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "59"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#used",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "14",
+    "label" : {
+      "IRI-based" : "used"
+    },
+    "domain" : "10",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "60"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasGeneratedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "4",
+    "label" : {
+      "IRI-based" : "wasGeneratedBy"
+    },
+    "domain" : "17",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "61"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasInformedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "4",
+    "label" : {
+      "IRI-based" : "wasInformedBy"
+    },
+    "domain" : "6",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "62"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#used",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "17",
+    "label" : {
+      "IRI-based" : "used"
+    },
+    "domain" : "6",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "63"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasDerivedFrom",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "14",
+    "label" : {
+      "IRI-based" : "wasDerivedFrom"
+    },
+    "domain" : "20",
+    "subproperty" : [ "12" ],
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "64"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#used",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "22",
+    "label" : {
+      "IRI-based" : "used"
+    },
+    "domain" : "5",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "65"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#wasInformedBy",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "8",
+    "label" : {
+      "IRI-based" : "wasInformedBy"
+    },
+    "domain" : "5",
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "66"
+  }, {
+    "range" : "18",
+    "domain" : "17",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "67"
+  }, {
+    "range" : "18",
+    "domain" : "13",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "68"
+  }, {
+    "range" : "28",
+    "domain" : "14",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "69"
+  }, {
+    "range" : "18",
+    "domain" : "1",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "70"
+  }, {
+    "range" : "18",
+    "domain" : "21",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "71"
+  }, {
+    "range" : "18",
+    "domain" : "20",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "72"
+  }, {
+    "range" : "18",
+    "domain" : "14",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "73"
+  }, {
+    "range" : "18",
+    "domain" : "22",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "74"
+  }, {
+    "range" : "18",
+    "domain" : "19",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "75"
+  }, {
+    "range" : "16",
+    "domain" : "17",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "76"
+  }, {
+    "range" : "16",
+    "domain" : "13",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "77"
+  }, {
+    "range" : "2",
+    "domain" : "9",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "78"
+  }, {
+    "iri" : "http://scimantic.io/supports",
+    "baseIri" : "http://scimantic.io",
+    "range" : "14",
+    "label" : {
+      "IRI-based" : "supports",
+      "en" : "supports"
+    },
+    "domain" : "29",
+    "comment" : {
+      "en" : "An Entity (Evidence/Result) that provides positive evidence for a Hypothesis."
+    },
+    "attributes" : [ "object" ],
+    "id" : "79"
+  }, {
+    "range" : "2",
+    "domain" : "8",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "80"
+  }, {
+    "range" : "2",
+    "domain" : "11",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "81"
+  }, {
+    "range" : "2",
+    "domain" : "10",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "82"
+  }, {
+    "iri" : "http://scimantic.io/accessLevel",
+    "baseIri" : "http://scimantic.io",
+    "range" : "31",
+    "label" : {
+      "IRI-based" : "accessLevel",
+      "en" : "access level"
+    },
+    "domain" : "28",
+    "comment" : {
+      "en" : "Publishing scope (e.g., local, institutional, public, public_essential_evidence)."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "83"
+  }, {
+    "range" : "2",
+    "domain" : "5",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "84"
+  }, {
+    "range" : "2",
+    "domain" : "4",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "85"
+  }, {
+    "range" : "2",
+    "domain" : "7",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "86"
+  }, {
+    "range" : "2",
+    "domain" : "6",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "87"
+  } ]
+}

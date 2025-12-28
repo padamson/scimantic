@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="resources/primer.css" media="screen"/>
+<link rel="stylesheet" href="resources/rec.css" media="screen"/>
+<link rel="stylesheet" href="resources/extra.css" media="screen"/>
+<link rel="stylesheet" href="resources/owl.css" media="screen"/>
+<link rel="stylesheet" href="resources/dark.css" media="(prefers-color-scheme: dark)"/>
+<link rel="stylesheet" href="resources/light.css" media="(prefers-color-scheme: light)"/>
+<link rel="stylesheet" href="resources/slider.css" media="screen"/>
+<meta name="color-scheme" content="dark light">
+<script type="module" src="resources/dark-mode-toggle.mjs"></script><div class="darkmode">
+	<dark-mode-toggle class="slider"></dark-mode-toggle>
+</div>
+ <title>Scimantic Ontology</title>
+
+
+<!-- SCHEMA.ORG METADATA -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","url":"https://scimantic.io/v/0.1.0/","image":"http://vowl.visualdataweb.org/webvowl/#iri=https://scimantic.io/v/0.1.0/","name":"Scimantic Ontology", "headline":"Scientific Method as a Provenance Chain.", "dateReleased":"Date created", "dateModified":"Date modified", "version":"0.1.0", "license":"https://creativecommons.org/licenses/by/4.0/", "author":[{"@type":"Person","name":"Scimantic Contributors","url":"https://scimantic.io"}]}</script>
+
+<script src="resources/jquery.js"></script> 
+<script src="resources/marked.min.js"></script> 
+    <script> 
+function loadHash() {
+  jQuery(".markdown").each(function(el){jQuery(this).after(marked.parse(jQuery(this).text())).remove()});
+	var hash = location.hash;
+	if($(hash).offset()!=null){
+	  $('html, body').animate({scrollTop: $(hash).offset().top}, 0);
+}
+	loadTOC();
+}
+function loadTOC(){
+	//process toc dynamically
+	  var t='<h2>Table of contents</h2><ul>';i = 1;j=0;
+	  jQuery(".list").each(function(){
+		if(jQuery(this).is('h2')){
+			if(j>0){
+				t+='</ul>';
+				j=0;
+			}
+			t+= '<li>'+i+'. <a href=#'+ jQuery(this).attr('id')+'>'+ jQuery(this).ignore("span").text()+'</a></li>';
+			i++;
+		}
+		if(jQuery(this).is('h3')){
+			if(j==0){
+				t+='<ul>';
+			}
+			j++;
+			t+= '<li>'+(i-1)+'.'+j+'. '+'<a href=#'+ jQuery(this).attr('id')+'>'+ jQuery(this).ignore("span").text()+'</a></li>';
+		}
+	  });
+	  t+='</ul>';
+	  $("#toc").html(t); 
+}
+$(function(){
+    loadHash();
+}); $.fn.ignore = function(sel){
+        return this.clone().find(sel||">*").remove().end();
+ }; 
+   </script> 
+  </head> 
+
+<body>
+<div class="container">
+<div class="head">
+<div style="float:right">language <a href="index-en.html"><b>en</b></a> </div>
+<h1>Scimantic Ontology</h1>
+<h2>Release: Date created</h2>
+
+
+<dl>
+<dt>Modified on: Date modified</dt>
+<dt>Revision:</dt>
+<dd>0.1.0</dd>
+<dt>Issued on:</dt>
+<dd>Date issued</dd>
+<dt>Authors:</dt>
+<dd><a href="https://scimantic.io">Scimantic Contributors</a></dd>
+
+<dt>Publisher:</dt>
+<dd><a href="https://scimantic.io">Scimantic Project</a></dd>
+<dt>Download serialization:</dt><dd><span><a href="ontology.jsonld" target="_blank"><img src="https://img.shields.io/badge/Format-JSON_LD-blue.svg" alt="JSON-LD" /></a> </span><span><a href="ontology.owl" target="_blank"><img src="https://img.shields.io/badge/Format-RDF/XML-blue.svg" alt="RDF/XML" /></a> </span><span><a href="ontology.nt" target="_blank"><img src="https://img.shields.io/badge/Format-N_Triples-blue.svg" alt="N-Triples" /></a> </span><span><a href="ontology.ttl" target="_blank"><img src="https://img.shields.io/badge/Format-TTL-blue.svg" alt="TTL" /></a> </span></dd><dt>License:</dt><dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"><img src="https://img.shields.io/badge/License-CC_BY%204.0-blue.svg" alt="https://creativecommons.org/licenses/by/4.0/" /></a>
+</dd><dt>Visualization:</dt><dd><a href="webvowl/index.html#" target="_blank"><img src="https://img.shields.io/badge/Visualize_with-WebVowl-blue.svg" alt="Visualize with WebVowl" /></a></dd>
+<!-- <dt>Evaluation:</dt><dd><a href="OOPSevaluation/oopsEval.html#" target="_blank"><img src="https://img.shields.io/badge/Evaluate_with-OOPS! (OntOlogy Pitfall Scanner!)-blue.svg" alt="Evaluate with OOPS!" /></a></dd> --></dl>
+
+<a href="provenance/provenance-en.html" target="_blank">Provenance of this page</a><hr/>
+</div>
+<div class="status">
+<div>
+<span>Specification Draft</span>
+</div>
+</div>     <div id="abstract"><h2>Abstract</h2><span class="markdown">
+Scientific Method as a Provenance Chain.</span>
+</div>
+<div id="toc"></div> 
+
+<!--INTRODUCTION SECTION-->
+    <div id="introduction"><h2 id="intro" class="list">Introduction <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<span class="markdown">
+This is a place holder text for the introduction. The introduction should briefly describe the ontology, its motivation, state of the art and goals.</span>
+<div id="namespacedeclarations">
+<h3 id="ns" class="list">Namespace declarations</h3>
+<div id="ns" align="center">
+<table>
+<caption> <a href="#ns"> Table 1</a>: Namespaces used in the document </caption>
+<tbody>
+<tr><td><b>dcat</b></td><td>&lt;http://www.w3.org/ns/dcat#&gt;</td></tr>
+<tr><td><b>dcterms</b></td><td>&lt;http://purl.org/dc/terms/&gt;</td></tr>
+<tr><td><b>doap</b></td><td>&lt;http://usefulinc.com/ns/doap#&gt;</td></tr>
+<tr><td><b>foaf</b></td><td>&lt;http://xmlns.com/foaf/0.1/&gt;</td></tr>
+<tr><td><b>np</b></td><td>&lt;http://www.nanopub.org/nschema#&gt;</td></tr>
+<tr><td><b>owl</b></td><td>&lt;http://www.w3.org/2002/07/owl#&gt;</td></tr>
+<tr><td><b>prov</b></td><td>&lt;http://www.w3.org/ns/prov#&gt;</td></tr>
+<tr><td><b>rdf</b></td><td>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</td></tr>
+<tr><td><b>rdfs</b></td><td>&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</td></tr>
+<tr><td><b>scimantic</b></td><td>&lt;http://scimantic.io/&gt;</td></tr>
+<tr><td><b>sosa</b></td><td>&lt;http://www.w3.org/ns/sosa/&gt;</td></tr>
+<tr><td><b>urref</b></td><td>&lt;https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#&gt;</td></tr>
+<tr><td><b>xml</b></td><td>&lt;http://www.w3.org/XML/1998/namespace&gt;</td></tr>
+<tr><td><b>xsd</b></td><td>&lt;http://www.w3.org/2001/XMLSchema#&gt;</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+  
+
+<!--OVERVIEW SECTION-->
+    <div id="overview"><h2 id="overv" class="list">Scimantic: Overview <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<span class="markdown">
+This ontology has the following classes and properties.</span>
+<h4>Classes</h4>
+<ul xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+   <li>
+      <a href="#http://scimantic.io/Analysis" title="http://scimantic.io/Analysis">Analysis</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Dataset" title="http://scimantic.io/Dataset">Dataset</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/DesignOfExperiment" title="http://scimantic.io/DesignOfExperiment">Design of Experiment</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Parameter" title="http://scimantic.io/Parameter">Design Parameter</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/EvidenceAssessment" title="http://scimantic.io/EvidenceAssessment">Evidence Assessment</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/ExperimentalMethod" title="http://scimantic.io/ExperimentalMethod">Experimental Method</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Experimentation" title="http://scimantic.io/Experimentation">Experimentation</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Hypothesis" title="http://scimantic.io/Hypothesis">Hypothesis</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/HypothesisFormation" title="http://scimantic.io/HypothesisFormation">Hypothesis Formation</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/LiteratureSearch" title="http://scimantic.io/LiteratureSearch">Literature Search</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/QuestionFormation" title="http://scimantic.io/QuestionFormation">Question Formation</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Question" title="http://scimantic.io/Question">Research Question</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/ResultAssessment" title="http://scimantic.io/ResultAssessment">Result Assessment</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel"
+         title="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel">
+         <span>Uncertainty Model</span>
+      </a>
+   </li>
+</ul><h4>Object Properties</h4><ul xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+   <li>
+      <a href="#http://scimantic.io/contradicts" title="http://scimantic.io/contradicts">contradicts</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/hasUncertainty" title="http://scimantic.io/hasUncertainty">has uncertainty</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/motivates" title="http://scimantic.io/motivates">motivates</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/parameter" title="http://scimantic.io/parameter">parameter</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/refines" title="http://scimantic.io/refines">refines</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/supports" title="http://scimantic.io/supports">supports</a>
+   </li>
+</ul><h4>Data Properties</h4><ul xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+   <li>
+      <a href="#http://scimantic.io/accessLevel" title="http://scimantic.io/accessLevel">access level</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/method" title="http://scimantic.io/method">method</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/publishable" title="http://scimantic.io/publishable">publishable</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/unit" title="http://scimantic.io/unit">unit</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/value" title="http://scimantic.io/value">value</a>
+   </li>
+</ul><iframe src="webvowl/index.html"></iframe> 
+</div>
+  
+
+<!--DESCRIPTION SECTION-->
+    <div id="description"><h2 id="desc" class="list">Scimantic: Description <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+
+<span class="markdown">This is a placeholder text for the description of your ontology. The description should include an explanation and a diagram explaining how the classes are related, examples of usage, etc.
+
+</span></div>
+   
+
+<!--CROSSREF SECTION-->
+   <div id="crossref"><h2 id="crossreference" class="list">Cross-reference for Scimantic classes, object properties and data properties <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+This section provides details for each class and property defined by Scimantic.
+<div xmlns:widoco="https://w3id.org/widoco/vocab#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classes">
+ <h3 id="classes-headline" class="list">Classes</h3>
+ <ul class="hlist">
+  <li><a href="#http://scimantic.io/Analysis" title="http://scimantic.io/Analysis">Analysis</a></li>
+  <li><a href="#http://scimantic.io/Dataset" title="http://scimantic.io/Dataset">Dataset</a></li>
+  <li><a href="#http://scimantic.io/DesignOfExperiment" title="http://scimantic.io/DesignOfExperiment">Design of Experiment</a></li>
+  <li><a href="#http://scimantic.io/Parameter" title="http://scimantic.io/Parameter">Design Parameter</a></li>
+  <li><a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a></li>
+  <li><a href="#http://scimantic.io/EvidenceAssessment" title="http://scimantic.io/EvidenceAssessment">Evidence Assessment</a></li>
+  <li><a href="#http://scimantic.io/ExperimentalMethod" title="http://scimantic.io/ExperimentalMethod">Experimental Method</a></li>
+  <li><a href="#http://scimantic.io/Experimentation" title="http://scimantic.io/Experimentation">Experimentation</a></li>
+  <li><a href="#http://scimantic.io/Hypothesis" title="http://scimantic.io/Hypothesis">Hypothesis</a></li>
+  <li><a href="#http://scimantic.io/HypothesisFormation" title="http://scimantic.io/HypothesisFormation">Hypothesis Formation</a></li>
+  <li><a href="#http://scimantic.io/LiteratureSearch" title="http://scimantic.io/LiteratureSearch">Literature Search</a></li>
+  <li><a href="#http://scimantic.io/QuestionFormation" title="http://scimantic.io/QuestionFormation">Question Formation</a></li>
+  <li><a href="#http://scimantic.io/Question" title="http://scimantic.io/Question">Research Question</a></li>
+  <li><a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a></li>
+  <li><a href="#http://scimantic.io/ResultAssessment" title="http://scimantic.io/ResultAssessment">Result Assessment</a></li>
+  <li><a href="#https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel" title="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel"> <span>Uncertainty Model</span> </a></li>
+ </ul>
+ <div class="entity" id="http://scimantic.io/Analysis">
+  <h3>Analysis<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Analysis</p>
+  <div class="comment">
+   <span class="markdown">The activity of processing a Dataset to produce a Result.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Activity" target="_blank" title="http://www.w3.org/ns/prov#Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Dataset">
+  <h3>Dataset<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Dataset</p>
+  <div class="comment">
+   <span class="markdown">Raw data, observations, or measurements produced by experimentation.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/dcat#Dataset" target="_blank" title="http://www.w3.org/ns/dcat#Dataset">Dataset</a> <sup class="type-c" title="class">c</sup>, <a href="http://www.w3.org/ns/prov#Entity" target="_blank" title="http://www.w3.org/ns/prov#Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/hasUncertainty" title="http://scimantic.io/hasUncertainty">has uncertainty</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/DesignOfExperiment">
+  <h3>Design of Experiment<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/DesignOfExperiment</p>
+  <div class="comment">
+   <span class="markdown">The activity of creating an ExperimentalMethod from a Hypothesis.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Activity" target="_blank" title="http://www.w3.org/ns/prov#Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Parameter">
+  <h3>Design Parameter<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Parameter</p>
+  <div class="comment">
+   <span class="markdown">A configured parameter within an Experimental Method.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Entity" target="_blank" title="http://www.w3.org/ns/prov#Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in range of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/parameter" title="http://scimantic.io/parameter">parameter</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Evidence">
+  <h3>Evidence<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Evidence</p>
+  <div class="comment">
+   <span class="markdown">A factual claim extracted from a source.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Entity" target="_blank" title="http://www.w3.org/ns/prov#Entity">Entity</a> <sup class="type-c" title="class">c</sup>, <a href="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Evidence" target="_blank" title="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Evidence">Evidence</a> <sup class="type-c" title="class">c</sup>, <a href="http://www.nanopub.org/nschema#Nanopublication" target="_blank" title="http://www.nanopub.org/nschema#Nanopublication">Nanopublication</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/contradicts" title="http://scimantic.io/contradicts">contradicts</a> <sup class="type-op" title="object property">op</sup>, <a href="#http://scimantic.io/hasUncertainty" title="http://scimantic.io/hasUncertainty">has uncertainty</a> <sup class="type-op" title="object property">op</sup>, <a href="#http://scimantic.io/supports" title="http://scimantic.io/supports">supports</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/EvidenceAssessment">
+  <h3>Evidence Assessment<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/EvidenceAssessment</p>
+  <div class="comment">
+   <span class="markdown">The activity of evaluating credibility or relevance of Evidence.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Activity" target="_blank" title="http://www.w3.org/ns/prov#Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/ExperimentalMethod">
+  <h3>Experimental Method<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/ExperimentalMethod</p>
+  <div class="comment">
+   <span class="markdown">A specification of the experimental or computational method to be executed.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Entity" target="_blank" title="http://www.w3.org/ns/prov#Entity">Entity</a> <sup class="type-c" title="class">c</sup>, <a href="http://www.w3.org/ns/prov#Plan" target="_blank" title="http://www.w3.org/ns/prov#Plan">Plan</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/method" title="http://scimantic.io/method">method</a> <sup class="type-dp" title="data property">dp</sup>, <a href="#http://scimantic.io/parameter" title="http://scimantic.io/parameter">parameter</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Experimentation">
+  <h3>Experimentation<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Experimentation</p>
+  <div class="comment">
+   <span class="markdown">The activity of running an ExperimentalMethod to produce a Dataset.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Activity" target="_blank" title="http://www.w3.org/ns/prov#Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Hypothesis">
+  <h3>Hypothesis<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Hypothesis</p>
+  <div class="comment">
+   <span class="markdown">A testable claim derived from evidence.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Entity" target="_blank" title="http://www.w3.org/ns/prov#Entity">Entity</a> <sup class="type-c" title="class">c</sup>, <a href="http://www.nanopub.org/nschema#Nanopublication" target="_blank" title="http://www.nanopub.org/nschema#Nanopublication">Nanopublication</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in range of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/contradicts" title="http://scimantic.io/contradicts">contradicts</a> <sup class="type-op" title="object property">op</sup>, <a href="#http://scimantic.io/refines" title="http://scimantic.io/refines">refines</a> <sup class="type-op" title="object property">op</sup>, <a href="#http://scimantic.io/supports" title="http://scimantic.io/supports">supports</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/HypothesisFormation">
+  <h3>Hypothesis Formation<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/HypothesisFormation</p>
+  <div class="comment">
+   <span class="markdown">The activity of synthesizing Evidence into a Hypothesis.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Activity" target="_blank" title="http://www.w3.org/ns/prov#Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/LiteratureSearch">
+  <h3>Literature Search<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/LiteratureSearch</p>
+  <div class="comment">
+   <span class="markdown">The activity of searching for and extracting Evidence.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Activity" target="_blank" title="http://www.w3.org/ns/prov#Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/QuestionFormation">
+  <h3>Question Formation<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/QuestionFormation</p>
+  <div class="comment">
+   <span class="markdown">The activity of creating a Research Question.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Activity" target="_blank" title="http://www.w3.org/ns/prov#Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Question">
+  <h3>Research Question<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Question</p>
+  <div class="comment">
+   <span class="markdown">An interrogative sentence representing the research query.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Entity" target="_blank" title="http://www.w3.org/ns/prov#Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/motivates" title="http://scimantic.io/motivates">motivates</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Result">
+  <h3>Result<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Result</p>
+  <div class="comment">
+   <span class="markdown">The outcome of an analysis activity.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Entity" target="_blank" title="http://www.w3.org/ns/prov#Entity">Entity</a> <sup class="type-c" title="class">c</sup>, <a href="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Evidence" target="_blank" title="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Evidence">Evidence</a> <sup class="type-c" title="class">c</sup>, <a href="http://www.nanopub.org/nschema#Nanopublication" target="_blank" title="http://www.nanopub.org/nschema#Nanopublication">Nanopublication</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/contradicts" title="http://scimantic.io/contradicts">contradicts</a> <sup class="type-op" title="object property">op</sup>, <a href="#http://scimantic.io/hasUncertainty" title="http://scimantic.io/hasUncertainty">has uncertainty</a> <sup class="type-op" title="object property">op</sup>, <a href="#http://scimantic.io/refines" title="http://scimantic.io/refines">refines</a> <sup class="type-op" title="object property">op</sup>, <a href="#http://scimantic.io/supports" title="http://scimantic.io/supports">supports</a> <sup class="type-op" title="object property">op</sup>, <a href="#http://scimantic.io/unit" title="http://scimantic.io/unit">unit</a> <sup class="type-dp" title="data property">dp</sup>, <a href="#http://scimantic.io/value" title="http://scimantic.io/value">value</a> <sup class="type-dp" title="data property">dp</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/ResultAssessment">
+  <h3>Result Assessment<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/ResultAssessment</p>
+  <div class="comment">
+   <span class="markdown">The activity of comparing a Result to the original Hypothesis.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Activity" target="_blank" title="http://www.w3.org/ns/prov#Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel">
+  <h3>Uncertainty Model<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel</p>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="http://www.w3.org/ns/prov#Entity" target="_blank" title="http://www.w3.org/ns/prov#Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in range of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/hasUncertainty" title="http://scimantic.io/hasUncertainty">has uncertainty</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+</div><div xmlns:widoco="https://w3id.org/widoco/vocab#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="objectproperties">
+ <h3 id="properties" class="list">Object Properties</h3>
+ <ul class="hlist">
+  <li><a href="#http://scimantic.io/contradicts" title="http://scimantic.io/contradicts">contradicts</a></li>
+  <li><a href="#http://scimantic.io/hasUncertainty" title="http://scimantic.io/hasUncertainty">has uncertainty</a></li>
+  <li><a href="#http://scimantic.io/motivates" title="http://scimantic.io/motivates">motivates</a></li>
+  <li><a href="#http://scimantic.io/parameter" title="http://scimantic.io/parameter">parameter</a></li>
+  <li><a href="#http://scimantic.io/refines" title="http://scimantic.io/refines">refines</a></li>
+  <li><a href="#http://scimantic.io/supports" title="http://scimantic.io/supports">supports</a></li>
+ </ul>
+ <div class="entity" id="http://scimantic.io/contradicts">
+  <h3>contradicts<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/contradicts</p>
+  <div class="comment">
+   <span class="markdown">An Entity (Evidence/Result) that provides negative evidence against a Hypothesis.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a> <sup class="type-c" title="class">c</sup> <span class="logic">or</span> <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Hypothesis" title="http://scimantic.io/Hypothesis">Hypothesis</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/hasUncertainty">
+  <h3>has uncertainty<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/hasUncertainty</p>
+  <div class="comment">
+   <span class="markdown">Links an entity to its reified uncertainty model.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Dataset" title="http://scimantic.io/Dataset">Dataset</a> <sup class="type-c" title="class">c</sup> <span class="logic">or</span> <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a> <sup class="type-c" title="class">c</sup> <span class="logic">or</span> <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="#https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel" title="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel">Uncertainty Model</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/motivates">
+  <h3>motivates<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/motivates</p>
+  <div class="comment">
+   <span class="markdown">A Question that triggers or motivates an Activity (e.g., Literature Search).</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Question" title="http://scimantic.io/Question">Research Question</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/ns/prov#Activity" target="_blank" title="http://www.w3.org/ns/prov#Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/parameter">
+  <h3>parameter<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/parameter</p>
+  <div class="comment">
+   <span class="markdown">Structured configuration parameter.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/ExperimentalMethod" title="http://scimantic.io/ExperimentalMethod">Experimental Method</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Parameter" title="http://scimantic.io/Parameter">Design Parameter</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/refines">
+  <h3>refines<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/refines</p>
+  <div class="comment">
+   <span class="markdown">A Result that suggests a specific modification to a Hypothesis (Feedback capability).</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has super-properties
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/ns/prov#wasDerivedFrom" target="_blank" title="http://www.w3.org/ns/prov#wasDerivedFrom">was Derived From</a> <sup class="type-op" title="object property">op</sup>
+    </dd>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Hypothesis" title="http://scimantic.io/Hypothesis">Hypothesis</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/supports">
+  <h3>supports<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/supports</p>
+  <div class="comment">
+   <span class="markdown">An Entity (Evidence/Result) that provides positive evidence for a Hypothesis.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a> <sup class="type-c" title="class">c</sup> <span class="logic">or</span> <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Hypothesis" title="http://scimantic.io/Hypothesis">Hypothesis</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+</div><div xmlns:widoco="https://w3id.org/widoco/vocab#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="dataproperties">
+ <h3 id="dataproperties-headline" class="list">Data Properties</h3>
+ <ul class="hlist">
+  <li><a href="#http://scimantic.io/accessLevel" title="http://scimantic.io/accessLevel">access level</a></li>
+  <li><a href="#http://scimantic.io/method" title="http://scimantic.io/method">method</a></li>
+  <li><a href="#http://scimantic.io/publishable" title="http://scimantic.io/publishable">publishable</a></li>
+  <li><a href="#http://scimantic.io/unit" title="http://scimantic.io/unit">unit</a></li>
+  <li><a href="#http://scimantic.io/value" title="http://scimantic.io/value">value</a></li>
+ </ul>
+ <div class="entity" id="http://scimantic.io/accessLevel">
+  <h3>access level<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/accessLevel</p>
+  <div class="comment">
+   <span class="markdown">Publishing scope (e.g., local, institutional, public, public_essential_evidence).</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="http://www.nanopub.org/nschema#Nanopublication" target="_blank" title="http://www.nanopub.org/nschema#Nanopublication">Nanopublication</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/method">
+  <h3>method<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/method</p>
+  <div class="comment">
+   <span class="markdown">Name or description of the method.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/ExperimentalMethod" title="http://scimantic.io/ExperimentalMethod">Experimental Method</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/publishable">
+  <h3>publishable<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/publishable</p>
+  <div class="comment">
+   <span class="markdown">Flag indicating if this is ready for public promotion.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="http://www.nanopub.org/nschema#Nanopublication" target="_blank" title="http://www.nanopub.org/nschema#Nanopublication">Nanopublication</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#boolean" target="_blank" title="http://www.w3.org/2001/XMLSchema#boolean">boolean</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/unit">
+  <h3>unit<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/unit</p>
+  <div class="comment">
+   <span class="markdown">Unit of measurement.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/value">
+  <h3>value<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/value</p>
+  <div class="comment">
+   <span class="markdown">The numeric or categorical result.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+</div><div id="legend">
+<h2>Legend <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<div   class="entity">
+<sup class="type-c" title="Classes">c</sup>: Classes <br/>
+<sup class="type-op" title="Object Properties">op</sup>: Object Properties <br/>
+<sup class="type-dp" title="Data Properties">dp</sup>: Data Properties <br/>
+</div>
+</div>
+</div>
+    
+
+<!--REFERENCES SECTION-->
+  <div id="references">
+<h2 id="ref" class="list">References <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<span class="markdown">
+Add your references here. It is recommended to have them as a list.</span>
+
+</div>
+<div id="acknowledgments">
+<h2 id="ack" class="list">Acknowledgments <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<p>
+The authors would like to thank <a href="http://www.essepuntato.it/">Silvio Peroni</a> for developing <a href="http://www.essepuntato.it/lode">LODE</a>, a Live OWL Documentation Environment, which is used for representing the Cross Referencing Section of this document and <a href="https://w3id.org/people/dgarijo">Daniel Garijo</a> for developing <a href="https://github.com/dgarijo/Widoco">Widoco</a>, the program used to create the template used in this documentation.</p>
+</div>
+
+
+</div>
+</body>
+</html>
