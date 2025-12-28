@@ -49,13 +49,10 @@
     "id" : "3",
     "type" : "owl:Class"
   }, {
-    "id" : "22",
+    "id" : "19",
     "type" : "rdfs:Datatype"
   }, {
-    "id" : "21",
-    "type" : "rdfs:Datatype"
-  }, {
-    "id" : "27",
+    "id" : "24",
     "type" : "rdfs:Datatype"
   }, {
     "id" : "26",
@@ -64,8 +61,11 @@
     "id" : "12",
     "type" : "owl:Class"
   }, {
-    "id" : "45",
+    "id" : "44",
     "type" : "owl:Class"
+  }, {
+    "id" : "54",
+    "type" : "rdfs:Datatype"
   }, {
     "id" : "51",
     "type" : "rdfs:Datatype"
@@ -76,31 +76,31 @@
     "id" : "14",
     "type" : "owl:Class"
   }, {
-    "id" : "24",
+    "id" : "61",
     "type" : "owl:Class"
   }, {
-    "id" : "30",
+    "id" : "29",
     "type" : "owl:Class"
-  }, {
-    "id" : "77",
-    "type" : "rdfs:Datatype"
   }, {
     "id" : "5",
     "type" : "owl:Class"
   }, {
-    "id" : "41",
+    "id" : "40",
     "type" : "owl:Class"
   }, {
-    "id" : "39",
+    "id" : "38",
     "type" : "owl:Class"
   }, {
-    "id" : "81",
-    "type" : "owl:Class"
-  }, {
-    "id" : "89",
+    "id" : "86",
     "type" : "rdfs:Datatype"
   }, {
-    "id" : "37",
+    "id" : "80",
+    "type" : "owl:Class"
+  }, {
+    "id" : "90",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "36",
     "type" : "owl:Class"
   }, {
     "id" : "9",
@@ -115,10 +115,10 @@
     "id" : "10",
     "type" : "owl:Class"
   }, {
-    "id" : "98",
+    "id" : "100",
     "type" : "rdfs:Datatype"
   }, {
-    "id" : "102",
+    "id" : "99",
     "type" : "rdfs:Datatype"
   }, {
     "id" : "110",
@@ -142,7 +142,7 @@
     "id" : "69",
     "type" : "owl:unionOf"
   }, {
-    "id" : "50",
+    "id" : "49",
     "type" : "rdfs:Datatype"
   }, {
     "id" : "6",
@@ -157,19 +157,19 @@
     "id" : "66",
     "type" : "owl:Class"
   }, {
-    "id" : "48",
+    "id" : "47",
     "type" : "rdfs:Datatype"
   }, {
-    "id" : "101",
+    "id" : "102",
     "type" : "rdfs:Datatype"
   }, {
-    "id" : "33",
+    "id" : "32",
     "type" : "owl:Class"
   }, {
-    "id" : "128",
+    "id" : "130",
     "type" : "rdfs:Datatype"
   }, {
-    "id" : "147",
+    "id" : "148",
     "type" : "rdfs:Datatype"
   }, {
     "id" : "150",
@@ -181,22 +181,22 @@
     "id" : "83",
     "type" : "owl:Thing"
   }, {
-    "id" : "35",
+    "id" : "34",
     "type" : "owl:Class"
   }, {
-    "id" : "116",
+    "id" : "117",
     "type" : "owl:Class"
   }, {
-    "id" : "80",
+    "id" : "79",
     "type" : "owl:Thing"
   }, {
-    "id" : "60",
+    "id" : "59",
     "type" : "owl:Thing"
-  }, {
-    "id" : "31",
-    "type" : "owl:Class"
   }, {
     "id" : "11",
+    "type" : "owl:Class"
+  }, {
+    "id" : "30",
     "type" : "owl:Class"
   }, {
     "id" : "120",
@@ -211,21 +211,21 @@
     "id" : "15",
     "type" : "owl:Class"
   }, {
-    "id" : "43",
+    "id" : "42",
     "type" : "owl:Class"
   }, {
-    "id" : "47",
+    "id" : "46",
     "type" : "owl:Thing"
   }, {
     "id" : "17",
     "type" : "owl:Thing"
   } ],
   "classAttribute" : [ {
-    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "iri" : "http://www.w3.org/2001/XMLSchema#boolean",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
     "id" : "0",
     "label" : {
-      "IRI-based" : "string"
+      "IRI-based" : "boolean"
     }
   }, {
     "iri" : "http://scimantic.io/UncertaintyModel",
@@ -321,23 +321,16 @@
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "22",
+    "id" : "19",
     "label" : {
       "IRI-based" : "string"
     }
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "21",
+    "id" : "24",
     "label" : {
       "IRI-based" : "string"
-    }
-  }, {
-    "iri" : "http://www.w3.org/2001/XMLSchema#boolean",
-    "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "27",
-    "label" : {
-      "IRI-based" : "boolean"
     }
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
@@ -404,7 +397,14 @@
       "IRI-based" : "Agent",
       "undefined" : "Agent"
     },
-    "id" : "45"
+    "id" : "44"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "54",
+    "label" : {
+      "IRI-based" : "string"
+    }
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
@@ -477,8 +477,8 @@
       "IRI-based" : "LiteratureSearch",
       "undefined" : "LiteratureSearch"
     },
-    "id" : "24",
-    "superClasses" : [ "31" ]
+    "id" : "61",
+    "superClasses" : [ "30" ]
   }, {
     "iri" : "http://scimantic.io/Analysis",
     "baseIri" : "http://scimantic.io",
@@ -507,15 +507,8 @@
       "IRI-based" : "Analysis",
       "undefined" : "Analysis"
     },
-    "id" : "30",
-    "superClasses" : [ "31" ]
-  }, {
-    "iri" : "http://www.w3.org/2001/XMLSchema#string",
-    "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "77",
-    "label" : {
-      "IRI-based" : "string"
-    }
+    "id" : "29",
+    "superClasses" : [ "30" ]
   }, {
     "iri" : "http://scimantic.io/Incompleteness",
     "baseIri" : "http://scimantic.io",
@@ -574,8 +567,8 @@
       "IRI-based" : "DesignOfExperiment",
       "undefined" : "DesignOfExperiment"
     },
-    "id" : "41",
-    "superClasses" : [ "31" ]
+    "id" : "40",
+    "superClasses" : [ "30" ]
   }, {
     "iri" : "http://scimantic.io/HypothesisFormation",
     "baseIri" : "http://scimantic.io",
@@ -604,8 +597,15 @@
       "IRI-based" : "HypothesisFormation",
       "undefined" : "HypothesisFormation"
     },
-    "id" : "39",
-    "superClasses" : [ "31" ]
+    "id" : "38",
+    "superClasses" : [ "30" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "86",
+    "label" : {
+      "IRI-based" : "string"
+    }
   }, {
     "iri" : "http://scimantic.io/UncertaintyDerivation",
     "baseIri" : "http://scimantic.io",
@@ -634,11 +634,11 @@
       "IRI-based" : "UncertaintyDerivation",
       "undefined" : "UncertaintyDerivation"
     },
-    "id" : "81"
+    "id" : "80"
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "89",
+    "id" : "90",
     "label" : {
       "IRI-based" : "string"
     }
@@ -670,8 +670,8 @@
       "IRI-based" : "Experimentation",
       "undefined" : "Experimentation"
     },
-    "id" : "37",
-    "superClasses" : [ "31" ]
+    "id" : "36",
+    "superClasses" : [ "30" ]
   }, {
     "iri" : "http://scimantic.io/Hypothesis",
     "baseIri" : "http://scimantic.io",
@@ -783,14 +783,14 @@
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "98",
+    "id" : "100",
     "label" : {
       "IRI-based" : "string"
     }
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "102",
+    "id" : "99",
     "label" : {
       "IRI-based" : "string"
     }
@@ -873,12 +873,12 @@
       "permissible_values" : [ {
         "identifier" : "permissible_values",
         "language" : "undefined",
-        "value" : "http://scimantic.io/UncertaintyNature#Aleatory",
+        "value" : "http://scimantic.io/UncertaintyNature#Epistemic",
         "type" : "iri"
       }, {
         "identifier" : "permissible_values",
         "language" : "undefined",
-        "value" : "http://scimantic.io/UncertaintyNature#Epistemic",
+        "value" : "http://scimantic.io/UncertaintyNature#Aleatory",
         "type" : "iri"
       } ]
     },
@@ -886,14 +886,14 @@
       "IRI-based" : "UncertaintyNature",
       "undefined" : "UncertaintyNature"
     },
-    "union" : [ "116", "68" ],
-    "subClasses" : [ "116", "68" ],
+    "union" : [ "117", "68" ],
+    "subClasses" : [ "117", "68" ],
     "attributes" : [ "union" ],
     "id" : "69"
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "50",
+    "id" : "49",
     "label" : {
       "IRI-based" : "string"
     }
@@ -974,14 +974,14 @@
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "48",
+    "id" : "47",
     "label" : {
       "IRI-based" : "string"
     }
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "101",
+    "id" : "102",
     "label" : {
       "IRI-based" : "string"
     }
@@ -1013,19 +1013,19 @@
       "IRI-based" : "EvidenceAssessment",
       "undefined" : "EvidenceAssessment"
     },
-    "id" : "33",
-    "superClasses" : [ "31" ]
+    "id" : "32",
+    "superClasses" : [ "30" ]
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "128",
+    "id" : "130",
     "label" : {
       "IRI-based" : "string"
     }
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#string",
     "baseIri" : "http://www.w3.org/2001/XMLSchema",
-    "id" : "147",
+    "id" : "148",
     "label" : {
       "IRI-based" : "string"
     }
@@ -1078,8 +1078,8 @@
       "IRI-based" : "QuestionFormation",
       "undefined" : "QuestionFormation"
     },
-    "id" : "35",
-    "superClasses" : [ "31" ]
+    "id" : "34",
+    "superClasses" : [ "30" ]
   }, {
     "iri" : "http://scimantic.io/UncertaintyNature#Epistemic",
     "baseIri" : "http://scimantic.io/UncertaintyNature",
@@ -1096,52 +1096,22 @@
       "IRI-based" : "Epistemic",
       "undefined" : "Epistemic"
     },
-    "id" : "116",
+    "id" : "117",
     "superClasses" : [ "69" ]
   }, {
     "iri" : "http://www.w3.org/2002/07/owl#Thing",
     "baseIri" : "http://owl2vowl.de",
-    "id" : "80",
+    "id" : "79",
     "label" : {
       "undefined" : "Thing"
     }
   }, {
     "iri" : "http://www.w3.org/2002/07/owl#Thing",
     "baseIri" : "http://owl2vowl.de",
-    "id" : "60",
+    "id" : "59",
     "label" : {
       "undefined" : "Thing"
     }
-  }, {
-    "iri" : "http://scimantic.io/Activity",
-    "baseIri" : "http://scimantic.io",
-    "instances" : 0,
-    "annotations" : {
-      "exactMatch" : [ {
-        "identifier" : "exactMatch",
-        "language" : "undefined",
-        "value" : "http://www.w3.org/ns/prov#Activity",
-        "type" : "iri"
-      } ],
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "A provenance activity.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "Activity",
-      "undefined" : "Activity"
-    },
-    "subClasses" : [ "24", "30", "33", "35", "37", "39", "41", "43" ],
-    "id" : "31"
   }, {
     "iri" : "http://scimantic.io/Parameter",
     "baseIri" : "http://scimantic.io",
@@ -1172,6 +1142,36 @@
     },
     "id" : "11",
     "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://scimantic.io/Activity",
+    "baseIri" : "http://scimantic.io",
+    "instances" : 0,
+    "annotations" : {
+      "exactMatch" : [ {
+        "identifier" : "exactMatch",
+        "language" : "undefined",
+        "value" : "http://www.w3.org/ns/prov#Activity",
+        "type" : "iri"
+      } ],
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "A provenance activity.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Activity",
+      "undefined" : "Activity"
+    },
+    "subClasses" : [ "61", "29", "32", "34", "36", "38", "40", "42" ],
+    "id" : "30"
   }, {
     "iri" : "http://www.w3.org/2002/07/owl#Thing",
     "baseIri" : "http://owl2vowl.de",
@@ -1251,12 +1251,12 @@
       "IRI-based" : "ResultAssessment",
       "undefined" : "ResultAssessment"
     },
-    "id" : "43",
-    "superClasses" : [ "31" ]
+    "id" : "42",
+    "superClasses" : [ "30" ]
   }, {
     "iri" : "http://www.w3.org/2002/07/owl#Thing",
     "baseIri" : "http://owl2vowl.de",
-    "id" : "47",
+    "id" : "46",
     "label" : {
       "undefined" : "Thing"
     }
@@ -1278,10 +1278,13 @@
     "id" : "18",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "19",
+    "id" : "20",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "20",
+    "id" : "21",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "22",
     "type" : "owl:allValuesFrom"
   }, {
     "id" : "23",
@@ -1290,44 +1293,44 @@
     "id" : "25",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "28",
+    "id" : "27",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "29",
+    "id" : "28",
     "type" : "rdfs:SubClassOf"
   }, {
-    "id" : "32",
+    "id" : "31",
     "type" : "rdfs:SubClassOf"
   }, {
-    "id" : "34",
+    "id" : "33",
     "type" : "rdfs:SubClassOf"
   }, {
-    "id" : "36",
+    "id" : "35",
     "type" : "rdfs:SubClassOf"
   }, {
-    "id" : "38",
+    "id" : "37",
     "type" : "rdfs:SubClassOf"
   }, {
-    "id" : "40",
+    "id" : "39",
     "type" : "rdfs:SubClassOf"
   }, {
-    "id" : "42",
+    "id" : "41",
     "type" : "rdfs:SubClassOf"
   }, {
-    "id" : "44",
+    "id" : "43",
     "type" : "owl:objectProperty"
   }, {
-    "id" : "46",
+    "id" : "45",
     "type" : "owl:datatypeProperty"
   }, {
-    "id" : "49",
+    "id" : "48",
     "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "50",
+    "type" : "owl:allValuesFrom"
   }, {
     "id" : "52",
     "type" : "owl:datatypeProperty"
-  }, {
-    "id" : "54",
-    "type" : "owl:allValuesFrom"
   }, {
     "id" : "55",
     "type" : "owl:allValuesFrom"
@@ -1336,12 +1339,9 @@
     "type" : "owl:allValuesFrom"
   }, {
     "id" : "58",
-    "type" : "owl:allValuesFrom"
-  }, {
-    "id" : "59",
     "type" : "owl:objectProperty"
   }, {
-    "id" : "61",
+    "id" : "60",
     "type" : "owl:allValuesFrom"
   }, {
     "id" : "62",
@@ -1374,11 +1374,14 @@
     "id" : "76",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "78",
+    "id" : "77",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "79",
+    "id" : "78",
     "type" : "owl:objectProperty"
+  }, {
+    "id" : "81",
+    "type" : "owl:allValuesFrom"
   }, {
     "id" : "82",
     "type" : "owl:objectProperty"
@@ -1389,16 +1392,13 @@
     "id" : "85",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "86",
-    "type" : "owl:allValuesFrom"
-  }, {
     "id" : "87",
     "type" : "owl:allValuesFrom"
   }, {
     "id" : "88",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "90",
+    "id" : "89",
     "type" : "owl:allValuesFrom"
   }, {
     "id" : "91",
@@ -1419,10 +1419,10 @@
     "id" : "97",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "99",
+    "id" : "98",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "100",
+    "id" : "101",
     "type" : "owl:datatypeProperty"
   }, {
     "id" : "103",
@@ -1449,7 +1449,7 @@
     "id" : "115",
     "type" : "owl:objectProperty"
   }, {
-    "id" : "117",
+    "id" : "116",
     "type" : "owl:datatypeProperty"
   }, {
     "id" : "118",
@@ -1479,10 +1479,10 @@
     "id" : "127",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "129",
+    "id" : "128",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "130",
+    "id" : "129",
     "type" : "owl:allValuesFrom"
   }, {
     "id" : "131",
@@ -1533,7 +1533,7 @@
     "id" : "146",
     "type" : "owl:allValuesFrom"
   }, {
-    "id" : "148",
+    "id" : "147",
     "type" : "owl:allValuesFrom"
   }, {
     "id" : "149",
@@ -1619,7 +1619,7 @@
     "attributes" : [ "object" ],
     "id" : "16"
   }, {
-    "iri" : "http://scimantic.io/content",
+    "iri" : "http://scimantic.io/publishable",
     "baseIri" : "http://scimantic.io",
     "range" : "0",
     "annotations" : {
@@ -1632,17 +1632,42 @@
       "definition" : [ {
         "identifier" : "definition",
         "language" : "undefined",
-        "value" : "The actual text content of the evidence.",
+        "value" : "Flag indicating if this is ready for public promotion.",
         "type" : "label"
       } ]
     },
     "label" : {
-      "IRI-based" : "content",
-      "undefined" : "content"
+      "IRI-based" : "publishable",
+      "undefined" : "publishable"
     },
     "domain" : "14",
     "attributes" : [ "allValues", "datatype" ],
     "id" : "18"
+  }, {
+    "iri" : "http://scimantic.io/contradicts",
+    "baseIri" : "http://scimantic.io",
+    "range" : "9",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "contradicts",
+      "undefined" : "contradicts"
+    },
+    "domain" : "14",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "20"
   }, {
     "iri" : "http://scimantic.io/supports",
     "baseIri" : "http://scimantic.io",
@@ -1666,12 +1691,12 @@
       "undefined" : "supports"
     },
     "domain" : "14",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "19"
+    "attributes" : [ "object", "allValues" ],
+    "id" : "21"
   }, {
-    "iri" : "http://scimantic.io/source",
+    "iri" : "http://scimantic.io/label",
     "baseIri" : "http://scimantic.io",
-    "range" : "21",
+    "range" : "19",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -1682,21 +1707,21 @@
       "definition" : [ {
         "identifier" : "definition",
         "language" : "undefined",
-        "value" : "Source URL or identifier.",
+        "value" : "The human-readable label or text.",
         "type" : "label"
       } ]
     },
     "label" : {
-      "IRI-based" : "source",
-      "undefined" : "source"
+      "IRI-based" : "label",
+      "undefined" : "label"
     },
     "domain" : "14",
     "attributes" : [ "allValues", "datatype" ],
-    "id" : "20"
+    "id" : "22"
   }, {
-    "iri" : "http://scimantic.io/wasGeneratedBy",
+    "iri" : "http://scimantic.io/hasUncertainty",
     "baseIri" : "http://scimantic.io",
-    "range" : "24",
+    "range" : "1",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -1707,21 +1732,21 @@
       "definition" : [ {
         "identifier" : "definition",
         "language" : "undefined",
-        "value" : "The activity that generated this entity.",
+        "value" : "Links an entity to its reified uncertainty model.",
         "type" : "label"
       } ]
     },
     "label" : {
-      "IRI-based" : "wasGeneratedBy",
-      "undefined" : "wasGeneratedBy"
+      "IRI-based" : "hasUncertainty",
+      "undefined" : "hasUncertainty"
     },
     "domain" : "14",
-    "attributes" : [ "allValues", "object" ],
+    "attributes" : [ "object", "allValues" ],
     "id" : "23"
   }, {
     "iri" : "http://scimantic.io/citation",
     "baseIri" : "http://scimantic.io",
-    "range" : "26",
+    "range" : "24",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -1744,9 +1769,9 @@
     "attributes" : [ "allValues", "datatype" ],
     "id" : "25"
   }, {
-    "iri" : "http://scimantic.io/label",
+    "iri" : "http://scimantic.io/accessLevel",
     "baseIri" : "http://scimantic.io",
-    "range" : "22",
+    "range" : "26",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -1757,52 +1782,52 @@
       "definition" : [ {
         "identifier" : "definition",
         "language" : "undefined",
-        "value" : "The human-readable label or text.",
+        "value" : "Publishing scope (e.g., local, institutional, public).",
         "type" : "label"
       } ]
     },
     "label" : {
-      "IRI-based" : "label",
-      "undefined" : "label"
+      "IRI-based" : "accessLevel",
+      "undefined" : "accessLevel"
     },
     "domain" : "14",
     "attributes" : [ "allValues", "datatype" ],
+    "id" : "27"
+  }, {
+    "range" : "30",
+    "domain" : "29",
+    "attributes" : [ "object", "anonymous" ],
     "id" : "28"
   }, {
-    "range" : "31",
-    "domain" : "30",
+    "range" : "30",
+    "domain" : "32",
     "attributes" : [ "object", "anonymous" ],
-    "id" : "29"
+    "id" : "31"
   }, {
-    "range" : "31",
-    "domain" : "33",
+    "range" : "30",
+    "domain" : "34",
     "attributes" : [ "object", "anonymous" ],
-    "id" : "32"
+    "id" : "33"
   }, {
-    "range" : "31",
-    "domain" : "35",
+    "range" : "30",
+    "domain" : "36",
     "attributes" : [ "object", "anonymous" ],
-    "id" : "34"
+    "id" : "35"
   }, {
-    "range" : "31",
-    "domain" : "37",
+    "range" : "30",
+    "domain" : "38",
     "attributes" : [ "object", "anonymous" ],
-    "id" : "36"
+    "id" : "37"
   }, {
-    "range" : "31",
-    "domain" : "39",
+    "range" : "30",
+    "domain" : "40",
     "attributes" : [ "object", "anonymous" ],
-    "id" : "38"
+    "id" : "39"
   }, {
-    "range" : "31",
-    "domain" : "41",
+    "range" : "30",
+    "domain" : "42",
     "attributes" : [ "object", "anonymous" ],
-    "id" : "40"
-  }, {
-    "range" : "31",
-    "domain" : "43",
-    "attributes" : [ "object", "anonymous" ],
-    "id" : "42"
+    "id" : "41"
   }, {
     "iri" : "http://scimantic.io/contradicts",
     "baseIri" : "http://scimantic.io",
@@ -1828,11 +1853,11 @@
     "maxCardinality" : "1",
     "domain" : "2",
     "attributes" : [ "object" ],
-    "id" : "44"
+    "id" : "43"
   }, {
     "iri" : "http://scimantic.io/content",
     "baseIri" : "http://scimantic.io",
-    "range" : "48",
+    "range" : "47",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -1852,13 +1877,13 @@
       "undefined" : "content"
     },
     "maxCardinality" : "1",
-    "domain" : "47",
+    "domain" : "46",
     "attributes" : [ "datatype" ],
-    "id" : "46"
+    "id" : "45"
   }, {
     "iri" : "http://scimantic.io/id",
     "baseIri" : "http://scimantic.io",
-    "range" : "50",
+    "range" : "49",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -1879,9 +1904,34 @@
     },
     "maxCardinality" : "1",
     "minCardinality" : "1",
-    "domain" : "47",
+    "domain" : "46",
     "attributes" : [ "datatype" ],
-    "id" : "49"
+    "id" : "48"
+  }, {
+    "iri" : "http://scimantic.io/content",
+    "baseIri" : "http://scimantic.io",
+    "range" : "51",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "The actual text content of the evidence.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "content",
+      "undefined" : "content"
+    },
+    "domain" : "14",
+    "attributes" : [ "allValues", "datatype" ],
+    "id" : "50"
   }, {
     "iri" : "http://scimantic.io/value",
     "baseIri" : "http://scimantic.io",
@@ -1904,13 +1954,13 @@
       "IRI-based" : "value",
       "undefined" : "value"
     },
-    "domain" : "47",
+    "domain" : "46",
     "attributes" : [ "datatype" ],
     "id" : "52"
   }, {
-    "iri" : "http://scimantic.io/accessLevel",
+    "iri" : "http://scimantic.io/wasAttributedTo",
     "baseIri" : "http://scimantic.io",
-    "range" : "51",
+    "range" : "44",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -1921,42 +1971,153 @@
       "definition" : [ {
         "identifier" : "definition",
         "language" : "undefined",
-        "value" : "Publishing scope (e.g., local, institutional, public).",
+        "value" : "The agent who attributed this entity (Agent).",
         "type" : "label"
       } ]
     },
     "label" : {
-      "IRI-based" : "accessLevel",
-      "undefined" : "accessLevel"
+      "IRI-based" : "wasAttributedTo",
+      "undefined" : "wasAttributedTo"
     },
-    "domain" : "14",
-    "attributes" : [ "allValues", "datatype" ],
-    "id" : "54"
-  }, {
-    "iri" : "http://scimantic.io/publishable",
-    "baseIri" : "http://scimantic.io",
-    "range" : "27",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "Flag indicating if this is ready for public promotion.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "publishable",
-      "undefined" : "publishable"
-    },
-    "domain" : "14",
-    "attributes" : [ "allValues", "datatype" ],
+    "domain" : "2",
+    "attributes" : [ "object", "allValues" ],
     "id" : "55"
+  }, {
+    "iri" : "http://scimantic.io/source",
+    "baseIri" : "http://scimantic.io",
+    "range" : "54",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "Source URL or identifier.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "source",
+      "undefined" : "source"
+    },
+    "domain" : "14",
+    "attributes" : [ "allValues", "datatype" ],
+    "id" : "57"
+  }, {
+    "iri" : "http://scimantic.io/parameter",
+    "baseIri" : "http://scimantic.io",
+    "range" : "11",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "Structured configuration parameter.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "parameter",
+      "undefined" : "parameter"
+    },
+    "domain" : "59",
+    "attributes" : [ "object" ],
+    "id" : "58"
+  }, {
+    "iri" : "http://scimantic.io/wasGeneratedBy",
+    "baseIri" : "http://scimantic.io",
+    "range" : "61",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "The activity that generated this entity.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "wasGeneratedBy",
+      "undefined" : "wasGeneratedBy"
+    },
+    "domain" : "14",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "60"
+  }, {
+    "iri" : "http://scimantic.io/method",
+    "baseIri" : "http://scimantic.io",
+    "range" : "63",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "Name or description of the method.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "method",
+      "undefined" : "method"
+    },
+    "maxCardinality" : "1",
+    "domain" : "46",
+    "attributes" : [ "datatype" ],
+    "id" : "62"
+  }, {
+    "iri" : "http://scimantic.io/wasInformedBy",
+    "baseIri" : "http://scimantic.io",
+    "range" : "38",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "Activity that informed this Activity.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "wasInformedBy",
+      "undefined" : "wasInformedBy"
+    },
+    "domain" : "40",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "64"
+  }, {
+    "range" : "66",
+    "domain" : "13",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "65"
+  }, {
+    "range" : "69",
+    "domain" : "68",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "67"
   }, {
     "iri" : "http://scimantic.io/id",
     "baseIri" : "http://scimantic.io",
@@ -1981,167 +2142,6 @@
     },
     "domain" : "2",
     "attributes" : [ "allValues", "datatype" ],
-    "id" : "57"
-  }, {
-    "iri" : "http://scimantic.io/hasUncertainty",
-    "baseIri" : "http://scimantic.io",
-    "range" : "1",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "Links an entity to its reified uncertainty model.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "hasUncertainty",
-      "undefined" : "hasUncertainty"
-    },
-    "domain" : "14",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "58"
-  }, {
-    "iri" : "http://scimantic.io/parameter",
-    "baseIri" : "http://scimantic.io",
-    "range" : "11",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "Structured configuration parameter.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "parameter",
-      "undefined" : "parameter"
-    },
-    "domain" : "60",
-    "attributes" : [ "object" ],
-    "id" : "59"
-  }, {
-    "iri" : "http://scimantic.io/contradicts",
-    "baseIri" : "http://scimantic.io",
-    "range" : "9",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "contradicts",
-      "undefined" : "contradicts"
-    },
-    "domain" : "14",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "61"
-  }, {
-    "iri" : "http://scimantic.io/method",
-    "baseIri" : "http://scimantic.io",
-    "range" : "63",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "Name or description of the method.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "method",
-      "undefined" : "method"
-    },
-    "maxCardinality" : "1",
-    "domain" : "47",
-    "attributes" : [ "datatype" ],
-    "id" : "62"
-  }, {
-    "iri" : "http://scimantic.io/wasInformedBy",
-    "baseIri" : "http://scimantic.io",
-    "range" : "39",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "Activity that informed this Activity.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "wasInformedBy",
-      "undefined" : "wasInformedBy"
-    },
-    "domain" : "41",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "64"
-  }, {
-    "range" : "66",
-    "domain" : "13",
-    "attributes" : [ "object", "anonymous" ],
-    "id" : "65"
-  }, {
-    "range" : "69",
-    "domain" : "68",
-    "attributes" : [ "object", "anonymous" ],
-    "id" : "67"
-  }, {
-    "iri" : "http://scimantic.io/wasAttributedTo",
-    "baseIri" : "http://scimantic.io",
-    "range" : "45",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "The agent who attributed this entity (Agent).",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "wasAttributedTo",
-      "undefined" : "wasAttributedTo"
-    },
-    "domain" : "2",
-    "attributes" : [ "allValues", "object" ],
     "id" : "70"
   }, {
     "iri" : "http://scimantic.io/generatedAtTime",
@@ -2165,7 +2165,7 @@
       "IRI-based" : "generatedAtTime",
       "undefined" : "generatedAtTime"
     },
-    "domain" : "47",
+    "domain" : "46",
     "attributes" : [ "datatype" ],
     "id" : "71"
   }, {
@@ -2190,8 +2190,8 @@
       "IRI-based" : "used",
       "undefined" : "used"
     },
-    "domain" : "41",
-    "attributes" : [ "allValues", "object" ],
+    "domain" : "40",
+    "attributes" : [ "object", "allValues" ],
     "id" : "73"
   }, {
     "range" : "66",
@@ -2199,14 +2199,14 @@
     "attributes" : [ "object", "anonymous" ],
     "id" : "74"
   }, {
-    "range" : "31",
-    "domain" : "24",
+    "range" : "30",
+    "domain" : "61",
     "attributes" : [ "object", "anonymous" ],
     "id" : "75"
   }, {
-    "iri" : "http://scimantic.io/label",
+    "iri" : "http://scimantic.io/motivates",
     "baseIri" : "http://scimantic.io",
-    "range" : "77",
+    "range" : "61",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -2217,21 +2217,21 @@
       "definition" : [ {
         "identifier" : "definition",
         "language" : "undefined",
-        "value" : "The human-readable label or text.",
+        "value" : "A Question that triggers or motivates an Activity.",
         "type" : "label"
       } ]
     },
     "label" : {
-      "IRI-based" : "label",
-      "undefined" : "label"
+      "IRI-based" : "motivates",
+      "undefined" : "motivates"
     },
     "domain" : "15",
-    "attributes" : [ "allValues", "datatype" ],
+    "attributes" : [ "object", "allValues" ],
     "id" : "76"
   }, {
     "iri" : "http://scimantic.io/wasAssociatedWith",
     "baseIri" : "http://scimantic.io",
-    "range" : "45",
+    "range" : "44",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -2250,13 +2250,13 @@
       "IRI-based" : "wasAssociatedWith",
       "undefined" : "wasAssociatedWith"
     },
-    "domain" : "35",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "78"
+    "domain" : "34",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "77"
   }, {
     "iri" : "http://scimantic.io/derivationOfUncertainty",
     "baseIri" : "http://scimantic.io",
-    "range" : "81",
+    "range" : "80",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -2276,9 +2276,34 @@
       "undefined" : "derivationOfUncertainty"
     },
     "maxCardinality" : "1",
-    "domain" : "80",
+    "domain" : "79",
     "attributes" : [ "object" ],
-    "id" : "79"
+    "id" : "78"
+  }, {
+    "iri" : "http://scimantic.io/wasGeneratedBy",
+    "baseIri" : "http://scimantic.io",
+    "range" : "34",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "The activity that generated this entity.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "wasGeneratedBy",
+      "undefined" : "wasGeneratedBy"
+    },
+    "domain" : "15",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "81"
   }, {
     "iri" : "http://scimantic.io/natureOfUncertainty",
     "baseIri" : "http://scimantic.io",
@@ -2307,6 +2332,31 @@
     "attributes" : [ "object" ],
     "id" : "82"
   }, {
+    "iri" : "http://scimantic.io/wasInformedBy",
+    "baseIri" : "http://scimantic.io",
+    "range" : "32",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "Activity that informed this Activity.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "wasInformedBy",
+      "undefined" : "wasInformedBy"
+    },
+    "domain" : "38",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "84"
+  }, {
     "iri" : "http://scimantic.io/used",
     "baseIri" : "http://scimantic.io",
     "range" : "14",
@@ -2328,88 +2378,13 @@
       "IRI-based" : "used",
       "undefined" : "used"
     },
-    "domain" : "39",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "84"
-  }, {
-    "iri" : "http://scimantic.io/wasInformedBy",
-    "baseIri" : "http://scimantic.io",
-    "range" : "33",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "Activity that informed this Activity.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "wasInformedBy",
-      "undefined" : "wasInformedBy"
-    },
-    "domain" : "39",
-    "attributes" : [ "allValues", "object" ],
+    "domain" : "38",
+    "attributes" : [ "object", "allValues" ],
     "id" : "85"
-  }, {
-    "iri" : "http://scimantic.io/motivates",
-    "baseIri" : "http://scimantic.io",
-    "range" : "24",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "A Question that triggers or motivates an Activity.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "motivates",
-      "undefined" : "motivates"
-    },
-    "domain" : "15",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "86"
-  }, {
-    "iri" : "http://scimantic.io/wasGeneratedBy",
-    "baseIri" : "http://scimantic.io",
-    "range" : "35",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "The activity that generated this entity.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "wasGeneratedBy",
-      "undefined" : "wasGeneratedBy"
-    },
-    "domain" : "15",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "87"
   }, {
     "iri" : "http://scimantic.io/label",
     "baseIri" : "http://scimantic.io",
-    "range" : "89",
+    "range" : "86",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -2428,34 +2403,9 @@
       "IRI-based" : "label",
       "undefined" : "label"
     },
-    "domain" : "9",
+    "domain" : "15",
     "attributes" : [ "allValues", "datatype" ],
-    "id" : "88"
-  }, {
-    "iri" : "http://scimantic.io/wasGeneratedBy",
-    "baseIri" : "http://scimantic.io",
-    "range" : "39",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "The activity that generated this entity.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "wasGeneratedBy",
-      "undefined" : "wasGeneratedBy"
-    },
-    "domain" : "9",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "90"
+    "id" : "87"
   }, {
     "iri" : "http://scimantic.io/wasDerivedFrom",
     "baseIri" : "http://scimantic.io",
@@ -2479,12 +2429,12 @@
       "undefined" : "wasDerivedFrom"
     },
     "domain" : "9",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "91"
+    "attributes" : [ "object", "allValues" ],
+    "id" : "88"
   }, {
-    "iri" : "http://scimantic.io/wasInformedBy",
+    "iri" : "http://scimantic.io/wasGeneratedBy",
     "baseIri" : "http://scimantic.io",
-    "range" : "41",
+    "range" : "38",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -2495,17 +2445,42 @@
       "definition" : [ {
         "identifier" : "definition",
         "language" : "undefined",
-        "value" : "Activity that informed this Activity.",
+        "value" : "The activity that generated this entity.",
         "type" : "label"
       } ]
     },
     "label" : {
-      "IRI-based" : "wasInformedBy",
-      "undefined" : "wasInformedBy"
+      "IRI-based" : "wasGeneratedBy",
+      "undefined" : "wasGeneratedBy"
     },
-    "domain" : "37",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "92"
+    "domain" : "9",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "89"
+  }, {
+    "iri" : "http://scimantic.io/label",
+    "baseIri" : "http://scimantic.io",
+    "range" : "90",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "The human-readable label or text.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "label",
+      "undefined" : "label"
+    },
+    "domain" : "9",
+    "attributes" : [ "allValues", "datatype" ],
+    "id" : "91"
   }, {
     "iri" : "http://scimantic.io/used",
     "baseIri" : "http://scimantic.io",
@@ -2528,8 +2503,33 @@
       "IRI-based" : "used",
       "undefined" : "used"
     },
-    "domain" : "37",
-    "attributes" : [ "allValues", "object" ],
+    "domain" : "36",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "92"
+  }, {
+    "iri" : "http://scimantic.io/wasInformedBy",
+    "baseIri" : "http://scimantic.io",
+    "range" : "40",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "Activity that informed this Activity.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "wasInformedBy",
+      "undefined" : "wasInformedBy"
+    },
+    "domain" : "36",
+    "attributes" : [ "object", "allValues" ],
     "id" : "93"
   }, {
     "iri" : "http://scimantic.io/wasDerivedFrom",
@@ -2584,6 +2584,82 @@
     "attributes" : [ "object" ],
     "id" : "96"
   }, {
+    "iri" : "http://scimantic.io/wasGeneratedBy",
+    "baseIri" : "http://scimantic.io",
+    "range" : "40",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "The activity that generated this entity.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "wasGeneratedBy",
+      "undefined" : "wasGeneratedBy"
+    },
+    "domain" : "10",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "97"
+  }, {
+    "iri" : "http://scimantic.io/method",
+    "baseIri" : "http://scimantic.io",
+    "range" : "99",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "Name or description of the method.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "method",
+      "undefined" : "method"
+    },
+    "domain" : "10",
+    "attributes" : [ "allValues", "datatype" ],
+    "id" : "98"
+  }, {
+    "iri" : "http://scimantic.io/citation",
+    "baseIri" : "http://scimantic.io",
+    "range" : "102",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "Bibliographic reference.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "citation",
+      "undefined" : "citation"
+    },
+    "maxCardinality" : "1",
+    "domain" : "46",
+    "attributes" : [ "datatype" ],
+    "id" : "101"
+  }, {
     "iri" : "http://scimantic.io/wasDerivedFrom",
     "baseIri" : "http://scimantic.io",
     "range" : "9",
@@ -2606,83 +2682,7 @@
       "undefined" : "wasDerivedFrom"
     },
     "domain" : "10",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "97"
-  }, {
-    "iri" : "http://scimantic.io/method",
-    "baseIri" : "http://scimantic.io",
-    "range" : "98",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "Name or description of the method.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "method",
-      "undefined" : "method"
-    },
-    "domain" : "10",
-    "attributes" : [ "allValues", "datatype" ],
-    "id" : "99"
-  }, {
-    "iri" : "http://scimantic.io/citation",
-    "baseIri" : "http://scimantic.io",
-    "range" : "101",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "Bibliographic reference.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "citation",
-      "undefined" : "citation"
-    },
-    "maxCardinality" : "1",
-    "domain" : "47",
-    "attributes" : [ "datatype" ],
-    "id" : "100"
-  }, {
-    "iri" : "http://scimantic.io/label",
-    "baseIri" : "http://scimantic.io",
-    "range" : "102",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "The human-readable label or text.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "label",
-      "undefined" : "label"
-    },
-    "domain" : "10",
-    "attributes" : [ "allValues", "datatype" ],
+    "attributes" : [ "object", "allValues" ],
     "id" : "103"
   }, {
     "iri" : "http://scimantic.io/accessLevel",
@@ -2707,34 +2707,9 @@
       "undefined" : "accessLevel"
     },
     "maxCardinality" : "1",
-    "domain" : "47",
+    "domain" : "46",
     "attributes" : [ "datatype" ],
     "id" : "104"
-  }, {
-    "iri" : "http://scimantic.io/wasInformedBy",
-    "baseIri" : "http://scimantic.io",
-    "range" : "24",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "Activity that informed this Activity.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "wasInformedBy",
-      "undefined" : "wasInformedBy"
-    },
-    "domain" : "33",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "106"
   }, {
     "iri" : "http://scimantic.io/used",
     "baseIri" : "http://scimantic.io",
@@ -2757,9 +2732,59 @@
       "IRI-based" : "used",
       "undefined" : "used"
     },
-    "domain" : "33",
-    "attributes" : [ "allValues", "object" ],
+    "domain" : "32",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "106"
+  }, {
+    "iri" : "http://scimantic.io/wasInformedBy",
+    "baseIri" : "http://scimantic.io",
+    "range" : "61",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "Activity that informed this Activity.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "wasInformedBy",
+      "undefined" : "wasInformedBy"
+    },
+    "domain" : "32",
+    "attributes" : [ "object", "allValues" ],
     "id" : "107"
+  }, {
+    "iri" : "http://scimantic.io/label",
+    "baseIri" : "http://scimantic.io",
+    "range" : "100",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "The human-readable label or text.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "label",
+      "undefined" : "label"
+    },
+    "domain" : "10",
+    "attributes" : [ "allValues", "datatype" ],
+    "id" : "108"
   }, {
     "iri" : "http://scimantic.io/parameter",
     "baseIri" : "http://scimantic.io",
@@ -2783,37 +2808,12 @@
       "undefined" : "parameter"
     },
     "domain" : "10",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "108"
-  }, {
-    "iri" : "http://scimantic.io/wasGeneratedBy",
-    "baseIri" : "http://scimantic.io",
-    "range" : "41",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "The activity that generated this entity.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "wasGeneratedBy",
-      "undefined" : "wasGeneratedBy"
-    },
-    "domain" : "10",
-    "attributes" : [ "allValues", "object" ],
+    "attributes" : [ "object", "allValues" ],
     "id" : "109"
   }, {
     "iri" : "http://scimantic.io/motivates",
     "baseIri" : "http://scimantic.io",
-    "range" : "31",
+    "range" : "30",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -2838,7 +2838,7 @@
   }, {
     "iri" : "http://scimantic.io/wasInformedBy",
     "baseIri" : "http://scimantic.io",
-    "range" : "31",
+    "range" : "30",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -2884,9 +2884,9 @@
       "undefined" : "publishable"
     },
     "maxCardinality" : "1",
-    "domain" : "47",
+    "domain" : "46",
     "attributes" : [ "datatype" ],
-    "id" : "117"
+    "id" : "116"
   }, {
     "iri" : "http://scimantic.io/natureOfUncertainty",
     "baseIri" : "http://scimantic.io",
@@ -2910,12 +2910,12 @@
       "undefined" : "natureOfUncertainty"
     },
     "domain" : "1",
-    "attributes" : [ "allValues", "object" ],
+    "attributes" : [ "object", "allValues" ],
     "id" : "118"
   }, {
     "iri" : "http://scimantic.io/wasAttributedTo",
     "baseIri" : "http://scimantic.io",
-    "range" : "45",
+    "range" : "44",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -2941,7 +2941,7 @@
   }, {
     "iri" : "http://scimantic.io/wasInformedBy",
     "baseIri" : "http://scimantic.io",
-    "range" : "30",
+    "range" : "29",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -2960,11 +2960,11 @@
       "IRI-based" : "wasInformedBy",
       "undefined" : "wasInformedBy"
     },
-    "domain" : "43",
-    "attributes" : [ "allValues", "object" ],
+    "domain" : "42",
+    "attributes" : [ "object", "allValues" ],
     "id" : "121"
   }, {
-    "iri" : "http://scimantic.io/contradicts",
+    "iri" : "http://scimantic.io/supports",
     "baseIri" : "http://scimantic.io",
     "range" : "9",
     "annotations" : {
@@ -2977,21 +2977,21 @@
       "definition" : [ {
         "identifier" : "definition",
         "language" : "undefined",
-        "value" : "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis.",
+        "value" : "An Entity (Evidence/Result) that provides positive evidence for a Hypothesis.",
         "type" : "label"
       } ]
     },
     "label" : {
-      "IRI-based" : "contradicts",
-      "undefined" : "contradicts"
+      "IRI-based" : "supports",
+      "undefined" : "supports"
     },
     "domain" : "13",
-    "attributes" : [ "allValues", "object" ],
+    "attributes" : [ "object", "allValues" ],
     "id" : "122"
   }, {
     "iri" : "http://scimantic.io/derivationOfUncertainty",
     "baseIri" : "http://scimantic.io",
-    "range" : "81",
+    "range" : "80",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -3011,7 +3011,7 @@
       "undefined" : "derivationOfUncertainty"
     },
     "domain" : "1",
-    "attributes" : [ "allValues", "object" ],
+    "attributes" : [ "object", "allValues" ],
     "id" : "123"
   }, {
     "iri" : "http://scimantic.io/used",
@@ -3035,8 +3035,8 @@
       "IRI-based" : "used",
       "undefined" : "used"
     },
-    "domain" : "43",
-    "attributes" : [ "allValues", "object" ],
+    "domain" : "42",
+    "attributes" : [ "object", "allValues" ],
     "id" : "124"
   }, {
     "iri" : "http://scimantic.io/unit",
@@ -3060,7 +3060,7 @@
       "IRI-based" : "unit",
       "undefined" : "unit"
     },
-    "domain" : "47",
+    "domain" : "46",
     "attributes" : [ "datatype" ],
     "id" : "125"
   }, {
@@ -3086,36 +3086,11 @@
       "undefined" : "source"
     },
     "maxCardinality" : "1",
-    "domain" : "47",
+    "domain" : "46",
     "attributes" : [ "datatype" ],
     "id" : "126"
   }, {
-    "iri" : "http://scimantic.io/label",
-    "baseIri" : "http://scimantic.io",
-    "range" : "128",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "The human-readable label or text.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "label",
-      "undefined" : "label"
-    },
-    "domain" : "13",
-    "attributes" : [ "allValues", "datatype" ],
-    "id" : "127"
-  }, {
-    "iri" : "http://scimantic.io/refines",
+    "iri" : "http://scimantic.io/contradicts",
     "baseIri" : "http://scimantic.io",
     "range" : "9",
     "annotations" : {
@@ -3128,17 +3103,17 @@
       "definition" : [ {
         "identifier" : "definition",
         "language" : "undefined",
-        "value" : "A Result that suggests a specific modification to a Hypothesis.",
+        "value" : "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis.",
         "type" : "label"
       } ]
     },
     "label" : {
-      "IRI-based" : "refines",
-      "undefined" : "refines"
+      "IRI-based" : "contradicts",
+      "undefined" : "contradicts"
     },
     "domain" : "13",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "129"
+    "attributes" : [ "object", "allValues" ],
+    "id" : "127"
   }, {
     "iri" : "http://scimantic.io/wasDerivedFrom",
     "baseIri" : "http://scimantic.io",
@@ -3162,8 +3137,83 @@
       "undefined" : "wasDerivedFrom"
     },
     "domain" : "13",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "130"
+    "attributes" : [ "object", "allValues" ],
+    "id" : "128"
+  }, {
+    "iri" : "http://scimantic.io/refines",
+    "baseIri" : "http://scimantic.io",
+    "range" : "9",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "A Result that suggests a specific modification to a Hypothesis.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "refines",
+      "undefined" : "refines"
+    },
+    "domain" : "13",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "129"
+  }, {
+    "iri" : "http://scimantic.io/label",
+    "baseIri" : "http://scimantic.io",
+    "range" : "130",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "The human-readable label or text.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "label",
+      "undefined" : "label"
+    },
+    "domain" : "13",
+    "attributes" : [ "allValues", "datatype" ],
+    "id" : "131"
+  }, {
+    "iri" : "http://scimantic.io/wasGeneratedBy",
+    "baseIri" : "http://scimantic.io",
+    "range" : "29",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "The activity that generated this entity.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "wasGeneratedBy",
+      "undefined" : "wasGeneratedBy"
+    },
+    "domain" : "13",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "132"
   }, {
     "iri" : "http://scimantic.io/hasUncertainty",
     "baseIri" : "http://scimantic.io",
@@ -3187,57 +3237,7 @@
       "undefined" : "hasUncertainty"
     },
     "domain" : "13",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "131"
-  }, {
-    "iri" : "http://scimantic.io/wasGeneratedBy",
-    "baseIri" : "http://scimantic.io",
-    "range" : "30",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "The activity that generated this entity.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "wasGeneratedBy",
-      "undefined" : "wasGeneratedBy"
-    },
-    "domain" : "13",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "132"
-  }, {
-    "iri" : "http://scimantic.io/supports",
-    "baseIri" : "http://scimantic.io",
-    "range" : "9",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "An Entity (Evidence/Result) that provides positive evidence for a Hypothesis.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "supports",
-      "undefined" : "supports"
-    },
-    "domain" : "13",
-    "attributes" : [ "allValues", "object" ],
+    "attributes" : [ "object", "allValues" ],
     "id" : "133"
   }, {
     "range" : "2",
@@ -3251,7 +3251,7 @@
     "id" : "135"
   }, {
     "range" : "69",
-    "domain" : "116",
+    "domain" : "117",
     "attributes" : [ "object", "anonymous" ],
     "id" : "136"
   }, {
@@ -3297,7 +3297,7 @@
       "undefined" : "natureOfUncertainty"
     },
     "domain" : "3",
-    "attributes" : [ "allValues", "object" ],
+    "attributes" : [ "object", "allValues" ],
     "id" : "141"
   }, {
     "iri" : "http://scimantic.io/used",
@@ -3321,13 +3321,13 @@
       "IRI-based" : "used",
       "undefined" : "used"
     },
-    "domain" : "30",
-    "attributes" : [ "allValues", "object" ],
+    "domain" : "29",
+    "attributes" : [ "object", "allValues" ],
     "id" : "142"
   }, {
     "iri" : "http://scimantic.io/wasInformedBy",
     "baseIri" : "http://scimantic.io",
-    "range" : "37",
+    "range" : "36",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -3346,8 +3346,8 @@
       "IRI-based" : "wasInformedBy",
       "undefined" : "wasInformedBy"
     },
-    "domain" : "30",
-    "attributes" : [ "allValues", "object" ],
+    "domain" : "29",
+    "attributes" : [ "object", "allValues" ],
     "id" : "143"
   }, {
     "iri" : "http://scimantic.io/wasDerivedFrom",
@@ -3372,7 +3372,7 @@
       "undefined" : "wasDerivedFrom"
     },
     "domain" : "12",
-    "attributes" : [ "allValues", "object" ],
+    "attributes" : [ "object", "allValues" ],
     "id" : "144"
   }, {
     "iri" : "http://scimantic.io/hasUncertainty",
@@ -3397,12 +3397,37 @@
       "undefined" : "hasUncertainty"
     },
     "domain" : "12",
-    "attributes" : [ "allValues", "object" ],
+    "attributes" : [ "object", "allValues" ],
     "id" : "145"
+  }, {
+    "iri" : "http://scimantic.io/wasGeneratedBy",
+    "baseIri" : "http://scimantic.io",
+    "range" : "36",
+    "annotations" : {
+      "inScheme" : [ {
+        "identifier" : "inScheme",
+        "language" : "undefined",
+        "value" : "http://scimantic.io/schema",
+        "type" : "iri"
+      } ],
+      "definition" : [ {
+        "identifier" : "definition",
+        "language" : "undefined",
+        "value" : "The activity that generated this entity.",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "wasGeneratedBy",
+      "undefined" : "wasGeneratedBy"
+    },
+    "domain" : "12",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "146"
   }, {
     "iri" : "http://scimantic.io/label",
     "baseIri" : "http://scimantic.io",
-    "range" : "147",
+    "range" : "148",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -3423,32 +3448,7 @@
     },
     "domain" : "12",
     "attributes" : [ "allValues", "datatype" ],
-    "id" : "146"
-  }, {
-    "iri" : "http://scimantic.io/wasGeneratedBy",
-    "baseIri" : "http://scimantic.io",
-    "range" : "37",
-    "annotations" : {
-      "inScheme" : [ {
-        "identifier" : "inScheme",
-        "language" : "undefined",
-        "value" : "http://scimantic.io/schema",
-        "type" : "iri"
-      } ],
-      "definition" : [ {
-        "identifier" : "definition",
-        "language" : "undefined",
-        "value" : "The activity that generated this entity.",
-        "type" : "label"
-      } ]
-    },
-    "label" : {
-      "IRI-based" : "wasGeneratedBy",
-      "undefined" : "wasGeneratedBy"
-    },
-    "domain" : "12",
-    "attributes" : [ "allValues", "object" ],
-    "id" : "148"
+    "id" : "147"
   }, {
     "iri" : "http://scimantic.io/id",
     "baseIri" : "http://scimantic.io",
@@ -3471,7 +3471,7 @@
       "IRI-based" : "id",
       "undefined" : "id"
     },
-    "domain" : "45",
+    "domain" : "44",
     "attributes" : [ "allValues", "datatype" ],
     "id" : "149"
   }, {
@@ -3487,7 +3487,7 @@
   }, {
     "iri" : "http://scimantic.io/wasAssociatedWith",
     "baseIri" : "http://scimantic.io",
-    "range" : "45",
+    "range" : "44",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
@@ -3533,7 +3533,7 @@
   }, {
     "iri" : "http://scimantic.io/wasGeneratedBy",
     "baseIri" : "http://scimantic.io",
-    "range" : "31",
+    "range" : "30",
     "annotations" : {
       "inScheme" : [ {
         "identifier" : "inScheme",
