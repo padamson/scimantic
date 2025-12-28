@@ -8,10 +8,12 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:shacl="http://www.w3.org/ns/shacl#"
      xmlns:terms="http://purl.org/dc/terms/"
      xmlns:linkml="https://w3id.org/linkml/">
     <owl:Ontology rdf:about="http://scimantic.io/">
         <owl:versionIRI rdf:resource="http://scimantic.io/v/0.1.1/ontology.ttl"/>
+        <owl:imports rdf:resource="http://scimantic.io/v/0.1.1/shacl/scimantic-shapes.ttl"/>
         <terms:license>https://creativecommons.org/licenses/by/4.0/</terms:license>
         <pav:version>0.1.1</pav:version>
         <rdfs:label>scimantic</rdfs:label>

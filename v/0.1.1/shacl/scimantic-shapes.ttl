@@ -13,7 +13,18 @@ scimantic:Question a sh:NodeShape ;
     sh:closed true ;
     sh:description "An interrogative sentence representing the research query." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class prov:Agent ;
+    sh:property [ sh:class scimantic:LiteratureSearch ;
+            sh:description "A Question that triggers or motivates an Activity." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path scimantic:motivates ],
+        [ sh:class scimantic:QuestionFormation ;
+            sh:description "The activity that generated this entity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path prov:wasGeneratedBy ],
+        [ sh:class prov:Agent ;
             sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
@@ -26,24 +37,13 @@ scimantic:Question a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 3 ;
             sh:path scimantic:id ],
-        [ sh:class scimantic:QuestionFormation ;
-            sh:description "The activity that generated this entity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path prov:wasGeneratedBy ],
         [ sh:datatype xsd:string ;
             sh:description "The human-readable label or text." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:nodeKind sh:Literal ;
             sh:order 0 ;
-            sh:path rdfs:label ],
-        [ sh:class scimantic:LiteratureSearch ;
-            sh:description "A Question that triggers or motivates an Activity." ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 2 ;
-            sh:path scimantic:motivates ] ;
+            sh:path rdfs:label ] ;
     sh:targetClass scimantic:Question .
 
 scimantic:ResultAssessment a sh:NodeShape ;
@@ -67,39 +67,32 @@ scimantic:ResultAssessment a sh:NodeShape ;
 prov:Activity a sh:NodeShape ;
     sh:closed true ;
     sh:description "A provenance activity." ;
-    sh:ignoredProperties ( prov:wasInformedBy prov:wasAssociatedWith rdf:type prov:used ) ;
+    sh:ignoredProperties ( rdf:type prov:wasAssociatedWith prov:wasInformedBy prov:used ) ;
     sh:targetClass prov:Activity .
 
 prov:Entity a sh:NodeShape ;
     sh:closed true ;
     sh:description "A provenance entity." ;
-    sh:ignoredProperties ( rdfs:label scimantic:supports scimantic:refines scimantic:hasUncertainty scimantic:accessLevel scimantic:contradicts scimantic:publishable dcterms:bibliographicCitation scimantic:motivates prov:wasGeneratedBy scimantic:parameter prov:wasDerivedFrom urref:natureOfUncertainty dcterms:source urref:derivationOfUncertainty scimantic:content rdf:type scimantic:method ) ;
-    sh:property [ sh:datatype xsd:string ;
-            sh:description "Unique identifier (URI) for this node." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 0 ;
-            sh:path scimantic:id ],
-        [ sh:class prov:Agent ;
+    sh:ignoredProperties ( dcterms:source rdf:type rdfs:label scimantic:supports scimantic:hasUncertainty dcterms:bibliographicCitation scimantic:motivates scimantic:contradicts urref:natureOfUncertainty prov:wasDerivedFrom urref:derivationOfUncertainty scimantic:method scimantic:parameter scimantic:refines prov:wasGeneratedBy scimantic:content scimantic:publishable scimantic:accessLevel ) ;
+    sh:property [ sh:class prov:Agent ;
             sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
             sh:order 1 ;
-            sh:path prov:wasAttributedTo ] ;
+            sh:path prov:wasAttributedTo ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier (URI) for this node." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path scimantic:id ] ;
     sh:targetClass prov:Entity .
 
 urref:Aleatory a sh:NodeShape ;
     sh:closed true ;
     sh:description "Aleatory uncertainty entities must have nature Aleatory." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:datatype xsd:string ;
-            sh:description "Unique identifier (URI) for this node." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 2 ;
-            sh:path scimantic:id ],
-        [ sh:class urref:UncertaintyDerivation ;
+    sh:property [ sh:class urref:UncertaintyDerivation ;
             sh:description "How the uncertainty was derived." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:BlankNodeOrIRI ;
@@ -111,6 +104,13 @@ urref:Aleatory a sh:NodeShape ;
             sh:minCount 1 ;
             sh:order 0 ;
             sh:path urref:natureOfUncertainty ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier (URI) for this node." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path scimantic:id ],
         [ sh:class prov:Agent ;
             sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
@@ -123,31 +123,31 @@ urref:Ambiguity a sh:NodeShape ;
     sh:closed true ;
     sh:description "Ambiguity is inherently Epistemic uncertainty." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:datatype xsd:string ;
-            sh:description "Unique identifier (URI) for this node." ;
+    sh:property [ sh:class urref:UncertaintyDerivation ;
+            sh:description "How the uncertainty was derived." ;
             sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 2 ;
-            sh:path scimantic:id ],
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path urref:derivationOfUncertainty ],
         [ sh:description "The nature of the uncertainty (Aleatory or Epistemic)." ;
             sh:in ( "Epistemic" "Aleatory" ) ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:order 0 ;
             sh:path urref:natureOfUncertainty ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier (URI) for this node." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path scimantic:id ],
         [ sh:class prov:Agent ;
             sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
             sh:order 3 ;
-            sh:path prov:wasAttributedTo ],
-        [ sh:class urref:UncertaintyDerivation ;
-            sh:description "How the uncertainty was derived." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path urref:derivationOfUncertainty ] ;
+            sh:path prov:wasAttributedTo ] ;
     sh:targetClass urref:Ambiguity .
 
 urref:Evidence a sh:NodeShape ;
@@ -160,19 +160,7 @@ urref:Incompleteness a sh:NodeShape ;
     sh:closed true ;
     sh:description "Incompleteness is inherently Epistemic uncertainty." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class urref:UncertaintyDerivation ;
-            sh:description "How the uncertainty was derived." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path urref:derivationOfUncertainty ],
-        [ sh:description "The nature of the uncertainty (Aleatory or Epistemic)." ;
-            sh:in ( "Epistemic" "Aleatory" ) ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:order 0 ;
-            sh:path urref:natureOfUncertainty ],
-        [ sh:class prov:Agent ;
+    sh:property [ sh:class prov:Agent ;
             sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
@@ -184,26 +172,38 @@ urref:Incompleteness a sh:NodeShape ;
             sh:minCount 1 ;
             sh:nodeKind sh:Literal ;
             sh:order 2 ;
-            sh:path scimantic:id ] ;
+            sh:path scimantic:id ],
+        [ sh:class urref:UncertaintyDerivation ;
+            sh:description "How the uncertainty was derived." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path urref:derivationOfUncertainty ],
+        [ sh:description "The nature of the uncertainty (Aleatory or Epistemic)." ;
+            sh:in ( "Epistemic" "Aleatory" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path urref:natureOfUncertainty ] ;
     sh:targetClass urref:Incompleteness .
 
 urref:Vagueness a sh:NodeShape ;
     sh:closed true ;
     sh:description "Vagueness is inherently Epistemic uncertainty." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class urref:UncertaintyDerivation ;
-            sh:description "How the uncertainty was derived." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path urref:derivationOfUncertainty ],
-        [ sh:datatype xsd:string ;
+    sh:property [ sh:datatype xsd:string ;
             sh:description "Unique identifier (URI) for this node." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:nodeKind sh:Literal ;
             sh:order 2 ;
             sh:path scimantic:id ],
+        [ sh:class urref:UncertaintyDerivation ;
+            sh:description "How the uncertainty was derived." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path urref:derivationOfUncertainty ],
         [ sh:class prov:Agent ;
             sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
@@ -222,37 +222,37 @@ scimantic:EvidenceAssessment a sh:NodeShape ;
     sh:closed true ;
     sh:description "The activity of evaluating credibility or relevance of Evidence." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class scimantic:LiteratureSearch ;
-            sh:description "Activity that informed this Activity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path prov:wasInformedBy ],
-        [ sh:class scimantic:Evidence ;
+    sh:property [ sh:class scimantic:Evidence ;
             sh:description "Entity used by an Activity." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
             sh:order 0 ;
-            sh:path prov:used ] ;
+            sh:path prov:used ],
+        [ sh:class scimantic:LiteratureSearch ;
+            sh:description "Activity that informed this Activity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path prov:wasInformedBy ] ;
     sh:targetClass scimantic:EvidenceAssessment .
 
 scimantic:Parameter a sh:NodeShape ;
     sh:closed true ;
     sh:description "A configured parameter within an Experimental Method." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:datatype xsd:string ;
+    sh:property [ sh:class prov:Agent ;
+            sh:description "The agent who attributed this entity (Agent)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path prov:wasAttributedTo ],
+        [ sh:datatype xsd:string ;
             sh:description "Unique identifier (URI) for this node." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:nodeKind sh:Literal ;
             sh:order 0 ;
-            sh:path scimantic:id ],
-        [ sh:class prov:Agent ;
-            sh:description "The agent who attributed this entity (Agent)." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 1 ;
-            sh:path prov:wasAttributedTo ] ;
+            sh:path scimantic:id ] ;
     sh:targetClass scimantic:Parameter .
 
 scimantic:QuestionFormation a sh:NodeShape ;
@@ -271,12 +271,25 @@ scimantic:Result a sh:NodeShape ;
     sh:closed true ;
     sh:description "The outcome of an analysis activity." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class prov:Agent ;
-            sh:description "The agent who attributed this entity (Agent)." ;
+    sh:property [ sh:class scimantic:Dataset ;
+            sh:description "Entity derived from another Entity." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
-            sh:order 8 ;
-            sh:path prov:wasAttributedTo ],
+            sh:order 2 ;
+            sh:path prov:wasDerivedFrom ],
+        [ sh:class urref:UncertaintyModel ;
+            sh:description "Links an entity to its reified uncertainty model." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 6 ;
+            sh:path scimantic:hasUncertainty ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier (URI) for this node." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path scimantic:id ],
         [ sh:class scimantic:Analysis ;
             sh:description "The activity that generated this entity." ;
             sh:maxCount 1 ;
@@ -289,31 +302,12 @@ scimantic:Result a sh:NodeShape ;
             sh:nodeKind sh:IRI ;
             sh:order 4 ;
             sh:path scimantic:supports ],
-        [ sh:class urref:UncertaintyModel ;
-            sh:description "Links an entity to its reified uncertainty model." ;
+        [ sh:class prov:Agent ;
+            sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
-            sh:order 6 ;
-            sh:path scimantic:hasUncertainty ],
-        [ sh:class scimantic:Hypothesis ;
-            sh:description "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 5 ;
-            sh:path scimantic:contradicts ],
-        [ sh:class scimantic:Dataset ;
-            sh:description "Entity derived from another Entity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 2 ;
-            sh:path prov:wasDerivedFrom ],
-        [ sh:datatype xsd:string ;
-            sh:description "Unique identifier (URI) for this node." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 7 ;
-            sh:path scimantic:id ],
+            sh:order 8 ;
+            sh:path prov:wasAttributedTo ],
         [ sh:datatype xsd:string ;
             sh:description "The human-readable label or text." ;
             sh:maxCount 1 ;
@@ -326,7 +320,13 @@ scimantic:Result a sh:NodeShape ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
             sh:order 3 ;
-            sh:path scimantic:refines ] ;
+            sh:path scimantic:refines ],
+        [ sh:class scimantic:Hypothesis ;
+            sh:description "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 5 ;
+            sh:path scimantic:contradicts ] ;
     sh:targetClass scimantic:Result .
 
 scimantic:Analysis a sh:NodeShape ;
@@ -351,25 +351,18 @@ scimantic:Dataset a sh:NodeShape ;
     sh:closed true ;
     sh:description "Raw data, observations, or measurements produced by experimentation." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class prov:Agent ;
+    sh:property [ sh:class scimantic:ExperimentalMethod ;
+            sh:description "Entity derived from another Entity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
+            sh:path prov:wasDerivedFrom ],
+        [ sh:class prov:Agent ;
             sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
             sh:order 5 ;
             sh:path prov:wasAttributedTo ],
-        [ sh:class scimantic:Experimentation ;
-            sh:description "The activity that generated this entity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path prov:wasGeneratedBy ],
-        [ sh:datatype xsd:string ;
-            sh:description "The human-readable label or text." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 0 ;
-            sh:path rdfs:label ],
         [ sh:datatype xsd:string ;
             sh:description "Unique identifier (URI) for this node." ;
             sh:maxCount 1 ;
@@ -377,18 +370,25 @@ scimantic:Dataset a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 4 ;
             sh:path scimantic:id ],
+        [ sh:class scimantic:Experimentation ;
+            sh:description "The activity that generated this entity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path prov:wasGeneratedBy ],
         [ sh:class urref:UncertaintyModel ;
             sh:description "Links an entity to its reified uncertainty model." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
             sh:order 3 ;
             sh:path scimantic:hasUncertainty ],
-        [ sh:class scimantic:ExperimentalMethod ;
-            sh:description "Entity derived from another Entity." ;
+        [ sh:datatype xsd:string ;
+            sh:description "The human-readable label or text." ;
             sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 2 ;
-            sh:path prov:wasDerivedFrom ] ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path rdfs:label ] ;
     sh:targetClass scimantic:Dataset .
 
 scimantic:DesignOfExperiment a sh:NodeShape ;
@@ -419,19 +419,6 @@ scimantic:ExperimentalMethod a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 3 ;
             sh:path prov:wasGeneratedBy ],
-        [ sh:class scimantic:Hypothesis ;
-            sh:description "Entity derived from another Entity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 4 ;
-            sh:path prov:wasDerivedFrom ],
-        [ sh:datatype xsd:string ;
-            sh:description "The human-readable label or text." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 0 ;
-            sh:path rdfs:label ],
         [ sh:datatype xsd:string ;
             sh:description "Unique identifier (URI) for this node." ;
             sh:maxCount 1 ;
@@ -439,101 +426,6 @@ scimantic:ExperimentalMethod a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 5 ;
             sh:path scimantic:id ],
-        [ sh:class scimantic:Parameter ;
-            sh:description "Structured configuration parameter." ;
-            sh:nodeKind sh:IRI ;
-            sh:order 2 ;
-            sh:path scimantic:parameter ],
-        [ sh:class prov:Agent ;
-            sh:description "The agent who attributed this entity (Agent)." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 6 ;
-            sh:path prov:wasAttributedTo ],
-        [ sh:datatype xsd:string ;
-            sh:description "Name or description of the method." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 1 ;
-            sh:path scimantic:method ] ;
-    sh:targetClass scimantic:ExperimentalMethod .
-
-scimantic:Experimentation a sh:NodeShape ;
-    sh:closed true ;
-    sh:description "The activity of running an ExperimentalMethod to produce a Dataset." ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class scimantic:ExperimentalMethod ;
-            sh:description "Entity used by an Activity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 0 ;
-            sh:path prov:used ],
-        [ sh:class scimantic:DesignOfExperiment ;
-            sh:description "Activity that informed this Activity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path prov:wasInformedBy ] ;
-    sh:targetClass scimantic:Experimentation .
-
-scimantic:HypothesisFormation a sh:NodeShape ;
-    sh:closed true ;
-    sh:description "The activity of synthesizing Evidence into a Hypothesis." ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class scimantic:EvidenceAssessment ;
-            sh:description "Activity that informed this Activity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path prov:wasInformedBy ],
-        [ sh:class scimantic:Evidence ;
-            sh:description "Entity used by an Activity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 0 ;
-            sh:path prov:used ] ;
-    sh:targetClass scimantic:HypothesisFormation .
-
-scimantic:Evidence a sh:NodeShape ;
-    sh:closed true ;
-    sh:description "A factual claim extracted from a source." ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:datatype xsd:string ;
-            sh:description "The actual text content of the evidence." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 1 ;
-            sh:path scimantic:content ],
-        [ sh:datatype xsd:string ;
-            sh:description "Bibliographic reference." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 2 ;
-            sh:path dcterms:bibliographicCitation ],
-        [ sh:datatype xsd:string ;
-            sh:description "Publishing scope (e.g., local, institutional, public)." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 5 ;
-            sh:path scimantic:accessLevel ],
-        [ sh:class scimantic:Hypothesis ;
-            sh:description "An Entity (Evidence/Result) that provides positive evidence for a Hypothesis." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 7 ;
-            sh:path scimantic:supports ],
-        [ sh:class scimantic:Hypothesis ;
-            sh:description "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 8 ;
-            sh:path scimantic:contradicts ],
-        [ sh:class scimantic:LiteratureSearch ;
-            sh:description "The activity that generated this entity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 4 ;
-            sh:path prov:wasGeneratedBy ],
         [ sh:datatype xsd:string ;
             sh:description "The human-readable label or text." ;
             sh:maxCount 1 ;
@@ -541,24 +433,83 @@ scimantic:Evidence a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 0 ;
             sh:path rdfs:label ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Flag indicating if this is ready for public promotion." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 6 ;
-            sh:path scimantic:publishable ],
         [ sh:datatype xsd:string ;
-            sh:description "Source URL or identifier." ;
+            sh:description "Name or description of the method." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:Literal ;
-            sh:order 3 ;
-            sh:path dcterms:source ],
+            sh:order 1 ;
+            sh:path scimantic:method ],
+        [ sh:class scimantic:Parameter ;
+            sh:description "Structured configuration parameter." ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
+            sh:path scimantic:parameter ],
+        [ sh:class scimantic:Hypothesis ;
+            sh:description "Entity derived from another Entity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 4 ;
+            sh:path prov:wasDerivedFrom ],
         [ sh:class prov:Agent ;
             sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
-            sh:order 11 ;
-            sh:path prov:wasAttributedTo ],
+            sh:order 6 ;
+            sh:path prov:wasAttributedTo ] ;
+    sh:targetClass scimantic:ExperimentalMethod .
+
+scimantic:Experimentation a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "The activity of running an ExperimentalMethod to produce a Dataset." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class scimantic:DesignOfExperiment ;
+            sh:description "Activity that informed this Activity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path prov:wasInformedBy ],
+        [ sh:class scimantic:ExperimentalMethod ;
+            sh:description "Entity used by an Activity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path prov:used ] ;
+    sh:targetClass scimantic:Experimentation .
+
+scimantic:HypothesisFormation a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "The activity of synthesizing Evidence into a Hypothesis." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class scimantic:Evidence ;
+            sh:description "Entity used by an Activity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path prov:used ],
+        [ sh:class scimantic:EvidenceAssessment ;
+            sh:description "Activity that informed this Activity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path prov:wasInformedBy ] ;
+    sh:targetClass scimantic:HypothesisFormation .
+
+scimantic:Evidence a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A factual claim extracted from a source." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Publishing scope (e.g., local, institutional, public)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path scimantic:accessLevel ],
+        [ sh:class scimantic:LiteratureSearch ;
+            sh:description "The activity that generated this entity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path prov:wasGeneratedBy ],
         [ sh:class urref:UncertaintyModel ;
             sh:description "Links an entity to its reified uncertainty model." ;
             sh:maxCount 1 ;
@@ -571,7 +522,56 @@ scimantic:Evidence a sh:NodeShape ;
             sh:minCount 1 ;
             sh:nodeKind sh:Literal ;
             sh:order 10 ;
-            sh:path scimantic:id ] ;
+            sh:path scimantic:id ],
+        [ sh:class scimantic:Hypothesis ;
+            sh:description "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 8 ;
+            sh:path scimantic:contradicts ],
+        [ sh:datatype xsd:string ;
+            sh:description "Bibliographic reference." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path dcterms:bibliographicCitation ],
+        [ sh:datatype xsd:string ;
+            sh:description "Source URL or identifier." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path dcterms:source ],
+        [ sh:datatype xsd:string ;
+            sh:description "The actual text content of the evidence." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path scimantic:content ],
+        [ sh:class scimantic:Hypothesis ;
+            sh:description "An Entity (Evidence/Result) that provides positive evidence for a Hypothesis." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 7 ;
+            sh:path scimantic:supports ],
+        [ sh:class prov:Agent ;
+            sh:description "The agent who attributed this entity (Agent)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 11 ;
+            sh:path prov:wasAttributedTo ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Flag indicating if this is ready for public promotion." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path scimantic:publishable ],
+        [ sh:datatype xsd:string ;
+            sh:description "The human-readable label or text." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path rdfs:label ] ;
     sh:targetClass scimantic:Evidence .
 
 scimantic:LiteratureSearch a sh:NodeShape ;
@@ -584,7 +584,14 @@ urref:UncertaintyModel a sh:NodeShape ;
     sh:closed true ;
     sh:description "A reified uncertainty model." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "The nature of the uncertainty (Aleatory or Epistemic)." ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Unique identifier (URI) for this node." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path scimantic:id ],
+        [ sh:description "The nature of the uncertainty (Aleatory or Epistemic)." ;
             sh:in ( "Epistemic" "Aleatory" ) ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
@@ -596,13 +603,6 @@ urref:UncertaintyModel a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 1 ;
             sh:path urref:derivationOfUncertainty ],
-        [ sh:datatype xsd:string ;
-            sh:description "Unique identifier (URI) for this node." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 2 ;
-            sh:path scimantic:id ],
         [ sh:class prov:Agent ;
             sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
@@ -621,30 +621,30 @@ scimantic:Hypothesis a sh:NodeShape ;
     sh:closed true ;
     sh:description "A testable claim derived from evidence." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class scimantic:HypothesisFormation ;
-            sh:description "The activity that generated this entity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path prov:wasGeneratedBy ],
-        [ sh:datatype xsd:string ;
+    sh:property [ sh:datatype xsd:string ;
             sh:description "Unique identifier (URI) for this node." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:nodeKind sh:Literal ;
             sh:order 3 ;
             sh:path scimantic:id ],
-        [ sh:class scimantic:Evidence ;
-            sh:description "Entity derived from another Entity." ;
-            sh:nodeKind sh:IRI ;
-            sh:order 2 ;
-            sh:path prov:wasDerivedFrom ],
         [ sh:class prov:Agent ;
             sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
             sh:order 4 ;
             sh:path prov:wasAttributedTo ],
+        [ sh:class scimantic:HypothesisFormation ;
+            sh:description "The activity that generated this entity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path prov:wasGeneratedBy ],
+        [ sh:class scimantic:Evidence ;
+            sh:description "Entity derived from another Entity." ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
+            sh:path prov:wasDerivedFrom ],
         [ sh:datatype xsd:string ;
             sh:description "The human-readable label or text." ;
             sh:maxCount 1 ;

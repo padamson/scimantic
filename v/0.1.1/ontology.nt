@@ -1,5 +1,6 @@
 <http://scimantic.io/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
 <http://scimantic.io/> <http://www.w3.org/2002/07/owl#versionIRI> <http://scimantic.io/v/0.1.1/ontology.ttl> .
+<http://scimantic.io/> <http://www.w3.org/2002/07/owl#imports> <http://scimantic.io/v/0.1.1/shacl/scimantic-shapes.ttl> .
 <http://scimantic.io/> <http://purl.org/dc/terms/license> "https://creativecommons.org/licenses/by/4.0/" .
 <http://scimantic.io/> <http://purl.org/pav/version> "0.1.1" .
 <http://scimantic.io/> <http://www.w3.org/2000/01/rdf-schema#label> "scimantic" .
