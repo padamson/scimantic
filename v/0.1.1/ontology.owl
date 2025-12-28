@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="http://scimantic.io/schema.owl.ttl#"
-     xml:base="http://scimantic.io/schema.owl.ttl"
+<rdf:RDF xmlns="http://scimantic.io/"
+     xml:base="http://scimantic.io/"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:pav="http://purl.org/pav/"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -10,7 +10,7 @@
      xmlns:skos="http://www.w3.org/2004/02/skos/core#"
      xmlns:terms="http://purl.org/dc/terms/"
      xmlns:linkml="https://w3id.org/linkml/">
-    <owl:Ontology rdf:about="http://scimantic.io/schema.owl.ttl">
+    <owl:Ontology rdf:about="http://scimantic.io/">
         <owl:versionIRI rdf:resource="http://scimantic.io/v/0.1.1/ontology.ttl"/>
         <terms:license>https://creativecommons.org/licenses/by/4.0/</terms:license>
         <pav:version>0.1.1</pav:version>

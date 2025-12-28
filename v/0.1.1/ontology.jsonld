@@ -1464,6 +1464,27 @@
   "@id" : "http://purl.org/pav/version",
   "@type" : [ "http://www.w3.org/2002/07/owl#AnnotationProperty" ]
 }, {
+  "@id" : "http://scimantic.io/",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Ontology" ],
+  "http://purl.org/dc/terms/license" : [ {
+    "@value" : "https://creativecommons.org/licenses/by/4.0/"
+  } ],
+  "http://purl.org/pav/version" : [ {
+    "@value" : "0.1.1"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@value" : "scimantic"
+  } ],
+  "http://www.w3.org/2002/07/owl#versionIRI" : [ {
+    "@id" : "http://scimantic.io/v/0.1.1/ontology.ttl"
+  } ],
+  "http://www.w3.org/2002/07/owl#versionInfo" : [ {
+    "@value" : "0.1.1"
+  } ],
+  "http://www.w3.org/2004/02/skos/core#definition" : [ {
+    "@value" : "A minimal domain ontology for representing the scientific method as provenance chains."
+  } ]
+}, {
   "@id" : "http://scimantic.io/Activity",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
   "http://www.w3.org/2000/01/rdf-schema#label" : [ {
@@ -2469,27 +2490,6 @@
   } ],
   "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
     "@id" : "http://scimantic.io/schema"
-  } ]
-}, {
-  "@id" : "http://scimantic.io/schema.owl.ttl",
-  "@type" : [ "http://www.w3.org/2002/07/owl#Ontology" ],
-  "http://purl.org/dc/terms/license" : [ {
-    "@value" : "https://creativecommons.org/licenses/by/4.0/"
-  } ],
-  "http://purl.org/pav/version" : [ {
-    "@value" : "0.1.1"
-  } ],
-  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
-    "@value" : "scimantic"
-  } ],
-  "http://www.w3.org/2002/07/owl#versionIRI" : [ {
-    "@id" : "http://scimantic.io/v/0.1.1/ontology.ttl"
-  } ],
-  "http://www.w3.org/2002/07/owl#versionInfo" : [ {
-    "@value" : "0.1.1"
-  } ],
-  "http://www.w3.org/2004/02/skos/core#definition" : [ {
-    "@value" : "A minimal domain ontology for representing the scientific method as provenance chains."
   } ]
 }, {
   "@id" : "http://scimantic.io/source",

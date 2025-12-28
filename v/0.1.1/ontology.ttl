@@ -20,13 +20,13 @@ scimantic:Aleatory a owl:Class ;
 scimantic:Ambiguity a owl:Class ;
     rdfs:label "Ambiguity" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
+            owl:maxCardinality 1 ;
             owl:onProperty scimantic:natureOfUncertainty ],
         [ a owl:Restriction ;
             owl:allValuesFrom scimantic:UncertaintyNature ;
             owl:onProperty scimantic:natureOfUncertainty ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
+            owl:minCardinality 0 ;
             owl:onProperty scimantic:natureOfUncertainty ],
         scimantic:UncertaintyModel ;
     skos:definition "Ambiguity is inherently Epistemic uncertainty." ;
@@ -53,7 +53,7 @@ scimantic:generatedAtTime a owl:DatatypeProperty ;
     skos:definition "Time of generation." ;
     skos:inScheme scimantic:schema .
 
-scimantic:schema.owl.ttl
+<http://scimantic.io/>
     owl:versionIRI <http://scimantic.io/v/0.1.1/ontology.ttl> ;
     owl:versionInfo "0.1.1" ; a owl:Ontology ;
     rdfs:label "scimantic" ;
@@ -76,10 +76,10 @@ scimantic:value a owl:DatatypeProperty ;
 scimantic:Question a owl:Class ;
     rdfs:label "Question" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty scimantic:label ],
+            owl:allValuesFrom scimantic:LiteratureSearch ;
+            owl:onProperty scimantic:motivates ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
+            owl:minCardinality 0 ;
             owl:onProperty scimantic:wasGeneratedBy ],
         [ a owl:Restriction ;
             owl:allValuesFrom scimantic:QuestionFormation ;
@@ -88,17 +88,17 @@ scimantic:Question a owl:Class ;
             owl:minCardinality 1 ;
             owl:onProperty scimantic:label ],
         [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:LiteratureSearch ;
+            owl:minCardinality 0 ;
             owl:onProperty scimantic:motivates ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
+            owl:maxCardinality 1 ;
             owl:onProperty scimantic:wasGeneratedBy ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:label ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:motivates ],
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:label ],
         scimantic:Entity ;
     skos:definition "An interrogative sentence representing the research query." ;
     skos:exactMatch scimantic:Question ;
@@ -107,14 +107,8 @@ scimantic:Question a owl:Class ;
 scimantic:ResultAssessment a owl:Class ;
     rdfs:label "ResultAssessment" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasInformedBy ],
-        [ a owl:Restriction ;
             owl:allValuesFrom scimantic:Result ;
             owl:onProperty scimantic:used ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasInformedBy ],
         [ a owl:Restriction ;
             owl:allValuesFrom scimantic:Analysis ;
             owl:onProperty scimantic:wasInformedBy ],
@@ -123,7 +117,13 @@ scimantic:ResultAssessment a owl:Class ;
             owl:onProperty scimantic:used ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
             owl:onProperty scimantic:used ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasInformedBy ],
         scimantic:Activity ;
     skos:definition "The activity of comparing a Result to the original Hypothesis." ;
     skos:exactMatch scimantic:ResultAssessment ;
@@ -138,17 +138,17 @@ scimantic:EvidenceAssessment a owl:Class ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:used ],
         [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:used ],
+        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:wasInformedBy ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasInformedBy ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:used ],
-        [ a owl:Restriction ;
             owl:allValuesFrom scimantic:Evidence ;
             owl:onProperty scimantic:used ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasInformedBy ],
         scimantic:Activity ;
     skos:definition "The activity of evaluating credibility or relevance of Evidence." ;
     skos:exactMatch scimantic:EvidenceAssessment ;
@@ -157,13 +157,13 @@ scimantic:EvidenceAssessment a owl:Class ;
 scimantic:QuestionFormation a owl:Class ;
     rdfs:label "QuestionFormation" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasAssociatedWith ],
+        [ a owl:Restriction ;
             owl:allValuesFrom scimantic:Agent ;
             owl:onProperty scimantic:wasAssociatedWith ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasAssociatedWith ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
             owl:onProperty scimantic:wasAssociatedWith ],
         scimantic:Activity ;
     skos:definition "The activity of creating a Research Question." ;
@@ -173,8 +173,20 @@ scimantic:QuestionFormation a owl:Class ;
 scimantic:Result a owl:Class ;
     rdfs:label "Result" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Analysis ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Dataset ;
+            owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Hypothesis ;
+            owl:onProperty scimantic:supports ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:refines ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty scimantic:label ],
@@ -183,43 +195,28 @@ scimantic:Result a owl:Class ;
             owl:onProperty scimantic:refines ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasDerivedFrom ],
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:contradicts ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasGeneratedBy ],
+            owl:onProperty scimantic:contradicts ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty scimantic:label ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:refines ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Analysis ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Dataset ;
-            owl:onProperty scimantic:wasDerivedFrom ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasDerivedFrom ],
-        [ a owl:Restriction ;
             owl:allValuesFrom scimantic:UncertaintyModel ;
             owl:onProperty scimantic:hasUncertainty ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:refines ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:supports ],
-        [ a owl:Restriction ;
             owl:allValuesFrom scimantic:Hypothesis ;
             owl:onProperty scimantic:contradicts ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty scimantic:contradicts ],
+            owl:onProperty scimantic:refines ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty scimantic:hasUncertainty ],
+            owl:onProperty scimantic:supports ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:hasUncertainty ],
@@ -228,12 +225,15 @@ scimantic:Result a owl:Class ;
             owl:onProperty scimantic:wasGeneratedBy ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty scimantic:contradicts ],
+            owl:onProperty scimantic:hasUncertainty ],
         [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Hypothesis ;
-            owl:onProperty scimantic:supports ],
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasDerivedFrom ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
             owl:onProperty scimantic:supports ],
         scimantic:Entity,
         scimantic:URREFEvidence ;
@@ -278,23 +278,23 @@ scimantic:parameter a owl:ObjectProperty ;
 scimantic:Analysis a owl:Class ;
     rdfs:label "Analysis" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Dataset ;
-            owl:onProperty scimantic:used ],
-        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty scimantic:used ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:used ],
+            owl:onProperty scimantic:wasInformedBy ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:wasInformedBy ],
         [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:used ],
+        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasInformedBy ],
+            owl:onProperty scimantic:used ],
         [ a owl:Restriction ;
             owl:allValuesFrom scimantic:Experimentation ;
             owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Dataset ;
+            owl:onProperty scimantic:used ],
         scimantic:Activity ;
     skos:definition "The activity of processing a Dataset to produce a Result." ;
     skos:exactMatch scimantic:Analysis ;
@@ -303,38 +303,38 @@ scimantic:Analysis a owl:Class ;
 scimantic:Dataset a owl:Class ;
     rdfs:label "Dataset" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:UncertaintyModel ;
+            owl:onProperty scimantic:hasUncertainty ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Experimentation ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
             owl:allValuesFrom scimantic:ExperimentalMethod ;
             owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:hasUncertainty ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:hasUncertainty ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:wasDerivedFrom ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:UncertaintyModel ;
-            owl:onProperty scimantic:hasUncertainty ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Experimentation ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:hasUncertainty ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:hasUncertainty ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasDerivedFrom ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:wasGeneratedBy ],
@@ -346,23 +346,23 @@ scimantic:Dataset a owl:Class ;
 scimantic:DesignOfExperiment a owl:Class ;
     rdfs:label "DesignOfExperiment" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:HypothesisFormation ;
+            owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:used ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
             owl:allValuesFrom scimantic:Hypothesis ;
             owl:onProperty scimantic:used ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:used ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:used ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasInformedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:HypothesisFormation ;
-            owl:onProperty scimantic:wasInformedBy ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasInformedBy ],
         scimantic:Activity ;
     skos:definition "The activity of creating an ExperimentalMethod from a Hypothesis." ;
     skos:exactMatch scimantic:DesignOfExperiment ;
@@ -371,47 +371,47 @@ scimantic:DesignOfExperiment a owl:Class ;
 scimantic:ExperimentalMethod a owl:Class ;
     rdfs:label "ExperimentalMethod" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:DesignOfExperiment ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Hypothesis ;
+            owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:method ],
+        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:method ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty scimantic:parameter ],
+            owl:onProperty scimantic:method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:label ],
         [ a owl:Restriction ;
             owl:allValuesFrom scimantic:Parameter ;
             owl:onProperty scimantic:parameter ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Hypothesis ;
-            owl:onProperty scimantic:wasDerivedFrom ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasDerivedFrom ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasDerivedFrom ],
+            owl:onProperty scimantic:parameter ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:method ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty scimantic:method ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:DesignOfExperiment ;
-            owl:onProperty scimantic:wasGeneratedBy ],
         scimantic:Entity ;
     skos:definition "A specification of the experimental or computational method." ;
     skos:exactMatch scimantic:ExperimentalMethod ;
@@ -420,22 +420,22 @@ scimantic:ExperimentalMethod a owl:Class ;
 scimantic:Experimentation a owl:Class ;
     rdfs:label "Experimentation" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:used ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
             owl:onProperty scimantic:wasInformedBy ],
         [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:ExperimentalMethod ;
+            owl:minCardinality 0 ;
             owl:onProperty scimantic:used ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasInformedBy ],
         [ a owl:Restriction ;
             owl:allValuesFrom scimantic:DesignOfExperiment ;
             owl:onProperty scimantic:wasInformedBy ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:used ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasInformedBy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
+            owl:allValuesFrom scimantic:ExperimentalMethod ;
             owl:onProperty scimantic:used ],
         scimantic:Activity ;
     skos:definition "The activity of running an ExperimentalMethod to produce a Dataset." ;
@@ -445,23 +445,23 @@ scimantic:Experimentation a owl:Class ;
 scimantic:HypothesisFormation a owl:Class ;
     rdfs:label "HypothesisFormation" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasInformedBy ],
-        [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasInformedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Evidence ;
-            owl:onProperty scimantic:used ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:used ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
             owl:onProperty scimantic:used ],
         [ a owl:Restriction ;
             owl:allValuesFrom scimantic:EvidenceAssessment ;
             owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:used ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Evidence ;
+            owl:onProperty scimantic:used ],
         scimantic:Activity ;
     skos:definition "The activity of synthesizing Evidence into a Hypothesis." ;
     skos:exactMatch scimantic:HypothesisFormation ;
@@ -558,89 +558,89 @@ scimantic:Evidence a owl:Class ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:hasUncertainty ],
         [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:LiteratureSearch ;
+            owl:allValuesFrom scimantic:Hypothesis ;
+            owl:onProperty scimantic:supports ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:accessLevel ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:publishable ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
             owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:source ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty scimantic:citation ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:contradicts ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:accessLevel ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:source ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:content ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty scimantic:publishable ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:source ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty scimantic:accessLevel ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty scimantic:source ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:supports ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Hypothesis ;
-            owl:onProperty scimantic:contradicts ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:citation ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:accessLevel ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Hypothesis ;
-            owl:onProperty scimantic:supports ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:publishable ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty scimantic:content ],
-        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:supports ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty scimantic:publishable ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:contradicts ],
+            owl:onProperty scimantic:source ],
         [ a owl:Restriction ;
             owl:allValuesFrom scimantic:UncertaintyModel ;
             owl:onProperty scimantic:hasUncertainty ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
+            owl:allValuesFrom scimantic:LiteratureSearch ;
             owl:onProperty scimantic:wasGeneratedBy ],
         [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:contradicts ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:publishable ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty scimantic:publishable ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Hypothesis ;
+            owl:onProperty scimantic:contradicts ],
+        [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
-            owl:onProperty scimantic:label ],
+            owl:onProperty scimantic:content ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:contradicts ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:accessLevel ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:supports ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:content ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasGeneratedBy ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:hasUncertainty ],
         [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:accessLevel ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:content ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:source ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:citation ],
         scimantic:Entity,
         scimantic:URREFEvidence ;
     skos:definition "A factual claim extracted from a source." ;
@@ -693,17 +693,17 @@ scimantic:UncertaintyModel a owl:Class ;
             owl:minCardinality 1 ;
             owl:onProperty scimantic:natureOfUncertainty ],
         [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:derivationOfUncertainty ],
+        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:derivationOfUncertainty ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
+            owl:allValuesFrom scimantic:UncertaintyDerivation ;
             owl:onProperty scimantic:derivationOfUncertainty ],
         [ a owl:Restriction ;
             owl:allValuesFrom scimantic:UncertaintyNature ;
             owl:onProperty scimantic:natureOfUncertainty ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:UncertaintyDerivation ;
-            owl:onProperty scimantic:derivationOfUncertainty ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:natureOfUncertainty ],
@@ -727,25 +727,25 @@ scimantic:Activity a owl:Class ;
 scimantic:Hypothesis a owl:Class ;
     rdfs:label "Hypothesis" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasDerivedFrom ],
-        [ a owl:Restriction ;
             owl:minCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
             owl:onProperty scimantic:label ],
         [ a owl:Restriction ;
             owl:allValuesFrom scimantic:HypothesisFormation ;
             owl:onProperty scimantic:wasGeneratedBy ],
         [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
             owl:allValuesFrom scimantic:Evidence ;
             owl:onProperty scimantic:wasDerivedFrom ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
             owl:onProperty scimantic:label ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
@@ -767,19 +767,19 @@ scimantic:Entity a owl:Class ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:id ],
         [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Agent ;
-            owl:onProperty scimantic:wasAttributedTo ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasAttributedTo ],
-        [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty scimantic:id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasAttributedTo ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty scimantic:id ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasAttributedTo ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Agent ;
             owl:onProperty scimantic:wasAttributedTo ] ;
     skos:definition "A provenance entity." ;
     skos:exactMatch prov:Entity ;
