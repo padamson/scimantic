@@ -71,10 +71,17 @@ repos:
   - repo: local
     hooks:
       - id: validate-ontology
-        name: Validate Ontology (Syntax)
-        entry: bash -c 'cd scimantic-core && uv run python -c "from rdflib import Graph; g=Graph(); g.parse(\"ontology/scimantic.ttl\", format=\"turtle\")"'
+        name: Validate Ontology (Syntax & SHACL)
+        entry: bash -c 'cd scimantic-core && uv run python -c "from rdflib import Graph; g=Graph(); g.parse(\"ontology/scimantic.ttl\", format=\"turtle\")" && uv run pyshacl -s ontology/shacl/scimantic-shapes.ttl -df turtle ontology/scimantic.ttl && uv run pyshacl -s ontology/shacl/urref-shapes.ttl -df turtle ontology/scimantic.ttl'
         language: system
         files: ^scimantic-core/ontology/.*\.ttl$
+        pass_filenames: false
+
+      - id: generate-ontology-graph
+        name: Generate Ontology Graph (Mermaid)
+        entry: bash -c 'uv run --with rdflib scripts/visualize_ontology.py'
+        language: system
+        files: ^scimantic-core/ontology/scimantic\.ttl$|scripts/visualize_ontology\.py$
         pass_filenames: false
 
   # Security: Detect secrets and sensitive data

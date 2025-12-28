@@ -37,9 +37,9 @@
 
 **Tasks**:
 - [x] Create `scimantic.ttl`.
-- [x] Define Classes: `Question`, `Evidence`, `Hypothesis`, `Design`, `Dataset`, `Result`.
-- [x] Define Activities: `QuestionFormation`, `LiteratureSearch`, `Assessment`, `HypothesisFormation`, `DesignPlanning`, `Execution`, `Analysis`.
-- [x] Define Properties: `accessLevel`, `content` (or `label`), domain-specific relations not covered by PROV.
+- [x] Define Classes (see [Ontology Spec](../03-how-specifications/ontology-spec-v0.1.0.md)).
+- [x] Define Activities (see [Ontology Spec](../03-how-specifications/ontology-spec-v0.1.0.md)).
+- [x] Define Properties (see [Ontology Spec](../03-how-specifications/ontology-spec-v0.1.0.md)).
 - [x] **Local Validation**: Configure `pre-commit` hooks to run syntax validation (riot/jena) and simplistic SHACL checks locally, mirroring the CI pipeline.
 
 ### Slice 3: Automated Publication (CI/CD)
@@ -58,7 +58,7 @@
 
 - **Valid RDF**: Passes syntax checkers.
 - **PROV Compliance**: All classes are valid PROV subclasses.
-- **Coverage**: Covers all 6 entities and 7 activities defined in Architecture.
+- **Coverage**: Covers all entities and activities defined in the [Ontology Specification](../03-how-specifications/ontology-spec-v0.1.0.md).
 
 ## 🔗 Dependencies
 

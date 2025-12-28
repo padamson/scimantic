@@ -1,0 +1,71 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix urref: <https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://scimantic.io/shapes/urref> a owl:Ontology ;
+    dcterms:title "URREF Validation Shapes"@en ;
+    dcterms:description "SHACL shapes for validating data against the URREF ontology constraints."@en ;
+    owl:versionInfo "0.1.0" ;
+    owl:versionIRI <http://scimantic.io/v/0.1.0/shacl/urref-shapes.ttl> .
+
+# ------------------------------------------------------------------------------
+# Uncertainty Model Integrity
+# ------------------------------------------------------------------------------
+
+urref:UncertaintyModelShape
+    a sh:NodeShape ;
+    sh:targetClass urref:UncertaintyModel ;
+    sh:property [
+        sh:path urref:natureOfUncertainty ;
+        sh:class urref:UncertaintyNature ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Uncertainty Model must specify exactly one nature (Aleatory or Epistemic)." ;
+    ] .
+
+# ------------------------------------------------------------------------------
+# Epistemic Uncertainty Consistency
+# ------------------------------------------------------------------------------
+
+urref:AmbiguityShape
+    a sh:NodeShape ;
+    sh:targetClass urref:Ambiguity ;
+    sh:property [
+        sh:path urref:natureOfUncertainty ;
+        sh:hasValue urref:Epistemic ;
+        sh:message "Ambiguity is inherently Epistemic uncertainty." ;
+    ] .
+
+urref:VaguenessShape
+    a sh:NodeShape ;
+    sh:targetClass urref:Vagueness ;
+    sh:property [
+        sh:path urref:natureOfUncertainty ;
+        sh:hasValue urref:Epistemic ;
+        sh:message "Vagueness is inherently Epistemic uncertainty." ;
+    ] .
+
+urref:IncompletenessShape
+    a sh:NodeShape ;
+    sh:targetClass urref:Incompleteness ;
+    sh:property [
+        sh:path urref:natureOfUncertainty ;
+        sh:hasValue urref:Epistemic ;
+        sh:message "Incompleteness is inherently Epistemic uncertainty." ;
+    ] .
+
+# ------------------------------------------------------------------------------
+# Aleatory Uncertainty Consistency
+# ------------------------------------------------------------------------------
+
+urref:RandomnessShape
+    a sh:NodeShape ;
+    sh:targetClass urref:Aleatory ;
+    sh:property [
+        sh:path urref:natureOfUncertainty ;
+        sh:hasValue urref:Aleatory ;
+        sh:message "Aleatory uncertainty entities must have nature Aleatory." ;
+    ] .

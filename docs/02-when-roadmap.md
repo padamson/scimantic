@@ -4,7 +4,8 @@ This roadmap defines **WHEN** we build capabilities, ordered to deliver value in
 
 For **WHY**, see [the vision](00-why-vision.md).
 For **WHAT** (system design), see [the architecture](01-what-architecture.md).
-For **HOW**, see code and tests.
+For **HOW** (implementation details), see [specifications](03-how-specifications/), `scimantic-core`, and `scimantic-ext`.
+For **FEATURES** (vertical slices), see [features](features/).
 
 ## Principles
 
@@ -13,7 +14,38 @@ For **HOW**, see code and tests.
 3. **Testable**: Every capability has automated tests
 4. **Dogfooded**: Use Scimantic to build Scimantic (examples/scimantic-paper)
 
+## Milestone 0: Core Ontology (v0.1.0)
+
+**Goal**: Define and publish a stable domain ontology that provides the semantic schema (Classes, Properties, Shapes) for all subsequent milestones.
+
+**Why first**: You cannot mint semantic evidence (Milestone 1) without a schema defining what "Evidence" is. Use standardized SHACL shapes for validation.
+
+**Value delivered**: A publicly resolvable, versioned ontology (`scimantic.io`) that allows researchers and tools to agree on data structure.
+
+**Status**: **Complete**.
+- `scimantic.ttl` defined.
+- SHACL validation rules implemented.
+- CI/CD pipeline (Test, Release, Docs) active.
+
+---
+
 ## Milestone 1: Semantic Literature Review (Foundation)
+... (rest of file) ...
+
+## Current Status
+
+- **Milestone 0**: Complete (Ontology v0.1.0 released).
+- **Milestone 1**: Slice 1 complete (Evidence persistence with nanopubs and PROV-O).
+- **Milestone 1**: Slice 2 in progress (VS Code tree view, needs nanopub integration).
+- **Milestones 2-8**: Not started
+
+## Next Steps
+
+1.  **Revise Milestone 1, Slice 2** to align with nanopublication-first approach
+2.  **Implement nanopublication minting** in `add_evidence` MCP tool
+3.  **Update VS Code extension** to display nanopub structure (assertion + provenance)
+4.  **Complete Milestone 1** before moving to Milestone 2
+
 
 **Goal**: Enable researchers to extract knowledge from legacy papers and persist it as nanopublications in a queryable knowledge graph.
 

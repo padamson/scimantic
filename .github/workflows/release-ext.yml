@@ -1,0 +1,70 @@
+name: Release Extension (VS Code)
+
+on:
+  push:
+    tags:
+      - 'ext-v*'
+
+jobs:
+  build-ext:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - name: Extract Version
+        id: get_version
+        run: |
+          # Extract version from tag (ext-v1.0.0 -> 1.0.0)
+          VERSION=${GITHUB_REF#refs/tags/ext-v}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Detected version: $VERSION"
+
+      - name: Verify package.json Version
+        run: |
+          # Check that package.json matches the tag
+          FILE="scimantic-ext/package.json"
+          EXPECTED_VERSION='"version": "${{ env.VERSION }}"'
+
+          if grep -Fq "$EXPECTED_VERSION" "$FILE"; then
+            echo "✅ Version verified in $FILE"
+          else
+            echo "❌ Error: $FILE does not contain '$EXPECTED_VERSION'"
+            echo "Please manually update version in package.json before tagging."
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: |
+          cd scimantic-ext
+          pnpm install
+
+      - name: Package Extension
+        run: |
+          cd scimantic-ext
+          pnpm run package
+          # vsce package produces a .vsix file
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: scimantic-ext-vsix
+          path: scimantic-ext/*.vsix
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: scimantic-ext/*.vsix
+          draft: false
+          prerelease: false
+          generate_release_notes: true

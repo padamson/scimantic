@@ -1,6 +1,6 @@
 # Scimantic
 
-**Scimantic** is a Semantic Research Orchestration framework that enables machine-readable scientific research from inception through publication.
+**Scimantic** is a VS Code extension and semantic framework that enables **human-AI teaming** for scientific research. It transforms the scientific process into a machine-readable workflow from inception through publication.
 
 ## Vision
 
@@ -14,40 +14,29 @@ Scimantic transforms the traditional scientific workflow into a fully semantic, 
 
 ## The Scientific Method as Linked Data
 
-Scimantic maps the scientific method to semantic web standards:
+Scimantic maps the activities in the scientific method to semantic web standards:
 
-1. **Literature Review** → Evidence entities linked via nanopublications
-2. **Hypothesis Formation** → Hypothesis entities derived from evidence with uncertainty bounds
-3. **Experimental Design** → Design entities specifying methods, parameters, and expected outcomes
-4. **Experimentation** → PROV Activities generating datasets with full lineage
-5. **Analysis** → Analysis entities with statistical measures and uncertainty propagation
-6. **Publication** → Nanopublications packaging assertions with provenance and metadata
+1. **Question Formation** → Generating a *Question*
+2. **Literature Search** → Extracting *Evidence* from sources
+3. **Evidence Assessment** → Evaluating *Evidence* credibility
+4. **Hypothesis Formation** → Deriving a *Hypothesis* from evidence
+5. **Experimental Design** → Defining an *Experimental Method*
+6. **Experimentation** → Executing the method to produce a *Dataset*
+7. **Analysis** → Processing data to produce a *Result*
+8. **Result Assessment** → Comparing *Result* with *Hypothesis*
 
-## Components
+![Scimantic Ontology Graph](./ontology_graph.png)
 
-*   **[scimantic-core](./scimantic-core)**: Python framework for semantic workflow orchestration
-    - RDF/OWL-based knowledge graph (RDFLib)
-    - W3C PROV-O provenance tracking
-    - Nanopublication generation and management
-    - Uncertainty representation and propagation
-    - MCP server for AI agent integration
+## Documentation
 
-*   **[scimantic-ext](./scimantic-ext)**: VS Code Extension for research visualization
-    - Interactive knowledge graph visualization
-    - Real-time provenance graph updates
-    - AI-assisted literature search (MCP client)
-    - Hypothesis minting and design specification UI
+For a deeper dive into Scimantic's rationale and design, please refer to the core documentation:
 
-*   **[examples](./examples)**: Reference implementations
-    - **scimantic-paper**: Dogfooding Scimantic by researching design and implementation of Scimantic itself
-
-## Key Technologies
-
-- **RDF/OWL**: W3C standards for linked data and ontologies
-- **Nanopublications**: Minimal publishable units with provenance
-- **W3C PROV-O**: Provenance ontology for complete lineage tracking
-- **MCP (Model Context Protocol)**: AI agent integration for research assistance
-- **RDFLib**: Python RDF manipulation and SPARQL querying
+- **[Vision (Why)](./docs/00-why-vision.md)**: The philosophy of semantic research and the reasoning behind Scimantic.
+- **[Architecture (What)](./docs/01-what-architecture.md)**: High-level system design and component breakdown.
+- **[Roadmap (When)](./docs/02-when-roadmap.md)**: Planned features and milestones.
+- **[Specifications (How)](./docs/03-how-specifications/)**: Detailed ontology and technical specifications.
+- **[Features](./docs/features/)**: Vertical slice implementation plans.
+- **[Release Guide](./docs/releasing.md)**: How to release Ontology, Core, and Extension versions.
 
 ## Development
 
@@ -64,10 +53,20 @@ cd scimantic-core && uv run pytest
 cd scimantic-core && uv run python -m scimantic.mcp
 ```
 
-## Documentation
+### Quality Assurance & Automation
 
-- [Feature Specifications](./docs/features/): Vertical slice planning and implementation tracking
-- [CLAUDE.md](./CLAUDE.md): Guide for AI assistants working on this codebase
+This project uses `pre-commit` to ensure code quality, consistency, and documentation accuracy.
+
+To enable the automation:
+```bash
+# Install git hooks
+pre-commit install
+```
+
+This includes ontology validation:
+
+- **Syntax**: Validates `scimantic.ttl` format
+- **Visualization**: **Auto-generates** `ontology_graph.png` (Mermaid) whenever the ontology changes
 
 ## License
 

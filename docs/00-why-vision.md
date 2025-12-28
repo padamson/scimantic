@@ -8,9 +8,9 @@ Science advances through a systematic reasoning process - the **scientific metho
 
 The scientific method involves both **things** (questions, evidence, hypotheses, data, results) and **processes** (searching, assessing, designing, executing, analyzing). Following the W3C PROV-O ontology structure, we can map the scientific method to:
 
-- **Entities** (`prov:Entity`): Concrete artifacts of research
-- **Activities** (`prov:Activity`): Processes that create or transform entities
-- **Agents** (`prov:Agent`): Researchers, AI assistants, and software
+- **Entities**: Concrete artifacts of research (Questions, Evidence, Data)
+- **Activities**: Processes that create or transform entities (Searching, Experimenting, Analyzing)
+- **Agents**: Researchers, AI assistants, and software executing the work
 
 ```mermaid
 graph TB
@@ -20,7 +20,7 @@ graph TB
             Q[Question]
             E[Evidence]
             H[Hypothesis]
-            D[Design]
+            EM[Experimental<br/>Method]
             DS[Dataset]
             R[Result]
         end
@@ -30,8 +30,8 @@ graph TB
             LS[Literature<br/>Search]
             EA[Evidence<br/>Assessment]
             HF[Hypothesis<br/>Formation]
-            DP[Design<br/>Planning]
-            EX[Execution]
+            DOE[Design Of<br/>Experiment]
+            EX[Expertimentation]
             AN[Analysis]
             RA[Result<br/>Assessment]
         end
@@ -44,9 +44,9 @@ graph TB
     EA -.may generate.-> Q
     E -.input to.-> HF
     HF -.generates.-> H
-    H -.input to.-> DP
-    DP -.generates.-> D
-    D -.input to.-> EX
+    H -.input to.-> DOE
+    DOE -.generates.-> EM
+    EM -.input to.-> EX
     EX -.generates.-> DS
     DS -.input to.-> AN
     AN -.generates.-> R
@@ -58,14 +58,14 @@ graph TB
     style Q fill:#e1f5ff,stroke:#333,stroke-width:2px
     style E fill:#fff4e1,stroke:#333,stroke-width:2px
     style H fill:#ffe1f5,stroke:#333,stroke-width:2px
-    style D fill:#e1ffe1,stroke:#333,stroke-width:2px
+    style EM fill:#e1ffe1,stroke:#333,stroke-width:2px
     style DS fill:#f5e1ff,stroke:#333,stroke-width:2px
     style R fill:#ffe1e1,stroke:#333,stroke-width:2px
     style QF fill:#f0f0f0,stroke:#666,stroke-width:1px
     style LS fill:#f0f0f0,stroke:#666,stroke-width:1px
     style EA fill:#f0f0f0,stroke:#666,stroke-width:1px
     style HF fill:#f0f0f0,stroke:#666,stroke-width:1px
-    style DP fill:#f0f0f0,stroke:#666,stroke-width:1px
+    style DOE fill:#f0f0f0,stroke:#666,stroke-width:1px
     style EX fill:#f0f0f0,stroke:#666,stroke-width:1px
     style AN fill:#f0f0f0,stroke:#666,stroke-width:1px
     style RA fill:#f0f0f0,stroke:#666,stroke-width:1px
@@ -88,11 +88,11 @@ graph TB
    - *Example*: "MQDO should predict DCS within 10% error"
    - *Provenance*: Which evidence supports this? What's the uncertainty?
 
-5. **Design Planning** (activity) → **Design** (entity): Specify experimental/computational method
+5. **Design of Experiment** (activity) → **ExperimentalMethod** (entity): Specify experimental/computational method
    - *Example*: "Run MQDO code with E = 10 MeV, angular range 0-180°"
    - *Provenance*: Motivated by which hypothesis?
 
-6. **Execution** (activity) → **Dataset** (entity): Run experiments/simulations
+6. **Experimentation** (activity) → **Dataset** (entity): Run experiments/simulations
    - *Example*: MQDO computation produces numerical output
    - *Provenance*: Which code version? What input parameters? Computational environment?
 
@@ -134,11 +134,11 @@ graph TB
 - Hypothesis → `scimantic:Hypothesis` entity with `prov:wasDerivedFrom` (evidence), uncertainty propagation
 - ... (continues through all stages)
 
-**The result**: A unified knowledge graph where SPARQL queries can answer:
-- "What evidence supports hypothesis X?" → Traverse `prov:wasDerivedFrom` chains
-- "Which experiments tested this hypothesis?" → Find designs with `prov:wasDerivedFrom` hypothesis
-- "How was this result computed?" → Trace `prov:wasGeneratedBy` → analysis activity → code version
-- "What's the uncertainty propagation path?" → Follow URREF `derivedFrom` chains from evidence → hypothesis → result
+**The result**: A unified knowledge graph where queries can answer:
+- "What evidence supports hypothesis X?" → Traverse the chain of support
+- "Which experiments tested this hypothesis?" → Find experimental methods designed for the hypothesis
+- "How was this result computed?" → Trace the analysis back to code and data
+- "What's the uncertainty?" → Propagate uncertainty from evidence through the reasoning chain
 
 ### Why This Matters
 
@@ -192,7 +192,7 @@ The scientific community has built impressive tools for **individual stages** of
 - Hypothesis formation is **undocumented** - no provenance linking Evidence → Hypothesis
 - Can't query "which evidence supports hypothesis X?" (relationship is implicit in text)
 
-#### Stage 4-5: Design Planning & Execution
+#### Stage 4-5: Design of Experiment & Experimentation
 
 **What exists:**
 - **Workflow systems**: Nextflow (dominant, 24% of WorkflowHub), Snakemake, Galaxy, CWL track execution
@@ -201,8 +201,8 @@ The scientific community has built impressive tools for **individual stages** of
 - **Code Ocean**: Integrated into Nature peer review for computational reproducibility
 
 **What's missing:**
-- Design → Hypothesis linkage is **absent** (workflows don't know *why* they exist)
-- Execution provenance is **computational** only (which script ran), not **scientific** (which hypothesis motivated it)
+- ExperimentalMethod → Hypothesis linkage is **absent** (workflows don't know *why* they exist)
+- Experimentation provenance is **computational** only (which script ran), not **scientific** (which hypothesis motivated it)
 - Can't query "which experiments tested this hypothesis?"
 
 #### Stage 6-7: Analysis & Result Assessment
@@ -249,12 +249,12 @@ The scientific community has built impressive tools for **individual stages** of
 
 **What's broken:**
 - **No end-to-end integration**: Tools operate in isolation, no machine-readable connections between stages
-- **Entity chains invisible**: Question → Evidence → Hypothesis → Design → Dataset → Result links exist only in researchers' heads, not as `prov:wasDerivedFrom` chains
-- **Activities undocumented**: LiteratureSearch, Assessment, HypothesisFormation happen but aren't captured as PROV-O activities
-- **Feedback loops missing**: Assessment doesn't generate new Questions; contradictory evidence doesn't create `prov:contradicts` relations
-- **Uncertainty as text**: URREF defines structure, but researchers write "high confidence" instead of creating `urref:UncertaintyEntity` RDF
-- **Semantic publishing post-hoc**: Nanopubs created after research is done, not minted automatically during each stage
-- **No persistent AI memory**: AI extractions produce text summaries, not RDF entities in shared knowledge graphs
+- **Entity chains invisible**: The links between Question, Evidence, Hypothesis, Method, Data, and Result exist only in researchers' heads, not as a traceable graph.
+- **Activities undocumented**: Key steps like Literature Search, Assessment, and Hypothesis Formation happen but aren't captured as structural activities.
+- **Feedback loops missing**: Assessment doesn't seamlessly generate new Questions; contradictory evidence doesn't formally link to the Hypothesis it challenges.
+- **Uncertainty as text**: Uncertainty is written as "high confidence" text rather than structured data that can be computed.
+- **Semantic publishing post-hoc**: Structured data is created only *after* research is done, not as a natural byproduct of the process.
+- **No persistent AI memory**: AI extractions produce text summaries, not structured entities in a shared knowledge graph.
 - **Domain gap**: Strong in life sciences (biology, medicine), weak in physical sciences (physics, chemistry, engineering)
 
 ---
@@ -282,76 +282,45 @@ Scimantic **builds on existing tools** (Semantic Scholar, Elicit, Nextflow, PROV
 - **RDFLib**: Python library for RDF manipulation, SPARQL queries, Turtle serialization
 - **Existing workflow systems**: Nextflow, Snakemake, Jupyter (decorated with PROV-O tracking, not replaced)
 
-**What Scimantic Adds** (Integration Layer, Not New Standards):
+**Scimantic provides the integration layer** that transforms these standards into a seamless research workflow:
 
-**Entities** (Research artifacts as `prov:Entity` subclasses):
-- `scimantic:Question`: Research questions that motivate investigations
-- `scimantic:Evidence`: Facts extracted from literature with provenance and uncertainty
-- `scimantic:Hypothesis`: Claims derived from evidence synthesis
-- `scimantic:Design`: Experimental/computational method specifications (also `prov:Plan`)
-- `scimantic:Dataset`: Observational data or experimental measurements
-- `scimantic:Result`: Analysis outcomes with uncertainty propagation
-
-**Activities** (Research processes as `prov:Activity` subclasses):
-- `scimantic:QuestionFormation`: Formulating research questions
-- `scimantic:LiteratureSearch`: Searching and extracting from papers
-- `scimantic:Assessment`: Evaluating credibility, validity, or generating support/contradict relations
-- `scimantic:HypothesisFormation`: Synthesizing evidence into hypotheses
-- `scimantic:DesignPlanning`: Creating experimental/computational designs
-- `scimantic:Execution`: Running experiments or simulations
-- `scimantic:Analysis`: Processing datasets into results
-
-**Integration Features**:
-- **Automatic nanopub generation**: Every research action mints nanopubs using standard schema
-- **Complete provenance chains**: Links all entities via `prov:wasDerivedFrom`, all activities via `prov:wasInformedBy`
-- **Feedback loops**: Assessment activities generate new Questions; Results can refine Hypotheses
-- **URREF uncertainty propagation**: Automatic calculation using `urref:derivedFrom` chains
-- **Access-level publishing**: Same RDF model, different visibility scopes (local/institutional/public)
-- **MCP tools for AI**: `add_evidence`, `create_hypothesis`, `query_graph`, `assess_result` enable AI collaboration
-- **PROV-K discourse relations**: `prov:supports`, `prov:contradicts` link Results to Hypotheses
+1.  **First-Class Research Objects**: We treat questions, evidence, hypotheses, and methods as distinct, structured data objects, not just text in a document.
+2.  **Explicit Relationships**: We capture the semantic connections between these objects—knowing *why* an experiment was run (to test a specific hypothesis) or *why* a hypothesis was formed (based on specific evidence).
+3.  **Standardized Provenance**: As you work, the system records every action using the W3C PROV standard, creating an immutable history of the research process.
+4.  **Integrated Uncertainty**: We don't just record values; we record the uncertainty and confidence associated with every piece of evidence and every result.
+5.  **AI Compatibility**: By structuring research as a knowledge graph, we provide AI agents with a "persistent memory" and a structured way to reason about science, enabling true collaboration.
 
 ### How It Works: Semantic-First Research
 
-Scimantic integrates into the researcher's workflow at every stage of the reasoning chain, automatically capturing entities and activities as RDF:
+Scimantic integrates into the researcher's workflow at every stage of the reasoning chain, capturing entities and activities as RDF through human-AI interaction:
 
 **1. Semantic from Day One**
-- **Literature extraction** creates `scimantic:Evidence` entities (not text notes)
-- **Hypothesis formation** creates `scimantic:Hypothesis` entities with `prov:wasDerivedFrom` links to evidence
-- **Design planning** creates `scimantic:Design` entities with `prov:wasDerivedFrom` links to hypotheses
-- All stored in local `project.ttl` graph—immediately queryable via SPARQL
+- **Literature extraction** creates structured Evidence objects, not just text notes.
+- **Hypothesis formation** creates Hypothesis objects linked directly to the supporting Evidence.
+- **Experimental design** creates Method objects linked to the Hypotheses they test.
+- This happens seamlessly in the background, building a queryable graph as you work.
 
 **2. Complete Provenance Chains**
-- Every entity traces back through the reasoning chain: Result → Analysis activity → Dataset → Execution activity → Design → Hypothesis → Evidence → Literature Search activity
-- Activities document *why* (which hypothesis motivated this experiment?) not just *what* (which script ran?)
-- SPARQL queries answer: "How did we get this result?" by traversing `prov:wasGeneratedBy` and `prov:wasDerivedFrom` chains
+- Every entity traces back through the reasoning chain: `Result` → `Analysis` → `Dataset` → `Experimentation` → `Method` → `Hypothesis` → `Evidence` → `Source`.
+- The system captures **why** things happened, not just **what** happened.
 
-**3. Automatic Nanopublication Generation**
-- Each research action (extract evidence, form hypothesis, run analysis) mints a nanopublication automatically
-- No manual RDF authoring—Scimantic wraps actions in standard schema (assertion + provenance + pubinfo)
-- Nanopubs generated during research, not post-hoc after publication
+**3. Seamless Publishing**
+- Research actions are formatted as standard "Nanopublications"—atomic, citable units of knowledge.
+- These can be shared internally or published globally without extra effort.
 
-**4. AI Persistent Memory via MCP**
-- AI agents (via MCP) read/write RDF entities to shared `project.ttl` graph
-- Evidence extracted by AI becomes permanent nanopub, survives beyond conversation
-- AI can query: "What contradicts hypothesis X?" by traversing PROV-K `prov:contradicts` relations
-- Collaborative research: AI suggests hypotheses from evidence patterns, human validates
+**4. AI Persistent Memory**
+- AI agents access this shared knowledge graph. They don't start from scratch; they know what you've read, what you've hypothesized, and what you've tested.
+- Collaboration becomes meaningful: AI can suggest hypotheses based on your evidence or identify contradictions in your results.
 
-**5. URREF Uncertainty Propagation**
-- Evidence has `urref:UncertaintyEntity` (epistemic, aleatory, with quantification)
-- Hypothesis uncertainty auto-calculated from evidence uncertainties + epistemic gap
-- Result uncertainty propagated via `urref:derivedFrom` chains
-- Query: "All hypotheses with epistemic uncertainty > 0.1" becomes computable
+**5. Quantitative Uncertainty**
+- Uncertainty is treated as data. If your evidence is 80% confident, the system helps propagate that uncertainty to your hypotheses and results.
 
-**6. Feedback Loops Documented**
-- Assessment activities can generate new `scimantic:Question` entities
-- Unexpected results can create `prov:contradicts` relations, triggering hypothesis refinement
-- Literature search provenance preserved ("why these 3 from 15 papers?")
+**6. Iterative Refinement**
+- The system naturally tracks feedback loops: evaluating evidence can trigger new questions, and analyzing results can refine hypotheses.
 
-**7. Access-Level Flexibility**
-- All entities start as local scope (private, safe for fair use)
-- Promote to institutional scope (lab collaboration) or public scope (publication) as needed
-- Same RDF model across all access levels—only `scimantic:accessLevel` metadata changes
-- Evidence from copyrighted sources can stay local while hypotheses/results go public
+**7. Flexible Publishing**
+- Work can start private and local, then easily be promoted to institutional or public scopes without changing the data format.
+- You control what stays private (e.g., copyright evidence) and what goes public (e.g., results).
 
 **Key Differentiator:** Other tools capture *what happened* (code ran, data produced). Scimantic captures *why it happened* (hypothesis motivated experiment, evidence supported hypothesis). The reasoning chain becomes a queryable knowledge graph, not narrative text.
 
@@ -363,5 +332,5 @@ This vision document establishes **why** Scimantic exists and the value it deliv
 
 - **Technical Architecture** (WHAT we're building): See [the architecture](./01-what-architecture.md)
 - **Implementation Roadmap** (WHEN we build capabilities): See [the roadmap](./02-when-roadmap.md)
+- **Specifications, Code, & Tests** (HOW it works): See [specifications](./03-how-specifications/), `scimantic-core`, and `scimantic-ext`
 - **Feature Specifications** (vertical slices): See [features](./features/)
-- **Code & Tests** (HOW it works): See `scimantic-core` and `scimantic-ext`

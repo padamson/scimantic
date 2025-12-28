@@ -1,0 +1,196 @@
+name: Release Ontology
+
+on:
+  push:
+    tags:
+      - 'ontology-v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release-ontology:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: |
+          cd scimantic-core
+          uv sync --all-extras
+
+      - name: Extract Version
+        id: get_version
+        run: |
+          # Extract version from tag (ontology-v0.1.0 -> 0.1.0)
+          VERSION=${GITHUB_REF#refs/tags/ontology-v}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Detected version: $VERSION"
+
+      - name: Verify OWL Version IRI
+        run: |
+          # Read the TTL file and check for the correct versionIRI
+          EXPECTED_IRI="owl:versionIRI <http://scimantic.io/v/${{ env.VERSION }}/ontology.ttl>"
+          FILE="scimantic-core/ontology/scimantic.ttl"
+
+          if grep -Fq "$EXPECTED_IRI" "$FILE"; then
+            echo "✅ Version IRI verified in $FILE"
+          else
+            echo "❌ Error: $FILE does not contain '$EXPECTED_IRI'"
+            echo "Please manually update owl:versionIRI in the ontology file before tagging."
+            exit 1
+          fi
+
+          # Verify SHACL files also have the correct versionInfo AND versionIRI
+          EXPECTED_INFO="owl:versionInfo \"${{ env.VERSION }}\""
+
+          # 1. Scimantic Shapes
+          SHAPES_1="scimantic-core/ontology/shacl/scimantic-shapes.ttl"
+          # Shapes are in the /shacl subfolder
+          EXPECTED_IRI_1="owl:versionIRI <http://scimantic.io/v/${{ env.VERSION }}/shacl/scimantic-shapes.ttl>"
+
+          if grep -Fq "$EXPECTED_INFO" "$SHAPES_1" && grep -Fq "$EXPECTED_IRI_1" "$SHAPES_1"; then
+             echo "✅ Version & IRI verified in $SHAPES_1"
+          else
+             echo "❌ Error: $SHAPES_1 missing '$EXPECTED_INFO' or '$EXPECTED_IRI_1'"
+             exit 1
+          fi
+
+          # 2. URREF Shapes
+          SHAPES_2="scimantic-core/ontology/shacl/urref-shapes.ttl"
+          EXPECTED_IRI_2="owl:versionIRI <http://scimantic.io/v/${{ env.VERSION }}/shacl/urref-shapes.ttl>"
+
+          if grep -Fq "$EXPECTED_INFO" "$SHAPES_2" && grep -Fq "$EXPECTED_IRI_2" "$SHAPES_2"; then
+             echo "✅ Version & IRI verified in $SHAPES_2"
+          else
+             echo "❌ Error: $SHAPES_2 missing '$EXPECTED_INFO' or '$EXPECTED_IRI_2'"
+             exit 1
+          fi
+
+          # 3. widoco.conf
+          CONF="scimantic-core/ontology/widoco.conf"
+          EXPECTED_INFO="ontologyRevisionNumber=${{ env.VERSION }}"
+          EXPECTED_IRI="ontologyNamespaceURI=https://scimantic.io/v/${{ env.VERSION }}"
+
+          if grep -Fq "$EXPECTED_INFO" "$CONF" && grep -Fq "$EXPECTED_IRI" "$CONF"; then
+             echo "✅ Version verified in $CONF"
+          else
+             echo "❌ Error: $CONF missing '$EXPECTED_INFO' or '$EXPECTED_IRI'"
+             exit 1
+          fi
+
+      - name: Verify Syntax & SHACL
+        run: |
+          cd scimantic-core
+          uv run python -c "from rdflib import Graph; Graph().parse('ontology/scimantic.ttl', format='turtle')"
+          uv run pyshacl -s ontology/shacl/scimantic-shapes.ttl -df turtle ontology/scimantic.ttl
+          uv run pyshacl -s ontology/shacl/urref-shapes.ttl -df turtle ontology/scimantic.ttl
+
+      # ------------------------------------------------------------------------
+      # Generate Documentation (Widoco)
+      # ------------------------------------------------------------------------
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Download Widoco
+        run: |
+          wget https://github.com/dgarijo/Widoco/releases/download/v1.4.25/widoco-1.4.25-jar-with-dependencies_JDK-17.jar -O widoco.jar
+
+      - name: Prepare Site Structure
+        run: |
+          # Create the site structure in release_artifacts/
+          # Only Versioned folder: v/X.Y.Z/
+          # Root Index: index.html (Redirect)
+
+          mkdir -p release_artifacts/v/${{ env.VERSION }}
+
+      - name: Run Widoco
+        run: |
+          # Output to versioned folder
+          java -jar widoco.jar \
+            -ontFile scimantic-core/ontology/scimantic.ttl \
+            -outFolder release_artifacts/v/${{ env.VERSION }} \
+            -confFile scimantic-core/ontology/widoco.conf \
+            -uniteSections \
+            -rewriteAll \
+            -webVowl \
+            -lang en
+
+      - name: Fix Index HTML & Flatten Structure
+        run: |
+          # 1. Flatten "doc" folder if Widoco created it
+          TARGET_DIR="release_artifacts/v/${{ env.VERSION }}"
+          if [ -d "$TARGET_DIR/doc" ]; then
+            echo "Moving content from $TARGET_DIR/doc to $TARGET_DIR"
+            mv "$TARGET_DIR/doc/"* "$TARGET_DIR/"
+            rmdir "$TARGET_DIR/doc"
+          fi
+
+          # 2. Widoco produces index-en.html. Rename/Copy to index.html for correct routing.
+          if [ -f "$TARGET_DIR/index-en.html" ]; then
+            cp "$TARGET_DIR/index-en.html" "$TARGET_DIR/index.html"
+          fi
+
+      - name: Enrich Release Artifacts
+        run: |
+          TARGET_DIR="release_artifacts/v/${{ env.VERSION }}"
+
+          # Add raw artifacts ONLY to Versioned Folder
+          # Copy to "ontology.ttl" to match the IRI <http://scimantic.io/v/0.1.0/ontology.ttl>
+          # This overwrites any partial 'ontology.ttl' generated by Widoco with the full source.
+          cp scimantic-core/ontology/scimantic.ttl "$TARGET_DIR/ontology.ttl"
+
+          # Also keep the original filename for reference
+          cp scimantic-core/ontology/scimantic.ttl "$TARGET_DIR/"
+
+          mkdir -p "$TARGET_DIR/shacl"
+          cp scimantic-core/ontology/shacl/*.ttl "$TARGET_DIR/shacl/"
+          cp ontology_graph.png "$TARGET_DIR/"
+
+      - name: Create Root Redirect
+        run: |
+          cat <<EOF > release_artifacts/index.html
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta http-equiv="refresh" content="0; url=v/${{ env.VERSION }}/" />
+            <title>Redirecting to latest version...</title>
+          </head>
+          <body>
+            <p>Redirecting to the latest version: <a href="v/${{ env.VERSION }}/">v/${{ env.VERSION }}</a></p>
+          </body>
+          </html>
+          EOF
+
+      # ------------------------------------------------------------------------
+      # Deploy to GitHub Pages (Root)
+      # ------------------------------------------------------------------------
+      - name: Deploy Site
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./release_artifacts # Contains index.html and v/X.Y.Z/
+          publish_branch: gh-pages
+          cname: scimantic.io
+          keep_files: true  # CRITICAL: Preserve existing v/ folders!
+
+      # ------------------------------------------------------------------------
+      # Create GitHub Release
+      # ------------------------------------------------------------------------
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release_artifacts/*
+          draft: false
+          prerelease: false
+          generate_release_notes: true

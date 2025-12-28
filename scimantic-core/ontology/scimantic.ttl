@@ -4,9 +4,12 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix urref: <http://www.w3.org/ns/urref#> .
+@prefix urref: <https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#> .
 @prefix np: <http://www.nanopub.org/nschema#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix scimantic: <http://scimantic.io/> .
 
 # ------------------------------------------------------------------------------
@@ -17,8 +20,11 @@ scimantic: a owl:Ontology ;
     dcterms:title "Scimantic Ontology"@en ;
     dcterms:description "A minimal domain ontology for representing the scientific method as provenance chains."@en ;
     owl:versionInfo "0.1.0" ;
+    owl:versionIRI <http://scimantic.io/v/0.1.0/ontology.ttl> ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-    rdfs:seeAlso <http://www.w3.org/ns/prov#>, <http://www.w3.org/ns/urref#> .
+    owl:imports <http://scimantic.io/v/0.1.0/shacl/urref-shapes.ttl> ;
+    owl:imports <http://scimantic.io/v/0.1.0/shacl/scimantic-shapes.ttl> ;
+    rdfs:seeAlso <http://www.w3.org/ns/prov#>, <https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#> .
 
 # ------------------------------------------------------------------------------
 # Entity Classes (prov:Entity)
@@ -26,38 +32,100 @@ scimantic: a owl:Ontology ;
 
 scimantic:Question a owl:Class ;
     rdfs:subClassOf prov:Entity ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasGeneratedBy ;
+        owl:allValuesFrom scimantic:QuestionFormation
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty scimantic:motivates ;
+        owl:someValuesFrom scimantic:LiteratureSearch
+    ] ;
     rdfs:label "Research Question"@en ;
     rdfs:comment "An interrogative sentence representing the research query."@en .
 
 scimantic:Evidence a owl:Class ;
-    rdfs:subClassOf prov:Entity, np:Nanopublication ;
+    rdfs:subClassOf prov:Entity, np:Nanopublication, urref:Evidence ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasGeneratedBy ;
+        owl:allValuesFrom scimantic:LiteratureSearch
+    ] ;
     rdfs:label "Evidence"@en ;
     rdfs:comment "A factual claim extracted from a source."@en .
 
 scimantic:Hypothesis a owl:Class ;
     rdfs:subClassOf prov:Entity, np:Nanopublication ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasGeneratedBy ;
+        owl:allValuesFrom scimantic:HypothesisFormation
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasDerivedFrom ;
+        owl:someValuesFrom scimantic:Evidence
+    ] ;
     rdfs:label "Hypothesis"@en ;
     rdfs:comment "A testable claim derived from evidence."@en .
 
-scimantic:Design a owl:Class ;
+scimantic:ExperimentalMethod a owl:Class ;
     rdfs:subClassOf prov:Entity, prov:Plan ;
-    rdfs:label "Study Design"@en ;
-    rdfs:comment "A specification of the experimental or computational method."@en .
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasGeneratedBy ;
+        owl:allValuesFrom scimantic:DesignOfExperiment
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasDerivedFrom ;
+        owl:someValuesFrom scimantic:Hypothesis
+    ] ;
+    rdfs:label "Experimental Method"@en ;
+    rdfs:comment "A specification of the experimental or computational method to be executed."@en .
 
 scimantic:Dataset a owl:Class ;
-    rdfs:subClassOf prov:Entity ;
+    rdfs:subClassOf prov:Entity, dcat:Dataset ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasGeneratedBy ;
+        owl:allValuesFrom scimantic:Experimentation
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasDerivedFrom ;
+        owl:someValuesFrom scimantic:ExperimentalMethod
+    ] ;
     rdfs:label "Dataset"@en ;
-    rdfs:comment "Raw data, observations, or measurements produced by execution."@en .
+    rdfs:comment "Raw data, observations, or measurements produced by experimentation."@en .
 
 scimantic:Result a owl:Class ;
-    rdfs:subClassOf prov:Entity ;
+    rdfs:subClassOf prov:Entity, np:Nanopublication, urref:Evidence ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasGeneratedBy ;
+        owl:allValuesFrom scimantic:Analysis
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasDerivedFrom ;
+        owl:someValuesFrom scimantic:Dataset
+    ] ;
     rdfs:label "Result"@en ;
     rdfs:comment "The outcome of an analysis activity."@en .
 
 scimantic:Parameter a owl:Class ;
     rdfs:subClassOf prov:Entity ;
     rdfs:label "Design Parameter"@en ;
-    rdfs:comment "A configured parameter within a Design."@en .
+    rdfs:comment "A configured parameter within an Experimental Method."@en .
+
+# ------------------------------------------------------------------------------
+# Uncertainty Entities (URREF Integration)
+# ------------------------------------------------------------------------------
+
+# Bridge URREF to PROV World
+urref:UncertaintyModel rdfs:subClassOf prov:Entity .
 
 # ------------------------------------------------------------------------------
 # Activity Classes (prov:Activity)
@@ -73,84 +141,179 @@ scimantic:LiteratureSearch a owl:Class ;
     rdfs:label "Literature Search"@en ;
     rdfs:comment "The activity of searching for and extracting Evidence."@en .
 
-scimantic:Assessment a owl:Class ;
+scimantic:EvidenceAssessment a owl:Class ;
     rdfs:subClassOf prov:Activity ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:used ;
+        owl:someValuesFrom scimantic:Evidence
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasInformedBy ;
+        owl:someValuesFrom scimantic:LiteratureSearch
+    ] ;
     rdfs:label "Evidence Assessment"@en ;
     rdfs:comment "The activity of evaluating credibility or relevance of Evidence."@en .
 
 scimantic:HypothesisFormation a owl:Class ;
     rdfs:subClassOf prov:Activity ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:used ;
+        owl:someValuesFrom scimantic:Evidence
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasInformedBy ;
+        owl:someValuesFrom scimantic:EvidenceAssessment
+    ] ;
     rdfs:label "Hypothesis Formation"@en ;
     rdfs:comment "The activity of synthesizing Evidence into a Hypothesis."@en .
 
-scimantic:DesignPlanning a owl:Class ;
+scimantic:DesignOfExperiment a owl:Class ;
     rdfs:subClassOf prov:Activity ;
-    rdfs:label "Design Planning"@en ;
-    rdfs:comment "The activity of specifying a Design."@en .
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:used ;
+        owl:someValuesFrom scimantic:Hypothesis
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasInformedBy ;
+        owl:someValuesFrom scimantic:HypothesisFormation
+    ] ;
+    rdfs:label "Design of Experiment"@en ;
+    rdfs:comment "The activity of creating an ExperimentalMethod from a Hypothesis."@en .
 
-scimantic:Execution a owl:Class ;
+scimantic:Experimentation a owl:Class ;
     rdfs:subClassOf prov:Activity ;
-    rdfs:label "Execution"@en ;
-    rdfs:comment "The activity of running a Design to produce a Dataset."@en .
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:used ;
+        owl:someValuesFrom scimantic:ExperimentalMethod
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasInformedBy ;
+        owl:someValuesFrom scimantic:DesignOfExperiment
+    ] ;
+    rdfs:label "Experimentation"@en ;
+    rdfs:comment "The activity of running an ExperimentalMethod to produce a Dataset."@en .
 
 scimantic:Analysis a owl:Class ;
     rdfs:subClassOf prov:Activity ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:used ;
+        owl:someValuesFrom scimantic:Dataset
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasInformedBy ;
+        owl:someValuesFrom scimantic:Experimentation
+    ] ;
     rdfs:label "Analysis"@en ;
     rdfs:comment "The activity of processing a Dataset to produce a Result."@en .
+
+scimantic:ResultAssessment a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:used ;
+        owl:someValuesFrom scimantic:Result
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty prov:wasInformedBy ;
+        owl:someValuesFrom scimantic:Analysis
+    ] ;
+    rdfs:label "Result Assessment"@en ;
+    rdfs:comment "The activity of comparing a Result to the original Hypothesis."@en .
 
 # ------------------------------------------------------------------------------
 # Properties
 # ------------------------------------------------------------------------------
 
+# --- Core Domain Properties ---
+
 scimantic:hasUncertainty a owl:ObjectProperty ;
-    rdfs:domain prov:Entity ;
-    rdfs:range urref:UncertaintyEntity ;
+    rdfs:domain [ a owl:Class ; owl:unionOf (scimantic:Evidence scimantic:Result scimantic:Dataset) ] ;
+    rdfs:range urref:UncertaintyModel ;
     rdfs:label "has uncertainty"@en ;
-    rdfs:comment "Links an entity to its uncertainty model."@en .
+    rdfs:comment "Links an entity to its reified uncertainty model."@en .
 
 scimantic:accessLevel a owl:DatatypeProperty ;
     rdfs:domain np:Nanopublication ;
     rdfs:range xsd:string ;
     rdfs:label "access level"@en ;
-    rdfs:comment "Publishing scope (e.g., local, institutional, public)."@en .
+    rdfs:comment "Publishing scope (e.g., local, institutional, public, public_essential_evidence)."@en .
 
 scimantic:publishable a owl:DatatypeProperty ;
     rdfs:domain np:Nanopublication ;
     rdfs:range xsd:boolean ;
     rdfs:label "publishable"@en ;
-    rdfs:comment "Flag indicating readiness for public promotion."@en .
+    rdfs:comment "Flag indicating if this is ready for public promotion."@en .
+
+# --- Experimental Method Properties ---
 
 scimantic:method a owl:DatatypeProperty ;
-    rdfs:domain scimantic:Design ;
+    rdfs:domain scimantic:ExperimentalMethod ;
     rdfs:range xsd:string ;
-    rdfs:label "method"@en .
+    rdfs:label "method"@en ;
+    rdfs:comment "Name or description of the method."@en .
 
 scimantic:parameter a owl:ObjectProperty ;
-    rdfs:domain scimantic:Design ;
+    rdfs:domain scimantic:ExperimentalMethod ;
     rdfs:range scimantic:Parameter ;
-    rdfs:label "parameter"@en .
+    rdfs:label "parameter"@en ;
+    rdfs:comment "Structured configuration parameter."@en .
 
-scimantic:expectedOutcome a owl:ObjectProperty ;
-    rdfs:domain scimantic:Design ;
-    rdfs:range scimantic:Hypothesis ;
-    rdfs:label "expected outcome"@en .
+
+
+# --- Result Properties ---
 
 scimantic:value a owl:DatatypeProperty ;
     rdfs:domain scimantic:Result ;
-    rdfs:label "value"@en .
+    rdfs:label "value"@en ;
+    rdfs:comment "The numeric or categorical result."@en .
 
 scimantic:unit a owl:DatatypeProperty ;
     rdfs:domain scimantic:Result ;
     rdfs:range xsd:string ;
-    rdfs:label "unit"@en .
+    rdfs:label "unit"@en ;
+    rdfs:comment "Unit of measurement."@en .
 
-# Software Provenance
-scimantic:codeRepository a owl:DatatypeProperty ;
-    rdfs:domain prov:SoftwareAgent ;
-    rdfs:range xsd:anyURI ;
-    rdfs:label "code repository"@en .
+# --- Discourse & Motivation Properties (Relationships) ---
 
-scimantic:commitHash a owl:DatatypeProperty ;
-    rdfs:domain prov:SoftwareAgent ;
-    rdfs:range xsd:string ;
-    rdfs:label "commit hash"@en .
+scimantic:motivates a owl:ObjectProperty ;
+    rdfs:domain scimantic:Question ;
+    rdfs:range prov:Activity ; # Ideally restricted to Scimantic activities
+    rdfs:label "motivates"@en ;
+    rdfs:comment "A Question that triggers or motivates an Activity (e.g., Literature Search)."@en .
+
+scimantic:supports a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ; owl:unionOf (scimantic:Evidence scimantic:Result) ] ;
+    rdfs:range scimantic:Hypothesis ;
+    rdfs:label "supports"@en ;
+    rdfs:comment "An Entity (Evidence/Result) that provides positive evidence for a Hypothesis."@en .
+
+scimantic:contradicts a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ; owl:unionOf (scimantic:Evidence scimantic:Result) ] ;
+    rdfs:range scimantic:Hypothesis ;
+    rdfs:label "contradicts"@en ;
+    rdfs:comment "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis."@en .
+
+scimantic:refines a owl:ObjectProperty ;
+    rdfs:subPropertyOf prov:wasDerivedFrom ;
+    rdfs:domain scimantic:Result ;
+    rdfs:range scimantic:Hypothesis ;
+    rdfs:label "refines"@en ;
+    rdfs:comment "A Result that suggests a specific modification to a Hypothesis (Feedback capability)."@en .
+
+# ------------------------------------------------------------------------------
+# Resource & Agent Provenance
+# ------------------------------------------------------------------------------
+# Note: Custom properties (scimantic:codeRepository) have been removed.
+# Scimantic relies on standard external ontologies (DOAP, DCAT, SOSA) for
+# describing resources, as specified in standard integration patterns.
