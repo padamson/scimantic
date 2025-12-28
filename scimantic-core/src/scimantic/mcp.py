@@ -3,8 +3,11 @@ import uuid
 from pathlib import Path
 from typing import Any, Dict, cast
 
+from datetime import datetime, timezone
+
 from mcp.server.fastmcp import FastMCP
-from rdflib import Graph, Namespace
+from rdflib import Graph, Namespace, Literal, URIRef
+from rdflib.namespace import RDF, RDFS, DCTERMS, XSD
 from rdflib.query import ResultRow
 
 from scimantic.config import (
@@ -55,7 +58,7 @@ def get_provenance_graph_json(project_path: str = DEFAULT_PROJECT_FILE) -> str:
     # Query for all Evidence entities
     evidence_list = []
     query = """
-        PREFIX scimantic: <http://scimantic.io/ontology#>
+        PREFIX scimantic: <http://scimantic.io/>
         PREFIX prov: <http://www.w3.org/ns/prov#>
         PREFIX dcterms: <http://purl.org/dc/terms/>
 
@@ -128,7 +131,21 @@ def get_tools() -> list[Dict[str, Any]]:
         {"name": "mint_hypothesis"},
         {"name": "mint_design"},
         {"name": "add_evidence"},
+        {"name": "add_question"},
     ]
+
+
+def _persist_graph(graph: Graph, project_path: str = DEFAULT_PROJECT_FILE):
+    """Helper to persist RDF graph to disk."""
+    project_file = Path(project_path)
+    if project_file.exists():
+        existing_g = Graph()
+        existing_g.parse(str(project_file), format="turtle")
+        existing_g += graph
+        graph = existing_g
+
+    project_file.parent.mkdir(parents=True, exist_ok=True)
+    graph.serialize(destination=str(project_file), format="turtle")
 
 
 def add_evidence(
@@ -140,53 +157,103 @@ def add_evidence(
 ) -> Dict[str, Any]:
     """
     Add evidence from literature to the knowledge graph.
-
-    Creates an Evidence entity following scimantic-core/ontology/scimantic.ttl
-    and persists it to project.ttl in Turtle format. Multiple calls accumulate
-    evidence in the same graph.
-
-    Args:
-        content: Summary of the finding extracted from the source paper
-        citation: Formatted bibliographic citation
-        source: DOI or URL of the source publication
-        agent: URI of the agent (human or AI) capturing this evidence
-        project_path: Path to project.ttl file (default: "project.ttl")
-
-    Returns:
-        Dictionary with status and evidence URI
     """
+    # TODO: Replace with LinkML rdf_dumper once schema packaging and context generation are fully automated.
+    # Currently using manual RDF construction for stability.
+
     # Generate unique URI for this evidence
     evidence_id = str(uuid.uuid4())[:8]
     evidence_uri = f"http://example.org/research/evidence/{evidence_id}"
 
-    # Create Evidence instance
+    # Create Evidence instance (note: id field)
+    # Generate a label from content if not provided (assume full content for now, or truncated)
+    label = content[:50] + "..." if len(content) > 50 else content
+
     evidence = Evidence(
-        uri=evidence_uri, content=content, citation=citation, source=source, agent=agent
+        id=evidence_uri,
+        label=label,
+        content=content,
+        citation=citation,
+        source=source,
+        wasAttributedTo=agent,
     )
 
-    # Convert to RDF
-    evidence_graph = evidence.to_rdf()
+    g = Graph()
+    g.bind("scimantic", SCIMANTIC)
+    g.bind("prov", PROV)
 
-    # Load existing graph or create new one
-    project_file = Path(project_path)
-    if project_file.exists():
-        # Load existing graph
-        g = Graph()
-        g.parse(str(project_file), format="turtle")
-        # Merge with new evidence
-        g += evidence_graph
-    else:
-        # Use new evidence graph
-        g = evidence_graph
+    evidence_node = URIRef(evidence.id)
+    g.add((evidence_node, RDF.type, SCIMANTIC.Evidence))
+    g.add((evidence_node, RDF.type, PROV.Entity))
+    g.add((evidence_node, SCIMANTIC.id, Literal(evidence.id)))
+    g.add((evidence_node, SCIMANTIC.content, Literal(evidence.content)))  # type: ignore
+    g.add((evidence_node, DCTERMS.bibliographicCitation, Literal(evidence.citation)))  # type: ignore
+    g.add((evidence_node, DCTERMS.source, Literal(evidence.source)))  # type: ignore
 
-    # Save back to file
-    project_file.parent.mkdir(parents=True, exist_ok=True)
-    g.serialize(destination=str(project_file), format="turtle")
+    agent_node = URIRef(evidence.wasAttributedTo)  # type: ignore
+    g.add((evidence_node, PROV.wasAttributedTo, agent_node))  # type: ignore
+    g.add((agent_node, RDF.type, PROV.Agent))
+    g.add((agent_node, SCIMANTIC.id, Literal(evidence.wasAttributedTo)))  # type: ignore
+
+    # Add timestamp
+    timestamp = datetime.now(timezone.utc)
+    g.add(
+        (evidence_node, PROV.generatedAtTime, Literal(timestamp, datatype=XSD.dateTime))
+    )
+
+    _persist_graph(g, project_path)
 
     return {
         "status": "success",
         "uri": evidence_uri,
         "message": f"Evidence added to {project_path}",
+    }
+
+
+def add_question(
+    label: str,
+    agent: str,
+    project_path: str = DEFAULT_PROJECT_FILE,
+) -> Dict[str, Any]:
+    """
+    Add a research question to the knowledge graph.
+    """
+    from scimantic.models import Question
+
+    # Generate unique URI
+    unique_id = str(uuid.uuid4())[:8]
+    question_uri = f"http://example.org/research/question/{unique_id}"
+
+    # Create model
+    question = Question(id=question_uri, label=label, wasAttributedTo=agent)
+
+    # Manual RDF (Temporary)
+    g = Graph()
+    g.bind("scimantic", SCIMANTIC)
+    g.bind("prov", PROV)
+
+    q_node = URIRef(question.id)
+    g.add((q_node, RDF.type, SCIMANTIC.Question))
+    g.add((q_node, SCIMANTIC.id, Literal(question.id)))
+    g.add((q_node, RDFS.label, Literal(question.label)))
+    if question.wasAttributedTo:
+        agent_node = URIRef(question.wasAttributedTo)
+        g.add((q_node, PROV.wasAttributedTo, agent_node))
+        g.add((agent_node, RDF.type, PROV.Agent))
+        g.add((agent_node, SCIMANTIC.id, Literal(question.wasAttributedTo)))
+
+    # Create associated Activity (QuestionFormation)
+    # Note: The model doesn't enforce this creation automatically, business logic does.
+    activity_uri = URIRef(f"{question_uri}/generation")
+    g.add((activity_uri, RDF.type, SCIMANTIC.QuestionFormation))
+    g.add((q_node, PROV.wasGeneratedBy, activity_uri))
+
+    _persist_graph(g, project_path)
+
+    return {
+        "status": "success",
+        "uri": question_uri,
+        "message": f"Question added to {project_path}",
     }
 
 

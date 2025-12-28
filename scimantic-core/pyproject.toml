@@ -24,6 +24,7 @@ dependencies = [
     "cclib>=1.7",
     "prov>=2.0.0",
     "pyshacl>=0.30.1",
+    "linkml>=1.8.0",
 ]
 
 [project.optional-dependencies]
@@ -34,8 +35,15 @@ dev = [
     "mypy>=1.0"
 ]
 
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = "scimantic.models"
+ignore_errors = true
+
 [project.scripts]
 scimantic = "scimantic.cli:main"
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/scimantic"]
+gen-all = "scimantic.gen_all:main"

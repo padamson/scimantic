@@ -39,8 +39,6 @@ jobs:
           uv run python -c "from rdflib import Graph; Graph().parse('ontology/scimantic.ttl', format='turtle')"
           # SHACL check (Scimantic)
           uv run pyshacl -s ontology/shacl/scimantic-shapes.ttl -df turtle ontology/scimantic.ttl
-          # SHACL check (URREF)
-          uv run pyshacl -s ontology/shacl/urref-shapes.ttl -df turtle ontology/scimantic.ttl
 
       # ------------------------------------------------------------------------
       # 2. Validation Finished

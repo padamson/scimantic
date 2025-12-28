@@ -63,21 +63,12 @@ jobs:
              exit 1
           fi
 
-          # 2. URREF Shapes
-          SHAPES_2="scimantic-core/ontology/shacl/urref-shapes.ttl"
-          EXPECTED_IRI_2="owl:versionIRI <http://scimantic.io/v/${{ env.VERSION }}/shacl/urref-shapes.ttl>"
 
-          if grep -Fq "$EXPECTED_INFO" "$SHAPES_2" && grep -Fq "$EXPECTED_IRI_2" "$SHAPES_2"; then
-             echo "✅ Version & IRI verified in $SHAPES_2"
-          else
-             echo "❌ Error: $SHAPES_2 missing '$EXPECTED_INFO' or '$EXPECTED_IRI_2'"
-             exit 1
-          fi
 
           # 3. widoco.conf
           CONF="scimantic-core/ontology/widoco.conf"
           EXPECTED_INFO="ontologyRevisionNumber=${{ env.VERSION }}"
-          EXPECTED_IRI="ontologyNamespaceURI=https://scimantic.io/v/${{ env.VERSION }}"
+          EXPECTED_IRI="ontologyNamespaceURI=https://scimantic.io/"
 
           if grep -Fq "$EXPECTED_INFO" "$CONF" && grep -Fq "$EXPECTED_IRI" "$CONF"; then
              echo "✅ Version verified in $CONF"
@@ -91,7 +82,6 @@ jobs:
           cd scimantic-core
           uv run python -c "from rdflib import Graph; Graph().parse('ontology/scimantic.ttl', format='turtle')"
           uv run pyshacl -s ontology/shacl/scimantic-shapes.ttl -df turtle ontology/scimantic.ttl
-          uv run pyshacl -s ontology/shacl/urref-shapes.ttl -df turtle ontology/scimantic.ttl
 
       # ------------------------------------------------------------------------
       # Generate Documentation (Widoco)

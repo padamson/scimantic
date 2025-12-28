@@ -45,3 +45,6 @@ public/
 
 # Generated Graph
 ontology_graph.mmd
+
+# widoco tmp files
+tmp/

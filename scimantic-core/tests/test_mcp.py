@@ -11,7 +11,7 @@ import pytest
 from rdflib import Graph, Namespace, URIRef
 from rdflib.namespace import RDF
 
-SCIMANTIC = Namespace("http://scimantic.io/ontology#")
+SCIMANTIC = Namespace("http://scimantic.io/")
 PROV = Namespace("http://www.w3.org/ns/prov#")
 
 

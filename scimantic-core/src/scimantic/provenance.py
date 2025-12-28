@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
 from functools import wraps
+from typing import cast
 
 from rdflib import RDF, Graph, Literal, Namespace
 from rdflib.namespace import PROV, RDFS, XSD
@@ -57,8 +58,8 @@ class SemProvenance:
 
         return decorator
 
-    def export_turtle(self):
-        return self.graph.serialize(format="turtle")
+    def export_turtle(self) -> str:
+        return cast(str, self.graph.serialize(format="turtle"))
 
 
 # Global Instance

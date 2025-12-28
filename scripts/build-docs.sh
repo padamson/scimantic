@@ -23,6 +23,7 @@ if [ ! -f "$WIDOCO_JAR" ]; then
     curl -L -o "$WIDOCO_JAR" "$WIDOCO_URL"
 fi
 
+
 # Run Widoco
 echo "Generating documentation..."
 "$JAVA_CMD" -jar "$WIDOCO_JAR" \

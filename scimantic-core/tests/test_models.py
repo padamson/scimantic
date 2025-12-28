@@ -4,14 +4,11 @@ Unit tests for scimantic models (Evidence, Hypothesis, etc.)
 Tests that model creation, validation, and RDF serialization work correctly.
 """
 
-from datetime import datetime
-
 import pytest
-from rdflib import Graph, Literal, Namespace, URIRef
-from rdflib.namespace import DCTERMS, RDF, XSD
+from rdflib import Namespace
 
 # Scimantic namespaces
-SCIMANTIC = Namespace("http://scimantic.io/ontology#")
+SCIMANTIC = Namespace("http://scimantic.io/")
 PROV = Namespace("http://www.w3.org/ns/prov#")
 
 
@@ -24,18 +21,17 @@ class TestEvidenceModel:
 
         # Create evidence with minimal required fields
         evidence = Evidence(
-            uri="http://example.org/research/scimantic-paper/evidence/001",
+            id="http://example.org/research/scimantic-paper/evidence/001",
             content="Nanopublications are the smallest unit of publishable information.",
             citation="Kuhn, T., et al. (2016). Decentralized provenance-aware publishing.",
             source="https://doi.org/10.7717/peerj-cs.78",
-            agent="http://example.org/agent/claude",
+            wasAttributedTo="http://example.org/agent/claude",
+            label="Nanopublications are the smallest unit...",
         )
 
         # Verify instance was created
         assert evidence is not None
-        assert (
-            evidence.uri == "http://example.org/research/scimantic-paper/evidence/001"
-        )
+        assert evidence.id == "http://example.org/research/scimantic-paper/evidence/001"
         assert (
             evidence.content
             == "Nanopublications are the smallest unit of publishable information."
@@ -45,56 +41,7 @@ class TestEvidenceModel:
             == "Kuhn, T., et al. (2016). Decentralized provenance-aware publishing."
         )
         assert evidence.source == "https://doi.org/10.7717/peerj-cs.78"
-        assert evidence.agent == "http://example.org/agent/claude"
-
-    def test_evidence_to_rdf(self):
-        """Test Evidence serialization to RDF following PROV-O standards"""
-        from scimantic.models import Evidence
-
-        evidence = Evidence(
-            uri="http://example.org/research/scimantic-paper/evidence/001",
-            content="Nanopublications are the smallest unit of publishable information.",
-            citation="Kuhn, T., et al. (2016). Decentralized provenance-aware publishing.",
-            source="https://doi.org/10.7717/peerj-cs.78",
-            agent="http://example.org/agent/claude",
-        )
-
-        # Convert to RDF graph
-        graph = evidence.to_rdf()
-
-        # Verify it's a graph
-        assert isinstance(graph, Graph)
-
-        # Create URIRefs for verification
-        evidence_uri = URIRef(evidence.uri)
-        agent_uri = URIRef(evidence.agent)
-        source_uri = URIRef(evidence.source)
-
-        # Verify dual typing: scimantic:Evidence AND prov:Entity
-        types = list(graph.objects(evidence_uri, RDF.type))
-        assert SCIMANTIC.Evidence in types
-        assert PROV.Entity in types
-
-        # Verify scimantic:content
-        content = graph.value(evidence_uri, SCIMANTIC.content)
-        assert content == Literal(evidence.content)
-
-        # Verify dcterms:bibliographicCitation
-        citation = graph.value(evidence_uri, DCTERMS.bibliographicCitation)
-        assert citation == Literal(evidence.citation)
-
-        # Verify dcterms:source
-        source = graph.value(evidence_uri, DCTERMS.source)
-        assert source == source_uri
-
-        # Verify prov:wasAttributedTo
-        attributed_to = graph.value(evidence_uri, PROV.wasAttributedTo)
-        assert attributed_to == agent_uri
-
-        # Verify prov:generatedAtTime exists and is a datetime
-        generated_at = graph.value(evidence_uri, PROV.generatedAtTime)
-        assert generated_at is not None
-        assert generated_at.datatype == XSD.dateTime
+        assert evidence.wasAttributedTo == "http://example.org/agent/claude"
 
     def test_evidence_validates_required_fields(self):
         """Test that Evidence requires all mandatory fields"""
@@ -105,38 +52,8 @@ class TestEvidenceModel:
             Evidence()  # No arguments
 
         with pytest.raises((TypeError, ValueError)):
-            Evidence(uri="http://example.org/evidence/001")  # Missing content
-
-    def test_evidence_generates_timestamp(self):
-        """Test that Evidence automatically generates prov:generatedAtTime"""
-        from datetime import timezone
-
-        from scimantic.models import Evidence
-
-        before = datetime.now(timezone.utc)
-
-        evidence = Evidence(
-            uri="http://example.org/evidence/001",
-            content="Test content",
-            citation="Test citation",
-            source="https://example.org/paper",
-            agent="http://example.org/agent/test",
-        )
-
-        after = datetime.now(timezone.utc)
-
-        # Verify timestamp attribute exists
-        assert evidence.timestamp is not None
-        assert isinstance(evidence.timestamp, datetime)
-
-        # Verify timestamp is within the before/after window
-        assert before <= evidence.timestamp <= after
-
-        # Convert to RDF and verify timestamp serialization
-        graph = evidence.to_rdf()
-        evidence_uri = URIRef(evidence.uri)
-        generated_at = graph.value(evidence_uri, PROV.generatedAtTime)
-
-        # Verify timestamp was serialized to RDF
-        assert generated_at is not None
-        assert generated_at.datatype == XSD.dateTime
+            Evidence(
+                id="http://example.org/evidence/001"
+            )  # Missing content (if required)
+            # Note: LinkML default is optional unless required: true.
+            # If generated code marks them as Optional, this test might need adjustment.

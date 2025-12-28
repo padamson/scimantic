@@ -6,6 +6,7 @@ import shutil
 # Namespaces
 SCIMANTIC = Namespace("http://scimantic.io/")
 PROV = Namespace("http://www.w3.org/ns/prov#")
+URREF = Namespace("https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#")
 
 def generate_mermaid():
     g = rdflib.Graph()
@@ -22,27 +23,57 @@ def generate_mermaid():
             return str(uri).split("#")[-1]
         return str(uri).split("/")[-1]
 
+    excluded_classes = [
+        "Aleatory", "Epistemic", "Ambiguity", "Vagueness", "Incompleteness",
+        "UncertaintyNature", "UncertaintyDerivation", "URREFEvidence",
+        "Activity", "Entity", "Union"
+    ]
+
     # 1. Identify Classes
     for s in g.subjects(RDF.type, OWL.Class):
         if str(s).startswith(str(SCIMANTIC)):
             name = get_name(s)
 
+            if name in excluded_classes: continue
+            if "Shape" in name or "Constraint" in name: continue
+
             is_entity = False
             is_activity = False
 
-            # Simple hierarchy check
-            parents = list(g.objects(s, RDFS.subClassOf))
+            # Check ancestors
+            is_entity = False
+            is_activity = False
 
-            if PROV.Entity in parents:
-                is_entity = True
-            elif PROV.Activity in parents:
-                is_activity = True
-            else:
+            # Simple recursive check for ancestors
+            def get_ancestors(cls_uri, visited=None):
+                if visited is None: visited = set()
+                if cls_uri in visited: return set()
+                visited.add(cls_uri)
+
+                parents = list(g.objects(cls_uri, RDFS.subClassOf))
+                ancestors = set(parents)
                 for p in parents:
-                    if (p, RDFS.subClassOf, PROV.Entity) in g:
-                        is_entity = True
-                    if (p, RDFS.subClassOf, PROV.Activity) in g:
-                        is_activity = True
+                    if isinstance(p, BNode): continue # Skip restrictions
+                    ancestors.update(get_ancestors(p, visited))
+                return ancestors
+
+            ancestors = get_ancestors(s)
+
+            # Check against known Entity/Activity roots
+            entity_roots = [PROV.Entity, SCIMANTIC.Entity, URREF.Entity]
+            activity_roots = [PROV.Activity, SCIMANTIC.Activity]
+
+            if any(root in ancestors for root in entity_roots):
+                is_entity = True
+            elif any(root in ancestors for root in activity_roots):
+                is_activity = True
+
+            # Fallback based on name (if ontology is incomplete)
+            if not is_entity and not is_activity:
+               if "Activity" in str(s) or "Formation" in str(s) or "Search" in str(s) or "Analysis" in str(s) or "Experimentation" in str(s):
+                   is_activity = True
+               else:
+                   is_entity = True # Default to entity if unknown
 
             if is_entity:
                 entities.append(name)
@@ -58,22 +89,27 @@ def generate_mermaid():
 
     # Mapping Predicates to Vision Strings
     # Key: Tuple(Label, IsInverse)
-    # IsInverse = True means we draw Target -> Source (Activity Flow)
-    # IsInverse = False means we draw Source -> Target (Dependence/Derivation)
     pred_map = {
-        PROV.wasGeneratedBy: ("generates", True), # Entity -> Activity (genBy) => Activity -> Entity
-        PROV.used: ("input to", True),            # Activity -> Entity (used)  => Entity -> Activity
-        PROV.wasInformedBy: ("informs", True),    # A2 -> A1 (informedBy)      => A1 -> A2
+        PROV.wasGeneratedBy: ("generates", True),
+        SCIMANTIC.wasGeneratedBy: ("generates", True), # Added SCIMANTIC variant
 
-        # Provenance & Discourse (Source -> Target)
-        PROV.wasDerivedFrom: ("derives from", False), # E2 -> E1 (derivedFrom) => E2 -> E1
+        PROV.used: ("input to", True),
+        SCIMANTIC.used: ("input to", True), # Added SCIMANTIC variant
+
+        PROV.wasInformedBy: ("informs", True),
+        SCIMANTIC.wasInformedBy: ("informs", True), # Added SCIMANTIC variant
+
+        PROV.wasDerivedFrom: ("derives from", False),
+        SCIMANTIC.wasDerivedFrom: ("derives from", False), # Added SCIMANTIC variant
+
+        PROV.wasAssociatedWith: ("associated with", True),
+        SCIMANTIC.wasAssociatedWith: ("associated with", True),
+
         SCIMANTIC.motivates: ("motivates", False),
         SCIMANTIC.supports: ("supports", False),
         SCIMANTIC.contradicts: ("contradicts", False),
         SCIMANTIC.refines: ("refines", False),
-        SCIMANTIC.parameter: ("parameter", False), # ExperimentalMethod -> Parameter
-
-        # Uncertainty
+        SCIMANTIC.parameter: ("parameter", False),
         SCIMANTIC.hasUncertainty: ("has uncertainty", False)
     }
 
@@ -84,6 +120,18 @@ def generate_mermaid():
     subjects = [s for s in g.subjects(RDF.type, OWL.Class) if str(s).startswith(str(SCIMANTIC))]
     for s in subjects:
         source_name = get_name(s)
+
+        # Filter out Shapes and Constraints
+        if "Shape" in source_name or "Constraint" in source_name: continue
+
+        # Filter out detailed URREF classes (Aleatory, Epistemic, etc.) to reduce clutter
+        # Keep only the high-level UncertaintyModel
+        excluded_classes = [
+            "Aleatory", "Epistemic", "Ambiguity", "Vagueness", "Incompleteness",
+            "UncertaintyNature", "UncertaintyDerivation", "URREFEvidence"
+        ]
+        if source_name in excluded_classes: continue
+
         for bn in g.objects(s, RDFS.subClassOf):
             if isinstance(bn, BNode):
                 if (bn, RDF.type, OWL.Restriction) in g:
@@ -93,6 +141,10 @@ def generate_mermaid():
 
                     if target and (str(target).startswith(str(SCIMANTIC)) or str(target).startswith(str(PROV)) or "URREF" in str(target)):
                         target_name = get_name(target)
+
+                        # Filter target shapes
+                        if "Shape" in target_name or "Constraint" in target_name: continue
+
                         if prop in pred_map:
                             label, is_inverse = pred_map[prop]
                             if is_inverse:

@@ -42,11 +42,11 @@
 6.  User: "Yes, add that."
 7.  AI calls `add_question` tool.
 
-**Acceptance Criteria**:
-- [ ] User can brainstorm via chat.
-- [ ] AI suggests refined, precise questions.
-- [ ] `scimantic:Question` entity created in `project.ttl`.
-- [ ] Tree view displays the Question.
+45: **Acceptance Criteria**:
+46: - [x] User can brainstorm via chat.
+47: - [x] AI suggests refined, precise questions.
+48: - [x] `scimantic:Question` entity created in `project.ttl`.
+49: - [ ] Tree view displays the Question.
 
 ### Slice 2: Question Visualization & Context
 

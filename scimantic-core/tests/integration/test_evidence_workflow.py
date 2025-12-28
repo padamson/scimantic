@@ -11,7 +11,7 @@ from pathlib import Path
 
 from rdflib import Graph, Namespace
 
-SCIMANTIC = Namespace("http://scimantic.io/ontology#")
+SCIMANTIC = Namespace("http://scimantic.io/")
 PROV = Namespace("http://www.w3.org/ns/prov#")
 DCTERMS = Namespace("http://purl.org/dc/terms/")
 
@@ -59,7 +59,7 @@ class TestEvidenceWorkflow:
 
             # --- ACCEPTANCE CRITERION: Evidence has dual typing ---
             query = f"""
-                PREFIX scimantic: <http://scimantic.io/ontology#>
+                PREFIX scimantic: <http://scimantic.io/>
                 PREFIX prov: <http://www.w3.org/ns/prov#>
                 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
@@ -72,7 +72,7 @@ class TestEvidenceWorkflow:
 
             # --- ACCEPTANCE CRITERION: Find evidence added by specific agent ---
             query = """
-                PREFIX scimantic: <http://scimantic.io/ontology#>
+                PREFIX scimantic: <http://scimantic.io/>
                 PREFIX prov: <http://www.w3.org/ns/prov#>
                 PREFIX dcterms: <http://purl.org/dc/terms/>
 
@@ -89,7 +89,7 @@ class TestEvidenceWorkflow:
 
             # --- ACCEPTANCE CRITERION: Count total evidence entries ---
             query = """
-                PREFIX scimantic: <http://scimantic.io/ontology#>
+                PREFIX scimantic: <http://scimantic.io/>
 
                 SELECT (COUNT(?evidence) as ?count) WHERE {
                     ?evidence a scimantic:Evidence .
@@ -114,7 +114,7 @@ class TestEvidenceWorkflow:
             g.parse(str(project_file), format="turtle")
 
             query = """
-                PREFIX scimantic: <http://scimantic.io/ontology#>
+                PREFIX scimantic: <http://scimantic.io/>
                 PREFIX prov: <http://www.w3.org/ns/prov#>
                 PREFIX dcterms: <http://purl.org/dc/terms/>
                 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -132,7 +132,7 @@ class TestEvidenceWorkflow:
 
             # --- ACCEPTANCE CRITERION: Multiple evidence entries coexist ---
             query = """
-                PREFIX scimantic: <http://scimantic.io/ontology#>
+                PREFIX scimantic: <http://scimantic.io/>
 
                 SELECT (COUNT(?evidence) as ?count) WHERE {
                     ?evidence a scimantic:Evidence .
@@ -167,7 +167,7 @@ class TestEvidenceWorkflow:
 
             # Query from feature doc: Find evidence by agent
             query = """
-                PREFIX scimantic: <http://scimantic.io/ontology#>
+                PREFIX scimantic: <http://scimantic.io/>
                 PREFIX prov: <http://www.w3.org/ns/prov#>
 
                 SELECT ?evidence ?citation WHERE {

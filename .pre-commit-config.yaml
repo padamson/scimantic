@@ -2,6 +2,16 @@
 # See https://pre-commit.com/hooks.html for more hooks
 fail_fast: true
 repos:
+  # Ontology Generation & Validation
+  - repo: local
+    hooks:
+      - id: validate-ontology
+        name: Validate Ontology (SHACL)
+        entry: bash -c "cd scimantic-core && uv run pyshacl -s ontology/shacl/scimantic-shapes.ttl ontology/scimantic.ttl"
+        language: system
+        files: ^scimantic-core/ontology/.*\.ttl$
+        pass_filenames: false
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -31,7 +41,7 @@ repos:
     hooks:
       - id: mypy
         name: mypy (scimantic-core)
-        entry: bash -c 'cd scimantic-core && uv run mypy src/scimantic'
+        entry: bash -c 'cd scimantic-core && uv run --extra dev mypy src/scimantic --exclude src/scimantic/models.py'
         language: system
         files: ^scimantic-core/src/scimantic/.*\.py$
         pass_filenames: false
@@ -42,9 +52,9 @@ repos:
     hooks:
       - id: pytest
         name: pytest (scimantic-core)
-        entry: bash -c 'cd scimantic-core && uv run pytest'
+        entry: bash -c 'cd scimantic-core && uv run --extra dev pytest'
         language: system
-        files: ^scimantic-core/(src/scimantic/.*\.py|tests/.*\.py)$
+        files: ^scimantic-core/(src/scimantic/.*\.py|tests/.*\.py|schema/scimantic\.yaml|ontology/.*\.ttl)$
         pass_filenames: false
         require_serial: true
 
@@ -67,22 +77,7 @@ repos:
         pass_filenames: false
         require_serial: true
 
-  # Ontology Validation
-  - repo: local
-    hooks:
-      - id: validate-ontology
-        name: Validate Ontology (Syntax & SHACL)
-        entry: bash -c 'cd scimantic-core && uv run python -c "from rdflib import Graph; g=Graph(); g.parse(\"ontology/scimantic.ttl\", format=\"turtle\")" && uv run pyshacl -s ontology/shacl/scimantic-shapes.ttl -df turtle ontology/scimantic.ttl && uv run pyshacl -s ontology/shacl/urref-shapes.ttl -df turtle ontology/scimantic.ttl'
-        language: system
-        files: ^scimantic-core/ontology/.*\.ttl$
-        pass_filenames: false
 
-      - id: generate-ontology-graph
-        name: Generate Ontology Graph (Mermaid)
-        entry: bash -c 'uv run --with rdflib scripts/visualize_ontology.py'
-        language: system
-        files: ^scimantic-core/ontology/scimantic\.ttl$|scripts/visualize_ontology\.py$
-        pass_filenames: false
 
   # Security: Detect secrets and sensitive data
   - repo: https://github.com/Yelp/detect-secrets

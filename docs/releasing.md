@@ -13,24 +13,18 @@ This repository manages releases for three distinct components using **Scoped Ta
 ## How to Release
 
 ### 1. Ontology Release
-1.  **Update Version Headers**: Manually update `owl:versionInfo` (and `owl:versionIRI`) in:
-    *   `scimantic-core/ontology/scimantic.ttl`
-    *   `scimantic-core/ontology/shacl/scimantic-shapes.ttl`
-    *   `scimantic-core/ontology/shacl/urref-shapes.ttl`
-
-    **Requirement**: All 3 files MUST have:
-    *   `owl:versionInfo "X.Y.Z"`
-    *   `owl:versionIRI <http://scimantic.io/v/X.Y.Z/scimantic>` (for ontology)
-    *   `owl:versionIRI <http://scimantic.io/v/X.Y.Z/shapes>` (for shapes)
-    *   `owl:versionIRI <http://scimantic.io/v/X.Y.Z/shapes/urref>` (for urref-shapes)
-
-2.  **Commit**: Push changes to `main`.
+1.  **Update Version**: Update `version` in `scimantic-core/schema/scimantic.yaml` (e.g., to `0.1.0`).
+2.  **Commit**:
+    -   Stage `scimantic.yaml`.
+    -   The `pre-commit` hook will auto-generate `scimantic.ttl`, `models.py`, and `scimantic-shapes.ttl` with the correct IRIs.
+    -   Stage these generated files as well.
+    -   Push changes to `main`.
 3.  **Tag**:
     ```bash
     git tag ontology-v0.1.0
     git push origin ontology-v0.1.0
     ```
-4.  **Verification**: The `Release Ontology` workflow will fail if any file version does not match `0.1.0`.
+4.  **Verification**: The `Release Ontology` workflow will check that the tagged version matches the IRIs in the committed artifacts.
 
 ### 2. Core Release (Python)
 1.  **Update Version**: Update `version` in `scimantic-core/pyproject.toml`.

@@ -8,7 +8,7 @@ This directory contains the core ontology sources and validation shapes for Scim
 ## Directory Inventory
 
 ### `scimantic.ttl`
-The definitive Turtle source for the Scimantic Ontology (v0.1.0).
+The definitive Turtle source for the Scimantic Ontology, generated from [LinkML](https://linkml.io) schema [../schema/scimantic.yaml](../schema/scimantic.yaml).
 - **URI**: `http://scimantic.io`
 - **Dependencies**: PROV-O, URREF, DCAT, DOAP, SOSA, Nanopub.
 
@@ -19,5 +19,5 @@ Configuration file for [Widoco](https://github.com/dgarijo/Widoco), used in the 
 Standard OWL Catalog file that maps ontology URIs (e.g., `http://scimantic.io/shapes`) to local file paths. This ensures tools like Protégé and Widoco can find the imported SHACL shapes without needing to resolve them over the internet.
 
 ### `shacl/`
-Contains [SHACL](https://www.w3.org/TR/shacl/) shapes used to validate Knowledge Graphs against the Scimantic schema.
+Contains [SHACL](https://www.w3.org/TR/shacl/) shapes used to validate Knowledge Graphs against the Scimantic schema. (Also generated from LinkML schema [../schema/scimantic.yaml](../schema/scimantic.yaml).)
 - `shacl/scimantic-shapes.ttl`: Defines constraints for Entities, Activities, and Uncertainty.
