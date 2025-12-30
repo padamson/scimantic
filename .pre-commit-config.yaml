@@ -5,6 +5,13 @@ repos:
   # Ontology Generation & Validation
   - repo: local
     hooks:
+      - id: regenerate-artifacts
+        name: Regenerate Ontology Artifacts
+        entry: bash -c "cd scimantic-core && uv run gen-all"
+        language: system
+        files: ^scimantic-core/schema/.*\.yaml$
+        pass_filenames: false
+
       - id: validate-ontology
         name: Validate Ontology (SHACL)
         entry: bash -c "cd scimantic-core && uv run pyshacl -s ontology/shacl/scimantic-shapes.ttl ontology/scimantic.ttl"
@@ -33,8 +40,10 @@ repos:
         args:
           - --fix
         files: ^scimantic-core/.*\.py$
+        exclude: ^scimantic-core/src/scimantic/models\.py$
       - id: ruff-format
         files: ^scimantic-core/.*\.py$
+        exclude: ^scimantic-core/src/scimantic/models\.py$
 
   # Type checking with mypy (strict mode)
   - repo: local

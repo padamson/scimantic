@@ -1,110 +1,65 @@
 import rdflib
 from rdflib import RDF, RDFS, OWL, Namespace, BNode
 import subprocess
-import shutil
+from pathlib import Path
 
 # Namespaces
 SCIMANTIC = Namespace("http://scimantic.io/")
 PROV = Namespace("http://www.w3.org/ns/prov#")
 URREF = Namespace("https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#")
 
-def generate_mermaid():
+def get_name(uri):
+    if not uri: return ""
+    if "#" in str(uri):
+        return str(uri).split("#")[-1]
+    return str(uri).split("/")[-1]
+
+def generate_mermaid_v2():
     g = rdflib.Graph()
     g.parse("scimantic-core/ontology/scimantic.ttl", format="turtle")
 
-    entities = []
-    activities = []
-    relations = []
+    # --- Configuration: Explicit Include Lists & Order ---
+    # These lists define WHAT is shown and the vertical ORDER (Rank).
 
-    # Helper to get refined local name
-    def get_name(uri):
-        if not uri: return ""
-        if "#" in str(uri):
-            return str(uri).split("#")[-1]
-        return str(uri).split("/")[-1]
-
-    excluded_classes = [
-        "Aleatory", "Epistemic", "Ambiguity", "Vagueness", "Incompleteness",
-        "UncertaintyNature", "UncertaintyDerivation", "URREFEvidence",
-        "Activity", "Entity", "Union"
+    # 1. Activities (Processes) - Left Column
+    ordered_activities = [
+        "QuestionFormation",
+        "LiteratureSearch",
+        "EvidenceAssessment",
+        "HypothesisFormation",
+        "DesignOfExperiment",
+        "Experimentation",
+        "Analysis",
+        "ResultAssessment"
     ]
 
-    # 1. Identify Classes
-    for s in g.subjects(RDF.type, OWL.Class):
-        if str(s).startswith(str(SCIMANTIC)):
-            name = get_name(s)
+    # 2. Entities (Things) - Right Column(s)
+    ordered_entities = [
+        "Question",
+        "Evidence",
+        "Premise",
+        "Hypothesis",
+        "ExperimentalMethod",
+        "Dataset",
+        "Result",
+        "Conclusion"
+    ]
 
-            if name in excluded_classes: continue
-            if "Shape" in name or "Constraint" in name: continue
+    # Combine for filtering
+    allowed_nodes = set(ordered_activities + ordered_entities)
 
-            is_entity = False
-            is_activity = False
-
-            # Check ancestors
-            is_entity = False
-            is_activity = False
-
-            # Simple recursive check for ancestors
-            def get_ancestors(cls_uri, visited=None):
-                if visited is None: visited = set()
-                if cls_uri in visited: return set()
-                visited.add(cls_uri)
-
-                parents = list(g.objects(cls_uri, RDFS.subClassOf))
-                ancestors = set(parents)
-                for p in parents:
-                    if isinstance(p, BNode): continue # Skip restrictions
-                    ancestors.update(get_ancestors(p, visited))
-                return ancestors
-
-            ancestors = get_ancestors(s)
-
-            # Check against known Entity/Activity roots
-            entity_roots = [PROV.Entity, SCIMANTIC.Entity, URREF.Entity]
-            activity_roots = [PROV.Activity, SCIMANTIC.Activity]
-
-            if any(root in ancestors for root in entity_roots):
-                is_entity = True
-            elif any(root in ancestors for root in activity_roots):
-                is_activity = True
-
-            # Fallback based on name (if ontology is incomplete)
-            if not is_entity and not is_activity:
-               if "Activity" in str(s) or "Formation" in str(s) or "Search" in str(s) or "Analysis" in str(s) or "Experimentation" in str(s):
-                   is_activity = True
-               else:
-                   is_entity = True # Default to entity if unknown
-
-            if is_entity:
-                entities.append(name)
-            elif is_activity:
-                activities.append(name)
-
-    # Explicitly include external URREF classes as Entities
-    # This ensures UncertaintyModel appears inside the "Entities" box
-    if "UncertaintyModel" not in entities:
-        entities.append("UncertaintyModel")
-
-    # 2. Extract Relationships from OWL Restrictions AND Domain/Range
-
-    # Mapping Predicates to Vision Strings
-    # Key: Tuple(Label, IsInverse)
+    # --- Predicate Mapping (Label, IsInverse) ---
     pred_map = {
         PROV.wasGeneratedBy: ("generates", True),
-        SCIMANTIC.wasGeneratedBy: ("generates", True), # Added SCIMANTIC variant
-
+        SCIMANTIC.wasGeneratedBy: ("generates", True),
         PROV.used: ("input to", True),
-        SCIMANTIC.used: ("input to", True), # Added SCIMANTIC variant
-
+        SCIMANTIC.used: ("input to", True),
         PROV.wasInformedBy: ("informs", True),
-        SCIMANTIC.wasInformedBy: ("informs", True), # Added SCIMANTIC variant
-
+        SCIMANTIC.wasInformedBy: ("informs", True),
         PROV.wasDerivedFrom: ("derives from", False),
-        SCIMANTIC.wasDerivedFrom: ("derives from", False), # Added SCIMANTIC variant
-
+        SCIMANTIC.wasDerivedFrom: ("derives from", False),
         PROV.wasAssociatedWith: ("associated with", True),
         SCIMANTIC.wasAssociatedWith: ("associated with", True),
-
         SCIMANTIC.motivates: ("motivates", False),
         SCIMANTIC.supports: ("supports", False),
         SCIMANTIC.contradicts: ("contradicts", False),
@@ -113,147 +68,293 @@ def generate_mermaid():
         SCIMANTIC.hasUncertainty: ("has uncertainty", False)
     }
 
-    # Set of unique relation strings to avoid duplicates
-    relations_set = set()
+    # --- Helper: Get Union Members ---
+    def get_union_members(class_uri):
+        members = []
 
-    # A. From Restrictions
-    subjects = [s for s in g.subjects(RDF.type, OWL.Class) if str(s).startswith(str(SCIMANTIC))]
-    for s in subjects:
-        source_name = get_name(s)
+        # 1. Direct unionOf: class_uri owl:unionOf ?list
+        for _, _, union_list_node in g.triples((class_uri, OWL.unionOf, None)):
+             c = rdflib.collection.Collection(g, union_list_node)
+             for member in c:
+                 members.append(member)
 
-        # Filter out Shapes and Constraints
-        if "Shape" in source_name or "Constraint" in source_name: continue
+        # 2. EquivalentClass union: class_uri owl:equivalentClass [ owl:unionOf ?list ]
+        if not members:
+            for _, _, bnode in g.triples((class_uri, OWL.equivalentClass, None)):
+                for _, _, union_list_node in g.triples((bnode, OWL.unionOf, None)):
+                    c = rdflib.collection.Collection(g, union_list_node)
+                    for member in c:
+                        members.append(member)
+        return members
 
-        # Filter out detailed URREF classes (Aleatory, Epistemic, etc.) to reduce clutter
-        # Keep only the high-level UncertaintyModel
-        excluded_classes = [
-            "Aleatory", "Epistemic", "Ambiguity", "Vagueness", "Incompleteness",
-            "UncertaintyNature", "UncertaintyDerivation", "URREFEvidence"
-        ]
-        if source_name in excluded_classes: continue
+    # --- Extraction Cycle ---
+    tuples = [] # List of (Source, Label, Target, SortKey)
 
-        for bn in g.objects(s, RDFS.subClassOf):
-            if isinstance(bn, BNode):
-                if (bn, RDF.type, OWL.Restriction) in g:
-                    prop = g.value(bn, OWL.onProperty)
-                    target = g.value(bn, OWL.allValuesFrom)
-                    if not target: current = g.value(bn, OWL.someValuesFrom); target = current
+    # Helper to add tuple
+    def add_tuples(src, label, tgt):
+        # Check if Target is a Union Class
+        union_members = get_union_members(tgt)
 
-                    if target and (str(target).startswith(str(SCIMANTIC)) or str(target).startswith(str(PROV)) or "URREF" in str(target)):
-                        target_name = get_name(target)
+        targets_to_add = []
 
-                        # Filter target shapes
-                        if "Shape" in target_name or "Constraint" in target_name: continue
+        if union_members:
+            # If target is a union, expand it!
+            targets_to_add = union_members
+        else:
+            # Otherwise just use the target
+            targets_to_add = [tgt]
 
-                        if prop in pred_map:
-                            label, is_inverse = pred_map[prop]
-                            if is_inverse:
-                                relations_set.add(f"{target_name} -. {label} .-> {source_name}")
-                            else:
-                                relations_set.add(f"{source_name} -. {label} .-> {target_name}")
+        for final_tgt in targets_to_add:
+            src_clean = get_name(src)
+            tgt_clean = get_name(final_tgt)
 
-    # B. From Domain/Range properties
+            # Filter
+            if src_clean not in allowed_nodes or tgt_clean not in allowed_nodes:
+                continue
+
+            # Explicit Sort Logic requested:
+            is_entity_src = src_clean in ordered_entities
+            src_index = 999
+            if is_entity_src:
+                src_index = ordered_entities.index(src_clean)
+            elif src_clean in ordered_activities:
+                src_index = ordered_activities.index(src_clean)
+
+            # Tuple: (Source, Target, Label, IsInverseVisual)
+            tuples.append({
+                "src": src_clean,
+                "tgt": tgt_clean,
+                "label": label,
+                "is_entity_src": is_entity_src,
+                "src_index": src_index
+            })
+
+    # 1. From Restrictions
+    # Iterate over all subjects in the graph (Classes)
+    for s in g.subjects(RDF.type, OWL.Class):
+        # Check for restrictions (subClassOf Restriction)
+        for _, _, bnode in g.triples((s, RDFS.subClassOf, None)):
+            if (bnode, RDF.type, OWL.Restriction) in g:
+                # Get property
+                prop = g.value(bnode, OWL.onProperty)
+                if prop in pred_map:
+                    mapped_label, is_inverse_visual = pred_map[prop]
+
+                    # Get target (allValuesFrom, someValuesFrom, or onClass for cardinality)
+                    # We usually look for allValuesFrom for strong links
+                    target = g.value(bnode, OWL.allValuesFrom)
+                    if not target: target = g.value(bnode, OWL.someValuesFrom) # Also check someValuesFrom
+
+                    if target:
+                        if isinstance(target, BNode):
+                            # Handle Anonymous Union inside Restriction (legacy/any_of)
+                            # [ owl:unionOf (...) ]
+                            if (target, OWL.unionOf, None) in g:
+                                # It's an anonymous union, expand members
+                                members = get_union_members(target)
+                                for m in members:
+                                     # Determine visual direction
+                                    if is_inverse_visual:
+                                        add_tuples(m, mapped_label, s)
+                                    else:
+                                        add_tuples(s, mapped_label, m)
+                            continue # Skip adding the BNode itself
+
+                        # Normal named class target
+                        if is_inverse_visual:
+                            # Inverse: Property is "used" (s used target), visual label is "input to"
+                            # We want visual edge: Target --[input to]--> S
+                            add_tuples(target, mapped_label, s)
+                        else:
+                            # Normal: S -> Target
+                            # For normal Named Classes, we just add the tuple.
+                            # But wait, if 'target' is a list? No, here target is a single value from g.value
+                            add_tuples(s, mapped_label, target)
+
+    # 2. From Attributes (Domain/Range)
     for p in g.subjects(RDF.type, OWL.ObjectProperty):
         if p in pred_map:
             label, is_inverse = pred_map[p]
-
-            # Get Domain(s)
+            # simplified domain/range check loop
             domains = []
             for d in g.objects(p, RDFS.domain):
                 if isinstance(d, BNode):
-                    union = g.value(d, OWL.unionOf)
-                    if union:
-                        current = union
-                        while current != RDF.nil:
-                            first = g.value(current, RDF.first)
-                            domains.append(get_name(first))
-                            current = g.value(current, RDF.rest)
+                     # handle unionOf if simple
+                     union = g.value(d, OWL.unionOf)
+                     if union:
+                         cur = union
+                         while cur != RDF.nil:
+                             domains.append(g.value(cur, RDF.first))
+                             cur = g.value(cur, RDF.rest)
                 else:
-                    domains.append(get_name(d))
+                    domains.append(d)
 
-            # Get Range(s)
-            ranges = []
-            for r in g.objects(p, RDFS.range):
-                ranges.append(get_name(r))
+            ranges = [r for r in g.objects(p, RDFS.range)]
 
-            for source_name in domains:
-                for target_name in ranges:
-                    if not source_name or not target_name: continue
+            for d in domains:
+                for r in ranges:
+                     if is_inverse:
+                         add_tuples(r, label, d)
+                     else:
+                         add_tuples(d, label, r)
 
-                    # Filter out generic PROV classes
-                    if target_name in ["Activity", "Entity", "Plan", "Agent", "Bundle"]: continue
-                    if source_name in ["Activity", "Entity", "Plan", "Agent", "Bundle"]: continue
+    # --- Sorting Order Strategy ---
+    # User requested alternating between Activities and Entities to guide layout
+    combined_sort_order = [
+        "QuestionFormation",
+        "Question",
+        "LiteratureSearch",
+        "Evidence",
+        "EvidenceAssessment",
+        "Premise",
+        "HypothesisFormation",
+        "Hypothesis",
+        "DesignOfExperiment",
+        "ExperimentalMethod",
+        "Experimentation",
+        "Dataset",
+        "Analysis",
+        "Result",
+        "ResultAssessment",
+        "Conclusion"
+    ]
 
-                    if is_inverse:
-                        relations_set.add(f"{target_name} -. {label} .-> {source_name}")
-                    else:
-                        relations_set.add(f"{source_name} -. {label} .-> {target_name}")
+    # Helper for sort index
+    def get_sort_index(node_name):
+        if node_name in combined_sort_order:
+            return combined_sort_order.index(node_name)
+        return 999
 
-    # Build Mermaid
+    # --- Sorting ---
+    # Sort tuples based on:
+    # 1. Source node position
+    # 2. Target node position (to prioritize closer connections)
+    # 3. Label
+    tuples.sort(key=lambda x: (
+        get_sort_index(x["src"]),
+        get_sort_index(x["tgt"]),
+        x["label"],
+        x["src"],
+        x["tgt"]
+    ))
+
+    # --- Mermaid Generation ---
     lines = ["graph TB"]
+    lines.append('    %% Subgraph Definitions using Explicit Lists')
 
-    # Master Subgraph
+    # --- Node Definitions & Vertical Backbone ---
     lines.append('    subgraph Scimantic_Ontology ["Scimantic Ontology Flow"]')
     lines.append('    direction TB')
 
-    # Subgraph Entities
-    lines.append('        subgraph Entities ["Entities (Things)"]')
-    lines.append('        direction TB')
-    for e in entities:
-        lines.append(f'            {e}[{e}]')
-    lines.append('        end')
+    # 1. Entities (Now First / Left Column)
+    lines.append('    subgraph Entities ["Entities (Things)"]')
+    lines.append('    direction TB')
+    for e in ordered_entities:
+        lines.append(f'        {e}[{e}]')
+    # Vertical Backbone
+    for i in range(len(ordered_entities)-1):
+        lines.append(f'        {ordered_entities[i]} ~~~ {ordered_entities[i+1]}')
+    lines.append('    end') # Ends Entities
 
-    # Subgraph Activities
-    lines.append('        subgraph Activities ["Activities (Processes)"]')
-    lines.append('        direction TB')
-    for a in activities:
-        lines.append(f'            {a}[{a}]')
-    lines.append('        end')
+    # 2. Activities (Now Second / Right Column)
+    lines.append('    subgraph Activities ["Activities (Processes)"]')
+    lines.append('    direction TB')
+    for a in ordered_activities:
+        lines.append(f'        {a}[{a}]')
+    # Vertical Backbone
+    for i in range(len(ordered_activities)-1):
+        lines.append(f'        {ordered_activities[i]} ~~~ {ordered_activities[i+1]}')
+    lines.append('    end') # Ends Activities
 
-    lines.append('    end') # End Master
+    lines.append('    end') # Ends Scimantic_Ontology
 
-    # Relations (outside subgraphs to allow cross-linking freely)
-    for r in sorted(list(relations_set)):
-        lines.append(f'    {r}')
+    # Edges
+    lines.append('    %% Relationships (Sorted)')
+    unique_edges = set()
 
-    # Styles
-    # Entity Zone: Light Blue, Activity Zone: Light Gray
-    lines.append('    style Scimantic_Ontology fill:#ffffff,stroke:#333,stroke-width:2px,color:black;')
-    lines.append('    style Entities fill:#eff6ff,stroke:#2563eb,stroke-width:1px,color:black,stroke-dasharray: 5 5;')
-    lines.append('    style Activities fill:#f9fafb,stroke:#4b5563,stroke-width:1px,color:black,stroke-dasharray: 5 5;')
+    for t in tuples:
+        src = t["src"]
+        tgt = t["tgt"]
+        label = t["label"]
 
-    # Node Styles
-    # Entity Nodes: White with Blue border
+        # Deduplication key
+        edge_key = f"{src}-{label}-{tgt}"
+        if edge_key in unique_edges: continue
+        unique_edges.add(edge_key)
+
+        # Style
+        # Forward flow: Solid, Feedback/Context: Dotted
+        if label in ["generates", "motivates", "derives from", "input to", "parameter", "has uncertainty"]:
+             arrow = "-->"
+        else:
+             arrow = "-.->"
+
+        lines.append(f'    {src} {arrow}|{label}| {tgt}')
+
+    # Apply Styles
     lines.append('    classDef entity fill:#ffffff,stroke:#2563eb,stroke-width:2px,color:black;')
-    # Activity Nodes: White with Gray border (Rounded)
     lines.append('    classDef activity fill:#ffffff,stroke:#4b5563,stroke-width:2px,color:black,rx:5,ry:5;')
 
-    if entities:
-        lines.append(f'    class {",".join(entities)} entity;')
-    if activities:
-        lines.append(f'    class {",".join(activities)} activity;')
+    # Subgraph Styling
+    lines.append('    style Entities fill:#f0f9ff,stroke:#bae6fd,stroke-width:2px,color:black')
+    lines.append('    style Activities fill:#f3f4f6,stroke:#cbd5e1,stroke-width:2px,color:black')
+    lines.append('    style Scimantic_Ontology fill:#ffffff,stroke:#94a3b8,stroke-width:2px,color:black')
 
-    mermaid_content = "\n".join(lines)
+    if ordered_entities:
+        lines.append(f'    class {",".join(ordered_entities)} entity;')
+    if ordered_activities:
+        lines.append(f'    class {",".join(ordered_activities)} activity;')
 
-    # Write Mermaid source
-    mmd_content = f"%%{{init: {{'theme': 'base', 'themeVariables': {{'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#ffffff'}} }} }}%%\n{mermaid_content}"
+    mmd_content = "\n".join(lines)
 
-    with open("ontology_graph.mmd", "w") as f:
-        f.write(mmd_content)
+    # Tighter spacing configuration
+    config = """%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'primaryColor': '#ffffff',
+      'edgeLabelBackground': '#ffffff',
+      'tertiaryColor': '#ffffff'
+    },
+    'flowchart': {
+      'nodeSpacing': 40,
+      'rankSpacing': 40
+    }
+  }
+}%%"""
 
-    print("Generated ontology_graph.mmd")
+    # Compare with existing file to avoid unnecessary IO and binary churn
+    output_mmd_path = Path("ontology_graph.mmd")
+    output_png_path = Path("ontology_graph.png")
 
-    # Generate PNG using mmdc with WHITE background
-    cmd = ["npx", "@mermaid-js/mermaid-cli", "-i", "ontology_graph.mmd", "-o", "ontology_graph.png", "-b", "white"]
+    full_new_content = f"{config}\n{mmd_content}"
+    if not full_new_content.endswith("\n"):
+        full_new_content += "\n"
 
-    try:
-        print("Running mmdc to generate PNG...")
-        subprocess.run(cmd, check=True)
-        print("Generated ontology_graph.png")
-    except subprocess.CalledProcessError as e:
-        print(f"Error generating PNG: {e}")
-    except FileNotFoundError:
-        print("Error: npx not found. Please ensure Node.js is installed.")
+    needs_regen = True
+    if output_mmd_path.exists() and output_png_path.exists():
+        with open(output_mmd_path, "r") as f:
+            old_content = f.read()
+        if old_content == full_new_content:
+            needs_regen = False
+            print("Graph definition unchanged. Skipping PNG generation.")
+
+    if needs_regen:
+        with open(output_mmd_path, "w") as f:
+            f.write(full_new_content)
+        print("Generated ontology_graph.mmd")
+
+        # SVG/PNG Gen
+        try:
+            cmd = ["npx", "@mermaid-js/mermaid-cli", "-i", "ontology_graph.mmd", "-o", "ontology_graph.png", "-b", "white", "-s", "3"]
+            print("Running mmdc...")
+            subprocess.run(cmd, check=True)
+            print("Generated ontology_graph.png")
+        except Exception as e:
+            print(f"Error running mmdc: {e}")
+            if not output_png_path.exists():
+                print("Warning: PNG generation failed and no stale PNG exists.")
+
 
 if __name__ == "__main__":
-    generate_mermaid()
+    generate_mermaid_v2()

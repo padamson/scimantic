@@ -246,6 +246,7 @@ def add_question(
     # Note: The model doesn't enforce this creation automatically, business logic does.
     activity_uri = URIRef(f"{question_uri}/generation")
     g.add((activity_uri, RDF.type, SCIMANTIC.QuestionFormation))
+    g.add((activity_uri, SCIMANTIC.id, Literal(str(activity_uri))))
     g.add((q_node, PROV.wasGeneratedBy, activity_uri))
 
     _persist_graph(g, project_path)

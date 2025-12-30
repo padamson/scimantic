@@ -43,8 +43,5 @@ coverage/
 public/
 *.jar
 
-# Generated Graph
-ontology_graph.mmd
-
 # widoco tmp files
 tmp/

@@ -12,11 +12,13 @@ def get_version(schema_path):
 def ensure_newline(file_path):
     with open(file_path, "r") as f:
         content = f.read()
-    if not content.endswith("\n"):
-        content += "\n"
+
+    new_content = content.rstrip() + "\n"
+
+    if content != new_content:
         with open(file_path, "w") as f:
-            f.write(content)
-        print(f"Added missing newline to {file_path}")
+            f.write(new_content)
+        print(f"Fixed EOF newline in {file_path}")
 
 
 def update_widoco_conf(file_path, version):
@@ -99,6 +101,9 @@ def update_ttl(file_path, version, is_shacl=False):
 """
             content += new_block
 
+            # Strict EOF newline
+            content = content.rstrip() + "\n"
+
             # Write immediately and return (skip regex replacement logic)
             with open(file_path, "w") as f:
                 f.write(content)
@@ -155,9 +160,8 @@ def update_ttl(file_path, version, is_shacl=False):
             r'pav:version\s+"[^"]+"', f"pav:version {version_info}", content
         )
 
-    # Ensure trailing newline for end-of-file-fixer parity
-    if not content.endswith("\n"):
-        content += "\n"
+    # strict EOF newline
+    content = content.rstrip() + "\n"
 
     if content == original_content:
         # print(f"No changes needed for {file_path}")

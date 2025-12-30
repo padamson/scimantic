@@ -14,10 +14,11 @@ This repository manages releases for three distinct components using **Scoped Ta
 
 ### 1. Ontology Release
 1.  **Update Version**: Update `version` in `scimantic-core/schema/scimantic.yaml` (e.g., to `0.1.0`).
-2.  **Commit**:
-    -   Stage `scimantic.yaml`.
-    -   The `pre-commit` hook will auto-generate `scimantic.ttl`, `models.py`, and `scimantic-shapes.ttl` with the correct IRIs.
-    -   Stage these generated files as well.
+2.  **Generate Artifacts**:
+    -   Run `uv run gen-all` inside `scimantic-core` to regenerate `scimantic.ttl`, `scimantic-shapes.ttl`, and `visualize_ontology.py` outputs.
+    -   *Note*: If you skip this, the `pre-commit` hook will run it for you but will **fail the commit** if changes are detected, requiring you to stage the new files and commit again.
+3.  **Commit**:
+    -   Stage `scimantic.yaml` AND all generated artifacts (`scimantic.ttl`, etc.).
     -   Push changes to `main`.
 3.  **Tag**:
     ```bash

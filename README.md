@@ -20,10 +20,10 @@ Scimantic maps the activities in the scientific method to semantic web standards
 2. **Literature Search** → Extracting *Evidence* from sources
 3. **Evidence Assessment** → Evaluating *Evidence* credibility
 4. **Hypothesis Formation** → Deriving a *Hypothesis* from evidence
-5. **Experimental Design** → Defining an *Experimental Method*
-6. **Experimentation** → Executing the method to produce a *Dataset*
-7. **Analysis** → Processing data to produce a *Result*
-8. **Result Assessment** → Comparing *Result* with *Hypothesis*
+5. **Design of Experiment** → Defining an *Experimental Method* to test the *Hypothesis*
+6. **Experimentation** → Executing the *Experimental Method* to produce a *Dataset*
+7. **Analysis** → Processing the *Dataset* to produce *Results*
+8. **Result Assessment** → Comparing *Results* with *Hypothesis* to generate *Conclusions*
 
 ![Scimantic Ontology Graph](./ontology_graph.png)
 

@@ -1,5 +1,7 @@
 # Scimantic Ontology Specification (v0.1.0)
 
+> **NOTE**: This document is for **reference only** as it provides some historical context for the ontology. The current ontology is specified in `scimantic-core/schema/scimantic.yaml`.
+
 This document specifies the classes, properties, and constraints for the `scimantic` ontology version 0.1.0. It serves as the blueprint for implementing the `scimantic.ttl` file.
 
 ## 1. Metadata & Namespaces
@@ -53,6 +55,7 @@ All are subclasses of `prov:Entity`.
 |---|---|---|
 | `scimantic:Question` | `prov:Entity` | An interrogative sentence representing the research query. |
 | `scimantic:Evidence` | `prov:Entity`, `np:Nanopublication` | A factual claim extracted from a source (literature or prior data). Enforces AIDA compliance. |
+| `scimantic:Premise` | `prov:Entity` | An evaluated proposition or insight derived from Evidence. |
 | `scimantic:Hypothesis` | `prov:Entity`, `np:Nanopublication` | A testable claim derived from evidence. |
 | `scimantic:ExperimentalMethod` | `prov:Entity`, `prov:Plan` | A specification of the method to be executed. |
 | `scimantic:Dataset` | `prov:Entity`, `dcat:Dataset`| Raw data/measurements produced by experimentation. |

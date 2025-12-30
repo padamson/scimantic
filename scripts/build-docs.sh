@@ -23,6 +23,19 @@ if [ ! -f "$WIDOCO_JAR" ]; then
     curl -L -o "$WIDOCO_JAR" "$WIDOCO_URL"
 fi
 
+# 1. Regenerate Artifacts (Source of Truth)
+if [ "$SKIP_GEN_ALL" != "true" ]; then
+    echo "Regenerating artifacts from schema..."
+    (cd scimantic-core && uv run gen-all)
+else
+    echo "Skipping gen-all (SKIP_GEN_ALL=true)..."
+fi
+
+# 2. Clean Public Folder
+echo "Cleaning output folder..."
+rm -rf "$OUTPUT_FOLDER"/*
+mkdir -p "$OUTPUT_FOLDER"
+
 
 # Run Widoco
 echo "Generating documentation..."
@@ -36,14 +49,20 @@ echo "Generating documentation..."
     -lang en
 
 # Match CI workflow post-processing
+# Flatten doc folder
+if [ -d "$OUTPUT_FOLDER/doc" ]; then
+    echo "Flattening content from $OUTPUT_FOLDER/doc to $OUTPUT_FOLDER"
+    # Use rsnyc to merge or move safely
+    cp -R "$OUTPUT_FOLDER/doc/"* "$OUTPUT_FOLDER/"
+    rm -rf "$OUTPUT_FOLDER/doc"
+fi
+
 echo "Applying CI post-processing..."
 # Rename index-en.html to index.html if needed
 if [ -f "${OUTPUT_FOLDER}/index-en.html" ]; then
-    mv "${OUTPUT_FOLDER}/index-en.html" "${OUTPUT_FOLDER}/index.html"
+    cp "${OUTPUT_FOLDER}/index-en.html" "${OUTPUT_FOLDER}/index.html"
+else
+    echo "No index-en.html found. Skipping rename."
 fi
-
-# Create /ontology redirect for local testing
-mkdir -p "${OUTPUT_FOLDER}/ontology"
-cp "${OUTPUT_FOLDER}/index.html" "${OUTPUT_FOLDER}/ontology/index.html"
 
 echo "Build complete."

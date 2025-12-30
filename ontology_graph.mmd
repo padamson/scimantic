@@ -1,0 +1,101 @@
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'primaryColor': '#ffffff',
+      'edgeLabelBackground': '#ffffff',
+      'tertiaryColor': '#ffffff'
+    },
+    'flowchart': {
+      'nodeSpacing': 40,
+      'rankSpacing': 40
+    }
+  }
+}%%
+graph TB
+    %% Subgraph Definitions using Explicit Lists
+    subgraph Scimantic_Ontology ["Scimantic Ontology Flow"]
+    direction TB
+    subgraph Entities ["Entities (Things)"]
+    direction TB
+        Question[Question]
+        Evidence[Evidence]
+        Premise[Premise]
+        Hypothesis[Hypothesis]
+        ExperimentalMethod[ExperimentalMethod]
+        Dataset[Dataset]
+        Result[Result]
+        Conclusion[Conclusion]
+        Question ~~~ Evidence
+        Evidence ~~~ Premise
+        Premise ~~~ Hypothesis
+        Hypothesis ~~~ ExperimentalMethod
+        ExperimentalMethod ~~~ Dataset
+        Dataset ~~~ Result
+        Result ~~~ Conclusion
+    end
+    subgraph Activities ["Activities (Processes)"]
+    direction TB
+        QuestionFormation[QuestionFormation]
+        LiteratureSearch[LiteratureSearch]
+        EvidenceAssessment[EvidenceAssessment]
+        HypothesisFormation[HypothesisFormation]
+        DesignOfExperiment[DesignOfExperiment]
+        Experimentation[Experimentation]
+        Analysis[Analysis]
+        ResultAssessment[ResultAssessment]
+        QuestionFormation ~~~ LiteratureSearch
+        LiteratureSearch ~~~ EvidenceAssessment
+        EvidenceAssessment ~~~ HypothesisFormation
+        HypothesisFormation ~~~ DesignOfExperiment
+        DesignOfExperiment ~~~ Experimentation
+        Experimentation ~~~ Analysis
+        Analysis ~~~ ResultAssessment
+    end
+    end
+    %% Relationships (Sorted)
+    QuestionFormation -->|generates| Question
+    QuestionFormation -.->|informs| LiteratureSearch
+    Question -->|motivates| LiteratureSearch
+    LiteratureSearch -->|generates| Evidence
+    LiteratureSearch -.->|informs| EvidenceAssessment
+    LiteratureSearch -.->|informs| DesignOfExperiment
+    Evidence -->|derives from| Question
+    Evidence -->|input to| EvidenceAssessment
+    Evidence -.->|contradicts| Hypothesis
+    Evidence -.->|supports| Hypothesis
+    Evidence -->|input to| DesignOfExperiment
+    EvidenceAssessment -->|generates| Premise
+    EvidenceAssessment -.->|informs| HypothesisFormation
+    Premise -->|derives from| Evidence
+    Premise -->|input to| HypothesisFormation
+    HypothesisFormation -->|generates| Hypothesis
+    HypothesisFormation -.->|informs| DesignOfExperiment
+    Hypothesis -->|derives from| Premise
+    Hypothesis -->|input to| DesignOfExperiment
+    DesignOfExperiment -->|generates| ExperimentalMethod
+    DesignOfExperiment -.->|informs| Experimentation
+    ExperimentalMethod -->|derives from| Evidence
+    ExperimentalMethod -->|derives from| Hypothesis
+    ExperimentalMethod -->|input to| Experimentation
+    Experimentation -->|generates| Dataset
+    Experimentation -.->|informs| Analysis
+    Dataset -->|derives from| ExperimentalMethod
+    Dataset -->|input to| Analysis
+    Analysis -->|generates| Result
+    Analysis -.->|informs| ResultAssessment
+    Result -.->|contradicts| Hypothesis
+    Result -.->|refines| Hypothesis
+    Result -.->|supports| Hypothesis
+    Result -->|derives from| Dataset
+    Result -->|input to| ResultAssessment
+    ResultAssessment -.->|informs| QuestionFormation
+    ResultAssessment -->|generates| Conclusion
+    Conclusion -->|derives from| Result
+    classDef entity fill:#ffffff,stroke:#2563eb,stroke-width:2px,color:black;
+    classDef activity fill:#ffffff,stroke:#4b5563,stroke-width:2px,color:black,rx:5,ry:5;
+    style Entities fill:#f0f9ff,stroke:#bae6fd,stroke-width:2px,color:black
+    style Activities fill:#f3f4f6,stroke:#cbd5e1,stroke-width:2px,color:black
+    style Scimantic_Ontology fill:#ffffff,stroke:#94a3b8,stroke-width:2px,color:black
+    class Question,Evidence,Premise,Hypothesis,ExperimentalMethod,Dataset,Result,Conclusion entity;
+    class QuestionFormation,LiteratureSearch,EvidenceAssessment,HypothesisFormation,DesignOfExperiment,Experimentation,Analysis,ResultAssessment activity;

@@ -32,6 +32,24 @@ jobs:
           cd scimantic-core
           uv sync --all-extras
 
+      - name: Ensure Artifacts are Up-to-Date
+        run: |
+          cd scimantic-core
+          # Regenerate everything from the schema
+          uv run gen-all
+
+          # Check if there are any changes. If yes, fail.
+          # This forces the user to commit their generated artifacts.
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "❌ Error: Generated artifacts are out of sync with schema/scimantic.yaml."
+            echo "Please run 'uv run gen-all' locally and commit the changes."
+            git status
+            git diff
+            exit 1
+          else
+            echo "✅ Artifacts are clean and up-to-date."
+          fi
+
       - name: Validate Ontology Syntax & SHACL
         run: |
           cd scimantic-core
