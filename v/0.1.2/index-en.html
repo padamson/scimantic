@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="resources/primer.css" media="screen"/>
+<link rel="stylesheet" href="resources/rec.css" media="screen"/>
+<link rel="stylesheet" href="resources/extra.css" media="screen"/>
+<link rel="stylesheet" href="resources/owl.css" media="screen"/>
+<link rel="stylesheet" href="resources/dark.css" media="(prefers-color-scheme: dark)"/>
+<link rel="stylesheet" href="resources/light.css" media="(prefers-color-scheme: light)"/>
+<link rel="stylesheet" href="resources/slider.css" media="screen"/>
+<meta name="color-scheme" content="dark light">
+<script type="module" src="resources/dark-mode-toggle.mjs"></script><div class="darkmode">
+	<dark-mode-toggle class="slider"></dark-mode-toggle>
+</div>
+ <title>Scimantic Ontology</title>
+
+
+<!-- SCHEMA.ORG METADATA -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","url":"https://scimantic.io/","image":"http://vowl.visualdataweb.org/webvowl/#iri=https://scimantic.io/","name":"Scimantic Ontology", "headline":"Scientific Method as a Provenance Chain.", "dateReleased":"Date created", "dateModified":"Date modified", "version":"0.1.2", "license":"https://creativecommons.org/licenses/by/4.0/", "author":[{"@type":"Person","name":"Scimantic Contributors","url":"https://scimantic.io"}]}</script>
+
+<script src="resources/jquery.js"></script> 
+<script src="resources/marked.min.js"></script> 
+    <script> 
+function loadHash() {
+  jQuery(".markdown").each(function(el){jQuery(this).after(marked.parse(jQuery(this).text())).remove()});
+	var hash = location.hash;
+	if($(hash).offset()!=null){
+	  $('html, body').animate({scrollTop: $(hash).offset().top}, 0);
+}
+	loadTOC();
+}
+function loadTOC(){
+	//process toc dynamically
+	  var t='<h2>Table of contents</h2><ul>';i = 1;j=0;
+	  jQuery(".list").each(function(){
+		if(jQuery(this).is('h2')){
+			if(j>0){
+				t+='</ul>';
+				j=0;
+			}
+			t+= '<li>'+i+'. <a href=#'+ jQuery(this).attr('id')+'>'+ jQuery(this).ignore("span").text()+'</a></li>';
+			i++;
+		}
+		if(jQuery(this).is('h3')){
+			if(j==0){
+				t+='<ul>';
+			}
+			j++;
+			t+= '<li>'+(i-1)+'.'+j+'. '+'<a href=#'+ jQuery(this).attr('id')+'>'+ jQuery(this).ignore("span").text()+'</a></li>';
+		}
+	  });
+	  t+='</ul>';
+	  $("#toc").html(t); 
+}
+$(function(){
+    loadHash();
+}); $.fn.ignore = function(sel){
+        return this.clone().find(sel||">*").remove().end();
+ }; 
+   </script> 
+  </head> 
+
+<body>
+<div class="container">
+<div class="head">
+<div style="float:right">language <a href="index-en.html"><b>en</b></a> </div>
+<h1>Scimantic Ontology</h1>
+<h2>Release: Date created</h2>
+
+
+<dl>
+<dt>Modified on: Date modified</dt>
+<dt>Revision:</dt>
+<dd>0.1.2</dd>
+<dt>Issued on:</dt>
+<dd>Date issued</dd>
+<dt>Authors:</dt>
+<dd><a href="https://scimantic.io">Scimantic Contributors</a></dd>
+
+<dt>Publisher:</dt>
+<dd><a href="https://scimantic.io">Scimantic Project</a></dd>
+<dt>Download serialization:</dt><dd><span><a href="ontology.jsonld" target="_blank"><img src="https://img.shields.io/badge/Format-JSON_LD-blue.svg" alt="JSON-LD" /></a> </span><span><a href="ontology.owl" target="_blank"><img src="https://img.shields.io/badge/Format-RDF/XML-blue.svg" alt="RDF/XML" /></a> </span><span><a href="ontology.nt" target="_blank"><img src="https://img.shields.io/badge/Format-N_Triples-blue.svg" alt="N-Triples" /></a> </span><span><a href="ontology.ttl" target="_blank"><img src="https://img.shields.io/badge/Format-TTL-blue.svg" alt="TTL" /></a> </span></dd><dt>License:</dt><dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"><img src="https://img.shields.io/badge/License-CC_BY%204.0-blue.svg" alt="https://creativecommons.org/licenses/by/4.0/" /></a>
+</dd><dt>Visualization:</dt><dd><a href="webvowl/index.html#" target="_blank"><img src="https://img.shields.io/badge/Visualize_with-WebVowl-blue.svg" alt="Visualize with WebVowl" /></a></dd>
+<!-- <dt>Evaluation:</dt><dd><a href="OOPSevaluation/oopsEval.html#" target="_blank"><img src="https://img.shields.io/badge/Evaluate_with-OOPS! (OntOlogy Pitfall Scanner!)-blue.svg" alt="Evaluate with OOPS!" /></a></dd> --></dl>
+
+<a href="provenance/provenance-en.html" target="_blank">Provenance of this page</a><hr/>
+</div>
+<div class="status">
+<div>
+<span>Specification Draft</span>
+</div>
+</div>     <div id="abstract"><h2>Abstract</h2><span class="markdown">
+Scientific Method as a Provenance Chain.</span>
+</div>
+<div id="toc"></div> 
+
+<!--INTRODUCTION SECTION-->
+    <div id="introduction"><h2 id="intro" class="list">Introduction <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<span class="markdown">
+This is a place holder text for the introduction. The introduction should briefly describe the ontology, its motivation, state of the art and goals.</span>
+<div id="namespacedeclarations">
+<h3 id="ns" class="list">Namespace declarations</h3>
+<div id="ns" align="center">
+<table>
+<caption> <a href="#ns"> Table 1</a>: Namespaces used in the document </caption>
+<tbody>
+<tr><td><b>UncertaintyNature</b></td><td>&lt;http://scimantic.io/UncertaintyNature#&gt;</td></tr>
+<tr><td><b>dcat</b></td><td>&lt;http://www.w3.org/ns/dcat#&gt;</td></tr>
+<tr><td><b>dcterms</b></td><td>&lt;http://purl.org/dc/terms/&gt;</td></tr>
+<tr><td><b>linkml</b></td><td>&lt;https://w3id.org/linkml/&gt;</td></tr>
+<tr><td><b>owl</b></td><td>&lt;http://www.w3.org/2002/07/owl#&gt;</td></tr>
+<tr><td><b>pav</b></td><td>&lt;http://purl.org/pav/&gt;</td></tr>
+<tr><td><b>prov</b></td><td>&lt;http://www.w3.org/ns/prov#&gt;</td></tr>
+<tr><td><b>rdf</b></td><td>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</td></tr>
+<tr><td><b>rdfs</b></td><td>&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</td></tr>
+<tr><td><b>scimantic</b></td><td>&lt;http://scimantic.io/&gt;</td></tr>
+<tr><td><b>skos</b></td><td>&lt;http://www.w3.org/2004/02/skos/core#&gt;</td></tr>
+<tr><td><b>urref</b></td><td>&lt;https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#&gt;</td></tr>
+<tr><td><b>xml</b></td><td>&lt;http://www.w3.org/XML/1998/namespace&gt;</td></tr>
+<tr><td><b>xsd</b></td><td>&lt;http://www.w3.org/2001/XMLSchema#&gt;</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+  
+
+<!--OVERVIEW SECTION-->
+    <div id="overview"><h2 id="overv" class="list">Scimantic: Overview <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<span class="markdown">
+This ontology has the following classes and properties.</span>
+<h4>Classes</h4>
+<ul xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+   <li>
+      <a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Agent" title="http://scimantic.io/Agent">Agent</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Aleatory" title="http://scimantic.io/Aleatory">Aleatory</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/UncertaintyNature#Aleatory" title="http://scimantic.io/UncertaintyNature#Aleatory">Aleatory</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Ambiguity" title="http://scimantic.io/Ambiguity">Ambiguity</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Analysis" title="http://scimantic.io/Analysis">Analysis</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Conclusion" title="http://scimantic.io/Conclusion">Conclusion</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Dataset" title="http://scimantic.io/Dataset">Dataset</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/DCATDataset" title="http://scimantic.io/DCATDataset">DCATDataset</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/DesignOfExperiment" title="http://scimantic.io/DesignOfExperiment">DesignOfExperiment</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/UncertaintyNature#Epistemic" title="http://scimantic.io/UncertaintyNature#Epistemic">Epistemic</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/EvidenceAssessment" title="http://scimantic.io/EvidenceAssessment">EvidenceAssessment</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/ExperimentalMethod" title="http://scimantic.io/ExperimentalMethod">ExperimentalMethod</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Experimentation" title="http://scimantic.io/Experimentation">Experimentation</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Hypothesis" title="http://scimantic.io/Hypothesis">Hypothesis</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/HypothesisFormation" title="http://scimantic.io/HypothesisFormation">HypothesisFormation</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Identifiable" title="http://scimantic.io/Identifiable">Identifiable</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Incompleteness" title="http://scimantic.io/Incompleteness">Incompleteness</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/LiteratureSearch" title="http://scimantic.io/LiteratureSearch">LiteratureSearch</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Nanopublication" title="http://scimantic.io/Nanopublication">Nanopublication</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Parameter" title="http://scimantic.io/Parameter">Parameter</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Premise" title="http://scimantic.io/Premise">Premise</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Question" title="http://scimantic.io/Question">Question</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/QuestionFormation" title="http://scimantic.io/QuestionFormation">QuestionFormation</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/ResultAssessment" title="http://scimantic.io/ResultAssessment">ResultAssessment</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/UncertaintyDerivation" title="http://scimantic.io/UncertaintyDerivation">UncertaintyDerivation</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/UncertaintyModel" title="http://scimantic.io/UncertaintyModel">UncertaintyModel</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/UncertaintyNature" title="http://scimantic.io/UncertaintyNature">UncertaintyNature</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/UncertaintySubject" title="http://scimantic.io/UncertaintySubject">UncertaintySubject</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/URREFEvidence" title="http://scimantic.io/URREFEvidence">URREFEvidence</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/Vagueness" title="http://scimantic.io/Vagueness">Vagueness</a>
+   </li>
+</ul><h4>Object Properties</h4><ul xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+   <li>
+      <a href="#http://scimantic.io/derivationOfUncertainty" title="http://scimantic.io/derivationOfUncertainty">derivationOfUncertainty</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/hasUncertainty" title="http://scimantic.io/hasUncertainty">hasUncertainty</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/natureOfUncertainty" title="http://scimantic.io/natureOfUncertainty">natureOfUncertainty</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/parameter" title="http://scimantic.io/parameter">parameter</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/wasAssociatedWith" title="http://scimantic.io/wasAssociatedWith">wasAssociatedWith</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/wasAttributedTo" title="http://scimantic.io/wasAttributedTo">wasAttributedTo</a>
+   </li>
+</ul><h4>Data Properties</h4><ul xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+   <li>
+      <a href="#http://scimantic.io/accessLevel" title="http://scimantic.io/accessLevel">accessLevel</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/citation" title="http://scimantic.io/citation">citation</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/content" title="http://scimantic.io/content">content</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/generatedAtTime" title="http://scimantic.io/generatedAtTime">generatedAtTime</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/id" title="http://scimantic.io/id">id</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/label" title="http://scimantic.io/label">label</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/method" title="http://scimantic.io/method">method</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/publishable" title="http://scimantic.io/publishable">publishable</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/source" title="http://scimantic.io/source">source</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/unit" title="http://scimantic.io/unit">unit</a>
+   </li>
+   <li>
+      <a href="#http://scimantic.io/value" title="http://scimantic.io/value">value</a>
+   </li>
+</ul><iframe src="webvowl/index.html"></iframe> 
+</div>
+  
+
+<!--DESCRIPTION SECTION-->
+    <div id="description"><h2 id="desc" class="list">Scimantic: Description <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+
+<span class="markdown">This is a placeholder text for the description of your ontology. The description should include an explanation and a diagram explaining how the classes are related, examples of usage, etc.
+
+</span></div>
+   
+
+<!--CROSSREF SECTION-->
+   <div id="crossref"><h2 id="crossreference" class="list">Cross-reference for Scimantic classes, object properties and data properties <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+This section provides details for each class and property defined by Scimantic.
+<div xmlns:widoco="https://w3id.org/widoco/vocab#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classes">
+ <h3 id="classes-headline" class="list">Classes</h3>
+ <ul class="hlist">
+  <li><a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a></li>
+  <li><a href="#http://scimantic.io/Agent" title="http://scimantic.io/Agent">Agent</a></li>
+  <li><a href="#http://scimantic.io/Aleatory" title="http://scimantic.io/Aleatory">Aleatory</a></li>
+  <li><a href="#http://scimantic.io/UncertaintyNature#Aleatory" title="http://scimantic.io/UncertaintyNature#Aleatory">Aleatory</a></li>
+  <li><a href="#http://scimantic.io/Ambiguity" title="http://scimantic.io/Ambiguity">Ambiguity</a></li>
+  <li><a href="#http://scimantic.io/Analysis" title="http://scimantic.io/Analysis">Analysis</a></li>
+  <li><a href="#http://scimantic.io/Conclusion" title="http://scimantic.io/Conclusion">Conclusion</a></li>
+  <li><a href="#http://scimantic.io/Dataset" title="http://scimantic.io/Dataset">Dataset</a></li>
+  <li><a href="#http://scimantic.io/DCATDataset" title="http://scimantic.io/DCATDataset">DCATDataset</a></li>
+  <li><a href="#http://scimantic.io/DesignOfExperiment" title="http://scimantic.io/DesignOfExperiment">DesignOfExperiment</a></li>
+  <li><a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a></li>
+  <li><a href="#http://scimantic.io/UncertaintyNature#Epistemic" title="http://scimantic.io/UncertaintyNature#Epistemic">Epistemic</a></li>
+  <li><a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a></li>
+  <li><a href="#http://scimantic.io/EvidenceAssessment" title="http://scimantic.io/EvidenceAssessment">EvidenceAssessment</a></li>
+  <li><a href="#http://scimantic.io/ExperimentalMethod" title="http://scimantic.io/ExperimentalMethod">ExperimentalMethod</a></li>
+  <li><a href="#http://scimantic.io/Experimentation" title="http://scimantic.io/Experimentation">Experimentation</a></li>
+  <li><a href="#http://scimantic.io/Hypothesis" title="http://scimantic.io/Hypothesis">Hypothesis</a></li>
+  <li><a href="#http://scimantic.io/HypothesisFormation" title="http://scimantic.io/HypothesisFormation">HypothesisFormation</a></li>
+  <li><a href="#http://scimantic.io/Identifiable" title="http://scimantic.io/Identifiable">Identifiable</a></li>
+  <li><a href="#http://scimantic.io/Incompleteness" title="http://scimantic.io/Incompleteness">Incompleteness</a></li>
+  <li><a href="#http://scimantic.io/LiteratureSearch" title="http://scimantic.io/LiteratureSearch">LiteratureSearch</a></li>
+  <li><a href="#http://scimantic.io/Nanopublication" title="http://scimantic.io/Nanopublication">Nanopublication</a></li>
+  <li><a href="#http://scimantic.io/Parameter" title="http://scimantic.io/Parameter">Parameter</a></li>
+  <li><a href="#http://scimantic.io/Premise" title="http://scimantic.io/Premise">Premise</a></li>
+  <li><a href="#http://scimantic.io/Question" title="http://scimantic.io/Question">Question</a></li>
+  <li><a href="#http://scimantic.io/QuestionFormation" title="http://scimantic.io/QuestionFormation">QuestionFormation</a></li>
+  <li><a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a></li>
+  <li><a href="#http://scimantic.io/ResultAssessment" title="http://scimantic.io/ResultAssessment">ResultAssessment</a></li>
+  <li><a href="#http://scimantic.io/UncertaintyDerivation" title="http://scimantic.io/UncertaintyDerivation">UncertaintyDerivation</a></li>
+  <li><a href="#http://scimantic.io/UncertaintyModel" title="http://scimantic.io/UncertaintyModel">UncertaintyModel</a></li>
+  <li><a href="#http://scimantic.io/UncertaintyNature" title="http://scimantic.io/UncertaintyNature">UncertaintyNature</a></li>
+  <li><a href="#http://scimantic.io/UncertaintySubject" title="http://scimantic.io/UncertaintySubject">UncertaintySubject</a></li>
+  <li><a href="#http://scimantic.io/URREFEvidence" title="http://scimantic.io/URREFEvidence">URREFEvidence</a></li>
+  <li><a href="#http://scimantic.io/Vagueness" title="http://scimantic.io/Vagueness">Vagueness</a></li>
+ </ul>
+ <div class="entity" id="http://scimantic.io/Activity">
+  <h3>Activity<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Activity</p>
+  <div class="comment">
+   <span class="markdown">A provenance activity.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Identifiable" title="http://scimantic.io/Identifiable">Identifiable</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    has sub-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Analysis" title="http://scimantic.io/Analysis">Analysis</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/DesignOfExperiment" title="http://scimantic.io/DesignOfExperiment">DesignOfExperiment</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/EvidenceAssessment" title="http://scimantic.io/EvidenceAssessment">EvidenceAssessment</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Experimentation" title="http://scimantic.io/Experimentation">Experimentation</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/HypothesisFormation" title="http://scimantic.io/HypothesisFormation">HypothesisFormation</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/LiteratureSearch" title="http://scimantic.io/LiteratureSearch">LiteratureSearch</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/QuestionFormation" title="http://scimantic.io/QuestionFormation">QuestionFormation</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/ResultAssessment" title="http://scimantic.io/ResultAssessment">ResultAssessment</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/wasAssociatedWith" title="http://scimantic.io/wasAssociatedWith">wasAssociatedWith</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Agent">
+  <h3>Agent<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Agent</p>
+  <div class="comment">
+   <span class="markdown">A provenance agent.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Identifiable" title="http://scimantic.io/Identifiable">Identifiable</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in range of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/wasAssociatedWith" title="http://scimantic.io/wasAssociatedWith">wasAssociatedWith</a> <sup class="type-op" title="object property">op</sup>, <a href="#http://scimantic.io/wasAttributedTo" title="http://scimantic.io/wasAttributedTo">wasAttributedTo</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Aleatory">
+  <h3>Aleatory<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Aleatory</p>
+  <div class="comment">
+   <span class="markdown">Aleatory uncertainty entities must have nature Aleatory.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/UncertaintyModel" title="http://scimantic.io/UncertaintyModel">UncertaintyModel</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/UncertaintyNature#Aleatory">
+  <h3>Aleatory<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/UncertaintyNature#Aleatory</p>
+  <div class="comment">
+   <span class="markdown">Uncertainty due to inherent randomness.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/UncertaintyNature" title="http://scimantic.io/UncertaintyNature">UncertaintyNature</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Ambiguity">
+  <h3>Ambiguity<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Ambiguity</p>
+  <div class="comment">
+   <span class="markdown">Ambiguity is inherently Epistemic uncertainty.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/UncertaintyModel" title="http://scimantic.io/UncertaintyModel">UncertaintyModel</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Analysis">
+  <h3>Analysis<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Analysis</p>
+  <div class="comment">
+   <span class="markdown">The activity of processing a Dataset to produce a Result.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Conclusion">
+  <h3>Conclusion<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Conclusion</p>
+  <div class="comment">
+   <span class="markdown">The final claim or decision derived from the ResultAssessment.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Nanopublication" title="http://scimantic.io/Nanopublication">Nanopublication</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Dataset">
+  <h3>Dataset<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Dataset</p>
+  <div class="comment">
+   <span class="markdown">Raw data, observations, or measurements produced by experimentation.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/DCATDataset" title="http://scimantic.io/DCATDataset">DCATDataset</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/UncertaintySubject" title="http://scimantic.io/UncertaintySubject">UncertaintySubject</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/DCATDataset">
+  <h3>DCATDataset<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/DCATDataset</p>
+  <div class="comment">
+   <span class="markdown">A collection of data, published or curated by a single agent.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has sub-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Dataset" title="http://scimantic.io/Dataset">Dataset</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/DesignOfExperiment">
+  <h3>DesignOfExperiment<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/DesignOfExperiment</p>
+  <div class="comment">
+   <span class="markdown">The activity of creating an ExperimentalMethod from a Hypothesis.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Entity">
+  <h3>Entity<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Entity</p>
+  <div class="comment">
+   <span class="markdown">A provenance entity.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Identifiable" title="http://scimantic.io/Identifiable">Identifiable</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    has sub-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Conclusion" title="http://scimantic.io/Conclusion">Conclusion</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Dataset" title="http://scimantic.io/Dataset">Dataset</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/ExperimentalMethod" title="http://scimantic.io/ExperimentalMethod">ExperimentalMethod</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Hypothesis" title="http://scimantic.io/Hypothesis">Hypothesis</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Parameter" title="http://scimantic.io/Parameter">Parameter</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Premise" title="http://scimantic.io/Premise">Premise</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Question" title="http://scimantic.io/Question">Question</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/UncertaintyModel" title="http://scimantic.io/UncertaintyModel">UncertaintyModel</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/generatedAtTime" title="http://scimantic.io/generatedAtTime">generatedAtTime</a> <sup class="type-dp" title="data property">dp</sup>, <a href="#http://scimantic.io/wasAttributedTo" title="http://scimantic.io/wasAttributedTo">wasAttributedTo</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/UncertaintyNature#Epistemic">
+  <h3>Epistemic<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/UncertaintyNature#Epistemic</p>
+  <div class="comment">
+   <span class="markdown">Uncertainty due to lack of knowledge.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/UncertaintyNature" title="http://scimantic.io/UncertaintyNature">UncertaintyNature</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Evidence">
+  <h3>Evidence<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Evidence</p>
+  <div class="comment">
+   <span class="markdown">A factual claim extracted from a source.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Nanopublication" title="http://scimantic.io/Nanopublication">Nanopublication</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/URREFEvidence" title="http://scimantic.io/URREFEvidence">URREFEvidence</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/UncertaintySubject" title="http://scimantic.io/UncertaintySubject">UncertaintySubject</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/citation" title="http://scimantic.io/citation">citation</a> <sup class="type-dp" title="data property">dp</sup>, <a href="#http://scimantic.io/content" title="http://scimantic.io/content">content</a> <sup class="type-dp" title="data property">dp</sup>, <a href="#http://scimantic.io/source" title="http://scimantic.io/source">source</a> <sup class="type-dp" title="data property">dp</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/EvidenceAssessment">
+  <h3>EvidenceAssessment<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/EvidenceAssessment</p>
+  <div class="comment">
+   <span class="markdown">The activity of evaluating credibility or relevance of Evidence.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/ExperimentalMethod">
+  <h3>ExperimentalMethod<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/ExperimentalMethod</p>
+  <div class="comment">
+   <span class="markdown">A specification of the experimental or computational method.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/method" title="http://scimantic.io/method">method</a> <sup class="type-dp" title="data property">dp</sup>, <a href="#http://scimantic.io/parameter" title="http://scimantic.io/parameter">parameter</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Experimentation">
+  <h3>Experimentation<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Experimentation</p>
+  <div class="comment">
+   <span class="markdown">The activity of running an ExperimentalMethod to produce a Dataset.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Hypothesis">
+  <h3>Hypothesis<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Hypothesis</p>
+  <div class="comment">
+   <span class="markdown">A testable claim derived from evidence.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Nanopublication" title="http://scimantic.io/Nanopublication">Nanopublication</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/HypothesisFormation">
+  <h3>HypothesisFormation<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/HypothesisFormation</p>
+  <div class="comment">
+   <span class="markdown">The activity of synthesizing Evidence into a Hypothesis.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Identifiable">
+  <h3>Identifiable<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Identifiable</p>
+  <div class="comment">
+   <span class="markdown">A mixin for objects that have a unique identifier.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd></dd>
+   <dt>
+    has sub-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Agent" title="http://scimantic.io/Agent">Agent</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/id" title="http://scimantic.io/id">id</a> <sup class="type-dp" title="data property">dp</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Incompleteness">
+  <h3>Incompleteness<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Incompleteness</p>
+  <div class="comment">
+   <span class="markdown">Incompleteness is inherently Epistemic uncertainty.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/UncertaintyModel" title="http://scimantic.io/UncertaintyModel">UncertaintyModel</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/LiteratureSearch">
+  <h3>LiteratureSearch<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/LiteratureSearch</p>
+  <div class="comment">
+   <span class="markdown">The activity of searching for and extracting Evidence.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Nanopublication">
+  <h3>Nanopublication<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Nanopublication</p>
+  <div class="comment">
+   <span class="markdown">A nanopublication object.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has sub-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Conclusion" title="http://scimantic.io/Conclusion">Conclusion</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Hypothesis" title="http://scimantic.io/Hypothesis">Hypothesis</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/accessLevel" title="http://scimantic.io/accessLevel">accessLevel</a> <sup class="type-dp" title="data property">dp</sup>, <a href="#http://scimantic.io/publishable" title="http://scimantic.io/publishable">publishable</a> <sup class="type-dp" title="data property">dp</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Parameter">
+  <h3>Parameter<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Parameter</p>
+  <div class="comment">
+   <span class="markdown">A configured parameter within an Experimental Method.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in range of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/parameter" title="http://scimantic.io/parameter">parameter</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Premise">
+  <h3>Premise<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Premise</p>
+  <div class="comment">
+   <span class="markdown">An evaluated proposition or insight derived from Evidence.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Question">
+  <h3>Question<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Question</p>
+  <div class="comment">
+   <span class="markdown">An interrogative sentence representing the research query.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/QuestionFormation">
+  <h3>QuestionFormation<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/QuestionFormation</p>
+  <div class="comment">
+   <span class="markdown">The activity of creating a Research Question.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Result">
+  <h3>Result<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Result</p>
+  <div class="comment">
+   <span class="markdown">The outcome of an analysis activity.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Nanopublication" title="http://scimantic.io/Nanopublication">Nanopublication</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/URREFEvidence" title="http://scimantic.io/URREFEvidence">URREFEvidence</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/UncertaintySubject" title="http://scimantic.io/UncertaintySubject">UncertaintySubject</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/unit" title="http://scimantic.io/unit">unit</a> <sup class="type-dp" title="data property">dp</sup>, <a href="#http://scimantic.io/value" title="http://scimantic.io/value">value</a> <sup class="type-dp" title="data property">dp</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/ResultAssessment">
+  <h3>ResultAssessment<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/ResultAssessment</p>
+  <div class="comment">
+   <span class="markdown">The activity of comparing a Result to the original Hypothesis.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/UncertaintyDerivation">
+  <h3>UncertaintyDerivation<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/UncertaintyDerivation</p>
+  <div class="comment">
+   <span class="markdown">Describes how the uncertainty was assessed.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    is in range of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/derivationOfUncertainty" title="http://scimantic.io/derivationOfUncertainty">derivationOfUncertainty</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/UncertaintyModel">
+  <h3>UncertaintyModel<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/UncertaintyModel</p>
+  <div class="comment">
+   <span class="markdown">A reified uncertainty model.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    has sub-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Aleatory" title="http://scimantic.io/Aleatory">Aleatory</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Ambiguity" title="http://scimantic.io/Ambiguity">Ambiguity</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Incompleteness" title="http://scimantic.io/Incompleteness">Incompleteness</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Vagueness" title="http://scimantic.io/Vagueness">Vagueness</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/derivationOfUncertainty" title="http://scimantic.io/derivationOfUncertainty">derivationOfUncertainty</a> <sup class="type-op" title="object property">op</sup>, <a href="#http://scimantic.io/natureOfUncertainty" title="http://scimantic.io/natureOfUncertainty">natureOfUncertainty</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+   <dt>
+    is in range of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/hasUncertainty" title="http://scimantic.io/hasUncertainty">hasUncertainty</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/UncertaintyNature">
+  <h3>UncertaintyNature<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/UncertaintyNature</p>
+  <dl class="description">
+   <dt>
+    is equivalent to
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/UncertaintyNature#Aleatory" title="http://scimantic.io/UncertaintyNature#Aleatory">Aleatory</a> <sup class="type-c" title="class">c</sup> <span class="logic">or</span> <a href="#http://scimantic.io/UncertaintyNature#Epistemic" title="http://scimantic.io/UncertaintyNature#Epistemic">Epistemic</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    has sub-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/UncertaintyNature#Aleatory" title="http://scimantic.io/UncertaintyNature#Aleatory">Aleatory</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/UncertaintyNature#Epistemic" title="http://scimantic.io/UncertaintyNature#Epistemic">Epistemic</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in range of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/natureOfUncertainty" title="http://scimantic.io/natureOfUncertainty">natureOfUncertainty</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/UncertaintySubject">
+  <h3>UncertaintySubject<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/UncertaintySubject</p>
+  <div class="comment">
+   <span class="markdown">A mixin for objects that can have a reified uncertainty model.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has sub-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Dataset" title="http://scimantic.io/Dataset">Dataset</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>
+    is in domain of
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/hasUncertainty" title="http://scimantic.io/hasUncertainty">hasUncertainty</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/URREFEvidence">
+  <h3>URREFEvidence<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/URREFEvidence</p>
+  <div class="comment">
+   <span class="markdown">Root evidence class from URREF ontology.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has sub-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a> <sup class="type-c" title="class">c</sup>, <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="http://scimantic.io/Vagueness">
+  <h3>Vagueness<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/Vagueness</p>
+  <div class="comment">
+   <span class="markdown">Vagueness is inherently Epistemic uncertainty.</span>
+  </div>
+  <dl class="description">
+   <dt>
+    has super-classes
+   </dt>
+   <dd>
+    <a href="#http://scimantic.io/UncertaintyModel" title="http://scimantic.io/UncertaintyModel">UncertaintyModel</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+</div><div xmlns:widoco="https://w3id.org/widoco/vocab#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="objectproperties">
+ <h3 id="properties" class="list">Object Properties</h3>
+ <ul class="hlist">
+  <li><a href="#http://scimantic.io/derivationOfUncertainty" title="http://scimantic.io/derivationOfUncertainty">derivationOfUncertainty</a></li>
+  <li><a href="#http://scimantic.io/hasUncertainty" title="http://scimantic.io/hasUncertainty">hasUncertainty</a></li>
+  <li><a href="#http://scimantic.io/natureOfUncertainty" title="http://scimantic.io/natureOfUncertainty">natureOfUncertainty</a></li>
+  <li><a href="#http://scimantic.io/parameter" title="http://scimantic.io/parameter">parameter</a></li>
+  <li><a href="#http://scimantic.io/wasAssociatedWith" title="http://scimantic.io/wasAssociatedWith">wasAssociatedWith</a></li>
+  <li><a href="#http://scimantic.io/wasAttributedTo" title="http://scimantic.io/wasAttributedTo">wasAttributedTo</a></li>
+ </ul>
+ <div class="entity" id="http://scimantic.io/derivationOfUncertainty">
+  <h3>derivationOfUncertainty<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/derivationOfUncertainty</p>
+  <div class="comment">
+   <span class="markdown">How the uncertainty was derived.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/UncertaintyModel" title="http://scimantic.io/UncertaintyModel">UncertaintyModel</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/UncertaintyDerivation" title="http://scimantic.io/UncertaintyDerivation">UncertaintyDerivation</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/hasUncertainty">
+  <h3>hasUncertainty<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/hasUncertainty</p>
+  <div class="comment">
+   <span class="markdown">Links an entity to its reified uncertainty model.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/UncertaintySubject" title="http://scimantic.io/UncertaintySubject">UncertaintySubject</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/UncertaintyModel" title="http://scimantic.io/UncertaintyModel">UncertaintyModel</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/natureOfUncertainty">
+  <h3>natureOfUncertainty<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/natureOfUncertainty</p>
+  <div class="comment">
+   <span class="markdown">The nature of the uncertainty (Aleatory or Epistemic).</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/UncertaintyModel" title="http://scimantic.io/UncertaintyModel">UncertaintyModel</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/UncertaintyNature" title="http://scimantic.io/UncertaintyNature">UncertaintyNature</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/parameter">
+  <h3>parameter<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/parameter</p>
+  <div class="comment">
+   <span class="markdown">Structured configuration parameter.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/ExperimentalMethod" title="http://scimantic.io/ExperimentalMethod">ExperimentalMethod</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Parameter" title="http://scimantic.io/Parameter">Parameter</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/wasAssociatedWith">
+  <h3>wasAssociatedWith<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/wasAssociatedWith</p>
+  <div class="comment">
+   <span class="markdown">The agent associated with an activity.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Activity" title="http://scimantic.io/Activity">Activity</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Agent" title="http://scimantic.io/Agent">Agent</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/wasAttributedTo">
+  <h3>wasAttributedTo<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/wasAttributedTo</p>
+  <div class="comment">
+   <span class="markdown">The agent who attributed this entity (Agent).</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Agent" title="http://scimantic.io/Agent">Agent</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+</div><div xmlns:widoco="https://w3id.org/widoco/vocab#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="dataproperties">
+ <h3 id="dataproperties-headline" class="list">Data Properties</h3>
+ <ul class="hlist">
+  <li><a href="#http://scimantic.io/accessLevel" title="http://scimantic.io/accessLevel">accessLevel</a></li>
+  <li><a href="#http://scimantic.io/citation" title="http://scimantic.io/citation">citation</a></li>
+  <li><a href="#http://scimantic.io/content" title="http://scimantic.io/content">content</a></li>
+  <li><a href="#http://scimantic.io/generatedAtTime" title="http://scimantic.io/generatedAtTime">generatedAtTime</a></li>
+  <li><a href="#http://scimantic.io/id" title="http://scimantic.io/id">id</a></li>
+  <li><a href="#http://scimantic.io/label" title="http://scimantic.io/label">label</a></li>
+  <li><a href="#http://scimantic.io/method" title="http://scimantic.io/method">method</a></li>
+  <li><a href="#http://scimantic.io/publishable" title="http://scimantic.io/publishable">publishable</a></li>
+  <li><a href="#http://scimantic.io/source" title="http://scimantic.io/source">source</a></li>
+  <li><a href="#http://scimantic.io/unit" title="http://scimantic.io/unit">unit</a></li>
+  <li><a href="#http://scimantic.io/value" title="http://scimantic.io/value">value</a></li>
+ </ul>
+ <div class="entity" id="http://scimantic.io/accessLevel">
+  <h3>accessLevel<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/accessLevel</p>
+  <div class="comment">
+   <span class="markdown">Publishing scope (e.g., local, institutional, public).</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Nanopublication" title="http://scimantic.io/Nanopublication">Nanopublication</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/citation">
+  <h3>citation<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/citation</p>
+  <div class="comment">
+   <span class="markdown">Bibliographic reference.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/content">
+  <h3>content<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/content</p>
+  <div class="comment">
+   <span class="markdown">The actual text content of the evidence.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/generatedAtTime">
+  <h3>generatedAtTime<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/generatedAtTime</p>
+  <div class="comment">
+   <span class="markdown">Time of generation.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Entity" title="http://scimantic.io/Entity">Entity</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#dateTime" target="_blank" title="http://www.w3.org/2001/XMLSchema#dateTime">date Time</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/id">
+  <h3>id<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/id</p>
+  <div class="comment">
+   <span class="markdown">Unique identifier (URI) for this node.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Identifiable" title="http://scimantic.io/Identifiable">Identifiable</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/label">
+  <h3>label<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/label</p>
+  <div class="comment">
+   <span class="markdown">The human-readable label or text.</span>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/method">
+  <h3>method<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/method</p>
+  <div class="comment">
+   <span class="markdown">Name or description of the method.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/ExperimentalMethod" title="http://scimantic.io/ExperimentalMethod">ExperimentalMethod</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/publishable">
+  <h3>publishable<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/publishable</p>
+  <div class="comment">
+   <span class="markdown">Flag indicating if this is ready for public promotion.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Nanopublication" title="http://scimantic.io/Nanopublication">Nanopublication</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#boolean" target="_blank" title="http://www.w3.org/2001/XMLSchema#boolean">boolean</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/source">
+  <h3>source<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/source</p>
+  <div class="comment">
+   <span class="markdown">Source URL or identifier.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Evidence" title="http://scimantic.io/Evidence">Evidence</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/unit">
+  <h3>unit<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/unit</p>
+  <div class="comment">
+   <span class="markdown">Unit of measurement.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="http://scimantic.io/value">
+  <h3>value<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> http://scimantic.io/value</p>
+  <div class="comment">
+   <span class="markdown">The numeric or categorical result.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>
+     has domain
+    </dt>
+    <dd>
+     <a href="#http://scimantic.io/Result" title="http://scimantic.io/Result">Result</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>
+     has range
+    </dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+</div><div id="legend">
+<h2>Legend <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<div   class="entity">
+<sup class="type-c" title="Classes">c</sup>: Classes <br/>
+<sup class="type-op" title="Object Properties">op</sup>: Object Properties <br/>
+<sup class="type-dp" title="Data Properties">dp</sup>: Data Properties <br/>
+</div>
+</div>
+</div>
+    
+
+<!--REFERENCES SECTION-->
+  <div id="references">
+<h2 id="ref" class="list">References <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<span class="markdown">
+Add your references here. It is recommended to have them as a list.</span>
+
+</div>
+<div id="acknowledgments">
+<h2 id="ack" class="list">Acknowledgments <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<p>
+The authors would like to thank <a href="http://www.essepuntato.it/">Silvio Peroni</a> for developing <a href="http://www.essepuntato.it/lode">LODE</a>, a Live OWL Documentation Environment, which is used for representing the Cross Referencing Section of this document and <a href="https://w3id.org/people/dgarijo">Daniel Garijo</a> for developing <a href="https://github.com/dgarijo/Widoco">Widoco</a>, the program used to create the template used in this documentation.</p>
+</div>
+
+
+</div>
+</body>
+</html>
