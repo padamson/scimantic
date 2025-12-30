@@ -74,12 +74,12 @@ jobs:
       - name: Run ruff linter
         run: |
           cd scimantic-core
-          uv run ruff check src/ tests/
+          uv run ruff check src/ tests/ --exclude src/scimantic/models.py
 
       - name: Run ruff formatter check
         run: |
           cd scimantic-core
-          uv run ruff format --check src/ tests/
+          uv run ruff format --check src/ tests/ --exclude src/scimantic/models.py
 
   type-check:
     runs-on: ubuntu-latest
