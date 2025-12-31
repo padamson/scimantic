@@ -1,19 +1,22 @@
 import * as assert from "assert";
 import * as vscode from "vscode";
 import {
-  EvidenceTreeDataProvider,
+  KnowledgeGraphTreeProvider,
   EvidenceTreeItem,
-} from "../providers/evidenceTreeProvider";
-import { Evidence } from "../types";
+  GroupItem,
+  QuestionTreeItem,
+  KnowledgeGraphItem,
+} from "../providers/knowledgeGraphTreeProvider";
+import { Evidence, Question } from "../types";
 
-suite("EvidenceTreeDataProvider Test Suite", () => {
+suite("KnowledgeGraphTreeProvider Test Suite", () => {
   test("Provider should be created successfully", () => {
-    const provider = new EvidenceTreeDataProvider();
+    const provider = new KnowledgeGraphTreeProvider();
     assert.ok(provider, "Provider should be instantiated");
   });
 
   test("getTreeItem should return EvidenceTreeItem with correct label", () => {
-    const provider = new EvidenceTreeDataProvider();
+    const provider = new KnowledgeGraphTreeProvider();
     const mockEvidence: Evidence = {
       uri: "http://example.org/evidence/001",
       content: "Test finding",
@@ -30,20 +33,18 @@ suite("EvidenceTreeDataProvider Test Suite", () => {
     assert.strictEqual(result.description, "2023-12-21T10:00:00Z");
   });
 
-  test("getChildren should return empty array when no evidence", async () => {
-    const provider = new EvidenceTreeDataProvider();
+  test("getChildren should return groups when empty", async () => {
+    const provider = new KnowledgeGraphTreeProvider();
     const children = await provider.getChildren();
 
     assert.ok(Array.isArray(children), "Should return an array");
-    assert.strictEqual(
-      children.length,
-      0,
-      "Should return empty array when no evidence",
-    );
+    assert.strictEqual(children.length, 2, "Should return 2 groups (Questions, Evidence)");
+    assert.ok(children[0] instanceof GroupItem);
+    assert.ok(children[1] instanceof GroupItem);
   });
 
-  test("getChildren should return EvidenceTreeItems when evidence exists", async () => {
-    const provider = new EvidenceTreeDataProvider();
+  test("getChildren should return EvidenceTreeItems when in Evidence group", async () => {
+    const provider = new KnowledgeGraphTreeProvider();
     const mockEvidence: Evidence[] = [
       {
         uri: "http://example.org/evidence/001",
@@ -64,9 +65,16 @@ suite("EvidenceTreeDataProvider Test Suite", () => {
     ];
 
     // Set mock data
-    provider.setEvidence(mockEvidence);
+    provider.setData(mockEvidence, []);
 
-    const children = await provider.getChildren();
+    // Get root groups first
+    const groups = await provider.getChildren();
+    const evidenceGroup = groups.find(
+      (g) => g instanceof GroupItem && g.type === "evidence",
+    ) as GroupItem;
+
+    // Get children of Evidence group
+    const children = await provider.getChildren(evidenceGroup);
 
     assert.strictEqual(children.length, 2, "Should return 2 evidence items");
     assert.ok(
@@ -123,10 +131,10 @@ suite("EvidenceTreeDataProvider Test Suite", () => {
   });
 
   test("refresh should fire onDidChangeTreeData event", (done) => {
-    const provider = new EvidenceTreeDataProvider();
+    const provider = new KnowledgeGraphTreeProvider();
 
     // Subscribe to tree data change event
-    provider.onDidChangeTreeData((_item: EvidenceTreeItem | undefined) => {
+    provider.onDidChangeTreeData((_item: KnowledgeGraphItem | undefined) => {
       assert.strictEqual(
         _item,
         undefined,
@@ -139,8 +147,8 @@ suite("EvidenceTreeDataProvider Test Suite", () => {
     provider.refresh();
   });
 
-  test("setEvidence should trigger refresh", (done) => {
-    const provider = new EvidenceTreeDataProvider();
+  test("setData should trigger refresh", (done) => {
+    const provider = new KnowledgeGraphTreeProvider();
     const mockEvidence: Evidence[] = [
       {
         uri: "http://example.org/evidence/001",
@@ -153,13 +161,13 @@ suite("EvidenceTreeDataProvider Test Suite", () => {
     ];
 
     // Subscribe to tree data change event
-    provider.onDidChangeTreeData((_item: EvidenceTreeItem | undefined) => {
+    provider.onDidChangeTreeData((_item: KnowledgeGraphItem | undefined) => {
       assert.strictEqual(_item, undefined);
       done();
     });
 
-    // Set evidence should trigger refresh
-    provider.setEvidence(mockEvidence);
+    // Set data should trigger refresh
+    provider.setData(mockEvidence, []);
   });
 
   test("EvidenceTreeItem contextValue should be set for context menu", () => {

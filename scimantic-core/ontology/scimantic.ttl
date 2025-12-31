@@ -121,6 +121,21 @@ scimantic:DCATDataset a owl:Class ;
     skos:exactMatch dcat:Dataset ;
     skos:inScheme scimantic:schema .
 
+scimantic:Identifiable a owl:Class ;
+    rdfs:label "Identifiable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty scimantic:id ] ;
+    skos:definition "A mixin for objects that have a unique identifier." ;
+    skos:exactMatch scimantic:Identifiable ;
+    skos:inScheme scimantic:schema .
+
 scimantic:Question a owl:Class ;
     rdfs:label "Question" ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -654,21 +669,6 @@ scimantic:ExperimentalMethod a owl:Class ;
     skos:exactMatch scimantic:ExperimentalMethod ;
     skos:inScheme scimantic:schema .
 
-scimantic:Identifiable a owl:Class ;
-    rdfs:label "Identifiable" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty scimantic:id ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:id ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty scimantic:id ] ;
-    skos:definition "A mixin for objects that have a unique identifier." ;
-    skos:exactMatch scimantic:Identifiable ;
-    skos:inScheme scimantic:schema .
-
 scimantic:LiteratureSearch a owl:Class ;
     rdfs:label "LiteratureSearch" ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -998,8 +998,7 @@ scimantic:Hypothesis a owl:Class ;
 
 scimantic:Activity a owl:Class ;
     rdfs:label "Activity" ;
-    rdfs:subClassOf scimantic:Identifiable ;
-    skos:definition "A provenance activity." ;
+    skos:definition "A provenance activity. Identified by its RDF URI." ;
     skos:exactMatch prov:Activity ;
     skos:inScheme scimantic:schema .
 
@@ -1037,15 +1036,13 @@ scimantic:UncertaintyModel a owl:Class ;
 
 scimantic:Entity a owl:Class ;
     rdfs:label "Entity" ;
-    rdfs:subClassOf scimantic:Identifiable ;
-    skos:definition "A provenance entity." ;
+    skos:definition "A provenance entity. Identified by its RDF URI." ;
     skos:exactMatch prov:Entity ;
     skos:inScheme scimantic:schema .
 
 scimantic:Agent a owl:Class ;
     rdfs:label "Agent" ;
-    rdfs:subClassOf scimantic:Identifiable ;
-    skos:definition "A provenance agent." ;
+    skos:definition "A provenance agent. Identified by its RDF URI." ;
     skos:exactMatch prov:Agent ;
     skos:inScheme scimantic:schema .
 

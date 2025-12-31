@@ -90,7 +90,35 @@ def get_provenance_graph_json(project_path: str = DEFAULT_PROJECT_FILE) -> str:
             }
         )
 
-    return json.dumps({"evidence": evidence_list})
+    return json.dumps({"evidence": evidence_list, "questions": get_questions_list(g)})
+
+
+def get_questions_list(g: Graph) -> list[Dict[str, Any]]:
+    """Helper to query questions from the graph."""
+    questions = []
+    query = """
+        PREFIX scimantic: <http://scimantic.io/>
+        PREFIX prov: <http://www.w3.org/ns/prov#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+        SELECT ?uri ?label ?agent
+        WHERE {
+            ?uri a scimantic:Question .
+            ?uri rdfs:label ?label .
+            OPTIONAL { ?uri prov:wasAttributedTo ?agent }
+        }
+    """
+    results = g.query(query)
+    for row in results:
+        r = cast(ResultRow, row)
+        questions.append(
+            {
+                "uri": str(r.uri),
+                "label": str(r.label),
+                "agent": str(r.agent) if r.agent else None,
+            }
+        )
+    return questions
 
 
 @mcp.tool()
@@ -148,12 +176,14 @@ def _persist_graph(graph: Graph, project_path: str = DEFAULT_PROJECT_FILE):
     graph.serialize(destination=str(project_file), format="turtle")
 
 
+@mcp.tool()
 def add_evidence(
     content: str,
     citation: str,
     source: str,
     agent: str,
     project_path: str = DEFAULT_PROJECT_FILE,
+    relates_to_question: str | None = None,
 ) -> Dict[str, Any]:
     """
     Add evidence from literature to the knowledge graph.
@@ -165,41 +195,47 @@ def add_evidence(
     evidence_id = str(uuid.uuid4())[:8]
     evidence_uri = f"http://example.org/research/evidence/{evidence_id}"
 
-    # Create Evidence instance (note: id field)
-    # Generate a label from content if not provided (assume full content for now, or truncated)
+    # Generate label from content if not provided (truncate for readability)
     label = content[:50] + "..." if len(content) > 50 else content
 
-    evidence = Evidence(
-        id=evidence_uri,
+    # Create Evidence model instance for validation only
+    # Note: We use the model just to validate required fields
+    _ = Evidence(
         label=label,
         content=content,
         citation=citation,
         source=source,
-        wasAttributedTo=agent,
     )
 
+    # Manually construct RDF graph using raw parameters
+    # TODO: Replace with LinkML rdf_dumper once context generation is automated
     g = Graph()
     g.bind("scimantic", SCIMANTIC)
     g.bind("prov", PROV)
 
-    evidence_node = URIRef(evidence.id)
+    # Create Evidence entity with URI as subject
+    evidence_node = URIRef(evidence_uri)
     g.add((evidence_node, RDF.type, SCIMANTIC.Evidence))
     g.add((evidence_node, RDF.type, PROV.Entity))
-    g.add((evidence_node, SCIMANTIC.id, Literal(evidence.id)))
-    g.add((evidence_node, SCIMANTIC.content, Literal(evidence.content)))  # type: ignore
-    g.add((evidence_node, DCTERMS.bibliographicCitation, Literal(evidence.citation)))  # type: ignore
-    g.add((evidence_node, DCTERMS.source, Literal(evidence.source)))  # type: ignore
+    g.add((evidence_node, RDFS.label, Literal(label)))
+    g.add((evidence_node, SCIMANTIC.content, Literal(content)))
+    g.add((evidence_node, DCTERMS.bibliographicCitation, Literal(citation)))
+    g.add((evidence_node, DCTERMS.source, Literal(source)))
 
-    agent_node = URIRef(evidence.wasAttributedTo)  # type: ignore
-    g.add((evidence_node, PROV.wasAttributedTo, agent_node))  # type: ignore
+    # Create Agent entity
+    agent_node = URIRef(agent)
+    g.add((evidence_node, PROV.wasAttributedTo, agent_node))
     g.add((agent_node, RDF.type, PROV.Agent))
-    g.add((agent_node, SCIMANTIC.id, Literal(evidence.wasAttributedTo)))  # type: ignore
 
     # Add timestamp
     timestamp = datetime.now(timezone.utc)
     g.add(
         (evidence_node, PROV.generatedAtTime, Literal(timestamp, datatype=XSD.dateTime))
     )
+
+    if relates_to_question:
+        question_node = URIRef(relates_to_question)
+        g.add((evidence_node, PROV.wasDerivedFrom, question_node))
 
     _persist_graph(g, project_path)
 
@@ -210,6 +246,7 @@ def add_evidence(
     }
 
 
+@mcp.tool()
 def add_question(
     label: str,
     agent: str,
@@ -224,29 +261,32 @@ def add_question(
     unique_id = str(uuid.uuid4())[:8]
     question_uri = f"http://example.org/research/question/{unique_id}"
 
-    # Create model
-    question = Question(id=question_uri, label=label, wasAttributedTo=agent)
+    # Create model instance for validation only
+    _ = Question(label=label)
 
-    # Manual RDF (Temporary)
+    # Manually construct RDF graph using raw parameters
+    # TODO: Replace with LinkML rdf_dumper once context generation is automated
     g = Graph()
     g.bind("scimantic", SCIMANTIC)
     g.bind("prov", PROV)
 
-    q_node = URIRef(question.id)
+    # Create Question entity with URI as subject
+    q_node = URIRef(question_uri)
     g.add((q_node, RDF.type, SCIMANTIC.Question))
-    g.add((q_node, SCIMANTIC.id, Literal(question.id)))
-    g.add((q_node, RDFS.label, Literal(question.label)))
-    if question.wasAttributedTo:
-        agent_node = URIRef(question.wasAttributedTo)
+    g.add((q_node, RDF.type, PROV.Entity))
+    g.add((q_node, RDFS.label, Literal(label)))
+
+    # Create Agent entity if provided
+    if agent:
+        agent_node = URIRef(agent)
         g.add((q_node, PROV.wasAttributedTo, agent_node))
         g.add((agent_node, RDF.type, PROV.Agent))
-        g.add((agent_node, SCIMANTIC.id, Literal(question.wasAttributedTo)))
 
-    # Create associated Activity (QuestionFormation)
+    # Create associated QuestionFormation activity
     # Note: The model doesn't enforce this creation automatically, business logic does.
     activity_uri = URIRef(f"{question_uri}/generation")
     g.add((activity_uri, RDF.type, SCIMANTIC.QuestionFormation))
-    g.add((activity_uri, SCIMANTIC.id, Literal(str(activity_uri))))
+    g.add((activity_uri, RDF.type, PROV.Activity))
     g.add((q_node, PROV.wasGeneratedBy, activity_uri))
 
     _persist_graph(g, project_path)

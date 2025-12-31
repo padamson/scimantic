@@ -27,23 +27,17 @@ classes:
   # ---------------------------------------------------------
   Entity:
     class_uri: prov:Entity
-    description: A provenance entity.
-    mixins:
-      - Identifiable
+    description: A provenance entity. Identified by its RDF URI.
     slots: []
 
   Activity:
     class_uri: prov:Activity
-    description: A provenance activity.
-    mixins:
-      - Identifiable
+    description: A provenance activity. Identified by its RDF URI.
     slots: []
 
   Agent:
     class_uri: prov:Agent
-    description: A provenance agent.
-    mixins:
-      - Identifiable
+    description: A provenance agent. Identified by its RDF URI.
 
   # ---------------------------------------------------------
   # Scimantic Entities

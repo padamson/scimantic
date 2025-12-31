@@ -1,71 +1,110 @@
-# scimantic-ext README
+# Scimantic VS Code Extension
 
-This is the README for your extension "Scimantic." After writing up a brief description, we recommend including the following sections.
+VS Code extension for visualizing semantic knowledge graphs and enabling Claude Code integration for research workflows.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Knowledge Graph Visualization**: Tree view of Evidence and Questions from `project.ttl`
+- **Claude Code Integration**: Automatic workspace initialization with research assistant configuration
+- **Ontology-Aligned Agents**: Specialized agents for research activities (QuestionFormation, EvidenceExtraction, etc.)
+- **Real-time Updates**: Watches `project.ttl` for changes and updates visualization
 
-For example if there is an image subfolder under your extension project workspace:
+## Prerequisites
 
-\!\[feature X\]\(images/feature-x.png\)
+- **Node.js**: v20 or higher
+- **pnpm**: v9 or higher
+- **VS Code**: v1.60.0 or higher
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Installation
 
-## Requirements
+```bash
+cd scimantic-ext
+pnpm install
+```
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Development
 
-## Extension Settings
+### Running Tests
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+```bash
+# Run all tests
+pnpm test
 
-For example:
+# Run tests with coverage
+pnpm run test:coverage
 
-This extension contributes the following settings:
+# Run type checking
+pnpm run check-types
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+# Run linter
+pnpm run lint
+```
 
-## Known Issues
+### Launching Extension Development Host
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Press **F5** in VS Code to launch the Extension Development Host with the extension loaded.
 
-## Release Notes
+The extension will:
+1. Activate in the development workspace
+2. Prompt to initialize Scimantic research workspace (if not already set up)
+3. Create `.mcp.json`, `CLAUDE.md`, and `claude/agents/` directory
+4. Display knowledge graph in the Scimantic sidebar
 
-Users appreciate release notes as you update your extension.
+### Building
 
-### 1.0.0
+```bash
+# Development build (with watch mode)
+pnpm run watch
 
-Initial release of ...
+# Production build
+pnpm run package
+```
 
-### 1.0.1
+### Packaging for Distribution
 
-Fixed issue #.
+```bash
+# Create .vsix package
+pnpm run package
+```
 
-### 1.1.0
+The packaged extension will be created in the root directory as `scimantic-ext-*.vsix`.
 
-Added features X, Y, and Z.
+## Architecture
 
----
+```
+scimantic-ext/
+├── src/
+│   ├── extension.ts              # Main activation logic
+│   ├── providers/
+│   │   └── knowledgeGraphTreeProvider.ts  # Tree view for RDF graph
+│   ├── services/
+│   │   └── mcpClient.ts          # MCP client for scimantic-core
+│   ├── types.ts                  # TypeScript type definitions
+│   └── test/                     # Test suites
+└── package.json                  # Extension manifest
+```
 
-## Following extension guidelines
+## Testing Strategy
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+Following TDD principles from [CLAUDE.md](../CLAUDE.md):
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+- **Unit Tests**: Test individual functions and classes in isolation
+- **Integration Tests**: Test component interactions (MCP client, providers)
+- **Idempotency Tests**: Ensure workspace initialization is safe to run multiple times
 
-## Working with Markdown
+All tests run automatically in CI/CD and pre-commit hooks.
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+## Commands
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+- `Scimantic: Refresh Knowledge Graph` - Manually refresh the graph view
+- `Scimantic: Initialize Research Workspace` - Set up Claude Code integration
 
-## For more information
+## Contributing
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+See the [monorepo README](../README.md) for overall project structure and contribution guidelines.
 
-**Enjoy!**
+## Links
+
+- [Scimantic Documentation](../docs/)
+- [VS Code Extension API](https://code.visualstudio.com/api)
+- [MCP Specification](https://modelcontextprotocol.io/)

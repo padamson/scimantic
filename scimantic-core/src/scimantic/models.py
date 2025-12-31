@@ -77,114 +77,13 @@ DEFAULT_ = SCIMANTIC
 # Types
 
 # Class references
-class EntityId(extended_str):
-    pass
-
-
-class ActivityId(extended_str):
-    pass
-
-
-class AgentId(extended_str):
-    pass
-
-
-class QuestionId(EntityId):
-    pass
-
-
-class QuestionFormationId(ActivityId):
-    pass
-
-
-class LiteratureSearchId(ActivityId):
-    pass
-
-
-class EvidenceId(EntityId):
-    pass
-
-
-class HypothesisId(EntityId):
-    pass
-
-
-class ExperimentalMethodId(EntityId):
-    pass
-
-
-class PremiseId(EntityId):
-    pass
-
-
-class DatasetId(EntityId):
-    pass
-
-
-class ResultId(EntityId):
-    pass
-
-
-class ConclusionId(EntityId):
-    pass
-
-
-class ParameterId(EntityId):
-    pass
-
-
-class EvidenceAssessmentId(ActivityId):
-    pass
-
-
-class HypothesisFormationId(ActivityId):
-    pass
-
-
-class DesignOfExperimentId(ActivityId):
-    pass
-
-
-class ExperimentationId(ActivityId):
-    pass
-
-
-class AnalysisId(ActivityId):
-    pass
-
-
-class ResultAssessmentId(ActivityId):
-    pass
-
-
-class UncertaintyModelId(EntityId):
-    pass
-
-
-class AmbiguityId(UncertaintyModelId):
-    pass
-
-
-class VaguenessId(UncertaintyModelId):
-    pass
-
-
-class IncompletenessId(UncertaintyModelId):
-    pass
-
-
-class AleatoryId(UncertaintyModelId):
-    pass
-
-
 class IdentifiableId(extended_str):
     pass
 
 
-@dataclass(repr=False)
 class Entity(YAMLRoot):
     """
-    A provenance entity.
+    A provenance entity. Identified by its RDF URI.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -193,21 +92,10 @@ class Entity(YAMLRoot):
     class_name: ClassVar[str] = "Entity"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Entity
 
-    id: Union[str, EntityId] = None
 
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, EntityId):
-            self.id = EntityId(self.id)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
 class Activity(YAMLRoot):
     """
-    A provenance activity.
+    A provenance activity. Identified by its RDF URI.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -216,21 +104,10 @@ class Activity(YAMLRoot):
     class_name: ClassVar[str] = "Activity"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Activity
 
-    id: Union[str, ActivityId] = None
 
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, ActivityId):
-            self.id = ActivityId(self.id)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
 class Agent(YAMLRoot):
     """
-    A provenance agent.
+    A provenance agent. Identified by its RDF URI.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -238,16 +115,6 @@ class Agent(YAMLRoot):
     class_class_curie: ClassVar[str] = "prov:Agent"
     class_name: ClassVar[str] = "Agent"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Agent
-
-    id: Union[str, AgentId] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, AgentId):
-            self.id = AgentId(self.id)
-
-        super().__post_init__(**kwargs)
 
 
 @dataclass(repr=False)
@@ -262,36 +129,30 @@ class Question(Entity):
     class_name: ClassVar[str] = "Question"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Question
 
-    id: Union[str, QuestionId] = None
     label: str = None
-    wasGeneratedBy: Optional[Union[str, QuestionFormationId]] = None
-    motivates: Optional[Union[Union[str, LiteratureSearchId], list[Union[str, LiteratureSearchId]]]] = empty_list()
+    wasGeneratedBy: Optional[Union[dict, "QuestionFormation"]] = None
+    motivates: Optional[Union[Union[dict, "LiteratureSearch"], list[Union[dict, "LiteratureSearch"]]]] = empty_list()
     wasDerivedFrom: Optional[str] = None
-    wasAttributedTo: Optional[Union[str, AgentId]] = None
+    wasAttributedTo: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, QuestionId):
-            self.id = QuestionId(self.id)
-
         if self._is_empty(self.label):
             self.MissingRequiredField("label")
         if not isinstance(self.label, str):
             self.label = str(self.label)
 
-        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, QuestionFormationId):
-            self.wasGeneratedBy = QuestionFormationId(self.wasGeneratedBy)
+        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, QuestionFormation):
+            self.wasGeneratedBy = QuestionFormation(**as_dict(self.wasGeneratedBy))
 
         if not isinstance(self.motivates, list):
             self.motivates = [self.motivates] if self.motivates is not None else []
-        self.motivates = [v if isinstance(v, LiteratureSearchId) else LiteratureSearchId(v) for v in self.motivates]
+        self.motivates = [v if isinstance(v, LiteratureSearch) else LiteratureSearch(**as_dict(v)) for v in self.motivates]
 
         if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, str):
             self.wasDerivedFrom = str(self.wasDerivedFrom)
 
-        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, AgentId):
-            self.wasAttributedTo = AgentId(self.wasAttributedTo)
+        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, Agent):
+            self.wasAttributedTo = Agent()
 
         super().__post_init__(**kwargs)
 
@@ -308,21 +169,15 @@ class QuestionFormation(Activity):
     class_name: ClassVar[str] = "QuestionFormation"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.QuestionFormation
 
-    id: Union[str, QuestionFormationId] = None
-    wasAssociatedWith: Optional[Union[str, AgentId]] = None
-    wasInformedBy: Optional[Union[str, ResultAssessmentId]] = None
+    wasAssociatedWith: Optional[Union[dict, Agent]] = None
+    wasInformedBy: Optional[Union[dict, "ResultAssessment"]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, QuestionFormationId):
-            self.id = QuestionFormationId(self.id)
+        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, Agent):
+            self.wasAssociatedWith = Agent()
 
-        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, AgentId):
-            self.wasAssociatedWith = AgentId(self.wasAssociatedWith)
-
-        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, ResultAssessmentId):
-            self.wasInformedBy = ResultAssessmentId(self.wasInformedBy)
+        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, ResultAssessment):
+            self.wasInformedBy = ResultAssessment(**as_dict(self.wasInformedBy))
 
         super().__post_init__(**kwargs)
 
@@ -339,21 +194,15 @@ class LiteratureSearch(Activity):
     class_name: ClassVar[str] = "LiteratureSearch"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.LiteratureSearch
 
-    id: Union[str, LiteratureSearchId] = None
-    wasAssociatedWith: Optional[Union[str, AgentId]] = None
-    wasInformedBy: Optional[Union[str, QuestionFormationId]] = None
+    wasAssociatedWith: Optional[Union[dict, Agent]] = None
+    wasInformedBy: Optional[Union[dict, QuestionFormation]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, LiteratureSearchId):
-            self.id = LiteratureSearchId(self.id)
+        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, Agent):
+            self.wasAssociatedWith = Agent()
 
-        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, AgentId):
-            self.wasAssociatedWith = AgentId(self.wasAssociatedWith)
-
-        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, QuestionFormationId):
-            self.wasInformedBy = QuestionFormationId(self.wasInformedBy)
+        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, QuestionFormation):
+            self.wasInformedBy = QuestionFormation(**as_dict(self.wasInformedBy))
 
         super().__post_init__(**kwargs)
 
@@ -370,26 +219,20 @@ class Evidence(Entity):
     class_name: ClassVar[str] = "Evidence"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Evidence
 
-    id: Union[str, EvidenceId] = None
     label: str = None
     content: Optional[str] = None
     citation: Optional[str] = None
     source: Optional[str] = None
-    wasGeneratedBy: Optional[Union[str, LiteratureSearchId]] = None
-    wasDerivedFrom: Optional[Union[str, QuestionId]] = None
-    wasAttributedTo: Optional[Union[str, AgentId]] = None
+    wasGeneratedBy: Optional[Union[dict, LiteratureSearch]] = None
+    wasDerivedFrom: Optional[Union[dict, Question]] = None
+    wasAttributedTo: Optional[Union[dict, Agent]] = None
     accessLevel: Optional[str] = None
     publishable: Optional[Union[bool, Bool]] = None
-    supports: Optional[Union[str, HypothesisId]] = None
-    contradicts: Optional[Union[str, HypothesisId]] = None
-    hasUncertainty: Optional[Union[str, UncertaintyModelId]] = None
+    supports: Optional[Union[dict, "Hypothesis"]] = None
+    contradicts: Optional[Union[dict, "Hypothesis"]] = None
+    hasUncertainty: Optional[Union[dict, "UncertaintyModel"]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, EvidenceId):
-            self.id = EvidenceId(self.id)
-
         if self._is_empty(self.label):
             self.MissingRequiredField("label")
         if not isinstance(self.label, str):
@@ -404,14 +247,14 @@ class Evidence(Entity):
         if self.source is not None and not isinstance(self.source, str):
             self.source = str(self.source)
 
-        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, LiteratureSearchId):
-            self.wasGeneratedBy = LiteratureSearchId(self.wasGeneratedBy)
+        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, LiteratureSearch):
+            self.wasGeneratedBy = LiteratureSearch(**as_dict(self.wasGeneratedBy))
 
-        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, QuestionId):
-            self.wasDerivedFrom = QuestionId(self.wasDerivedFrom)
+        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, Question):
+            self.wasDerivedFrom = Question(**as_dict(self.wasDerivedFrom))
 
-        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, AgentId):
-            self.wasAttributedTo = AgentId(self.wasAttributedTo)
+        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, Agent):
+            self.wasAttributedTo = Agent()
 
         if self.accessLevel is not None and not isinstance(self.accessLevel, str):
             self.accessLevel = str(self.accessLevel)
@@ -419,14 +262,14 @@ class Evidence(Entity):
         if self.publishable is not None and not isinstance(self.publishable, Bool):
             self.publishable = Bool(self.publishable)
 
-        if self.supports is not None and not isinstance(self.supports, HypothesisId):
-            self.supports = HypothesisId(self.supports)
+        if self.supports is not None and not isinstance(self.supports, Hypothesis):
+            self.supports = Hypothesis(**as_dict(self.supports))
 
-        if self.contradicts is not None and not isinstance(self.contradicts, HypothesisId):
-            self.contradicts = HypothesisId(self.contradicts)
+        if self.contradicts is not None and not isinstance(self.contradicts, Hypothesis):
+            self.contradicts = Hypothesis(**as_dict(self.contradicts))
 
-        if self.hasUncertainty is not None and not isinstance(self.hasUncertainty, UncertaintyModelId):
-            self.hasUncertainty = UncertaintyModelId(self.hasUncertainty)
+        if self.hasUncertainty is not None and not isinstance(self.hasUncertainty, UncertaintyModel):
+            self.hasUncertainty = UncertaintyModel(**as_dict(self.hasUncertainty))
 
         super().__post_init__(**kwargs)
 
@@ -443,32 +286,26 @@ class Hypothesis(Entity):
     class_name: ClassVar[str] = "Hypothesis"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Hypothesis
 
-    id: Union[str, HypothesisId] = None
     label: str = None
-    wasGeneratedBy: Optional[Union[str, HypothesisFormationId]] = None
-    wasDerivedFrom: Optional[Union[Union[str, PremiseId], list[Union[str, PremiseId]]]] = empty_list()
-    wasAttributedTo: Optional[Union[str, AgentId]] = None
+    wasGeneratedBy: Optional[Union[dict, "HypothesisFormation"]] = None
+    wasDerivedFrom: Optional[Union[Union[dict, "Premise"], list[Union[dict, "Premise"]]]] = empty_list()
+    wasAttributedTo: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, HypothesisId):
-            self.id = HypothesisId(self.id)
-
         if self._is_empty(self.label):
             self.MissingRequiredField("label")
         if not isinstance(self.label, str):
             self.label = str(self.label)
 
-        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, HypothesisFormationId):
-            self.wasGeneratedBy = HypothesisFormationId(self.wasGeneratedBy)
+        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, HypothesisFormation):
+            self.wasGeneratedBy = HypothesisFormation(**as_dict(self.wasGeneratedBy))
 
         if not isinstance(self.wasDerivedFrom, list):
             self.wasDerivedFrom = [self.wasDerivedFrom] if self.wasDerivedFrom is not None else []
-        self.wasDerivedFrom = [v if isinstance(v, PremiseId) else PremiseId(v) for v in self.wasDerivedFrom]
+        self.wasDerivedFrom = [v if isinstance(v, Premise) else Premise(**as_dict(v)) for v in self.wasDerivedFrom]
 
-        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, AgentId):
-            self.wasAttributedTo = AgentId(self.wasAttributedTo)
+        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, Agent):
+            self.wasAttributedTo = Agent()
 
         super().__post_init__(**kwargs)
 
@@ -485,20 +322,14 @@ class ExperimentalMethod(Entity):
     class_name: ClassVar[str] = "ExperimentalMethod"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.ExperimentalMethod
 
-    id: Union[str, ExperimentalMethodId] = None
     label: str = None
     method: Optional[str] = None
-    parameter: Optional[Union[Union[str, ParameterId], list[Union[str, ParameterId]]]] = empty_list()
-    wasGeneratedBy: Optional[Union[str, DesignOfExperimentId]] = None
+    parameter: Optional[Union[Union[dict, "Parameter"], list[Union[dict, "Parameter"]]]] = empty_list()
+    wasGeneratedBy: Optional[Union[dict, "DesignOfExperiment"]] = None
     wasDerivedFrom: Optional[str] = None
-    wasAttributedTo: Optional[Union[str, AgentId]] = None
+    wasAttributedTo: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, ExperimentalMethodId):
-            self.id = ExperimentalMethodId(self.id)
-
         if self._is_empty(self.label):
             self.MissingRequiredField("label")
         if not isinstance(self.label, str):
@@ -509,16 +340,16 @@ class ExperimentalMethod(Entity):
 
         if not isinstance(self.parameter, list):
             self.parameter = [self.parameter] if self.parameter is not None else []
-        self.parameter = [v if isinstance(v, ParameterId) else ParameterId(v) for v in self.parameter]
+        self.parameter = [v if isinstance(v, Parameter) else Parameter(**as_dict(v)) for v in self.parameter]
 
-        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, DesignOfExperimentId):
-            self.wasGeneratedBy = DesignOfExperimentId(self.wasGeneratedBy)
+        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, DesignOfExperiment):
+            self.wasGeneratedBy = DesignOfExperiment(**as_dict(self.wasGeneratedBy))
 
         if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, str):
             self.wasDerivedFrom = str(self.wasDerivedFrom)
 
-        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, AgentId):
-            self.wasAttributedTo = AgentId(self.wasAttributedTo)
+        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, Agent):
+            self.wasAttributedTo = Agent()
 
         super().__post_init__(**kwargs)
 
@@ -535,27 +366,21 @@ class Premise(Entity):
     class_name: ClassVar[str] = "Premise"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Premise
 
-    id: Union[str, PremiseId] = None
     label: str = None
-    wasGeneratedBy: Optional[Union[str, EvidenceAssessmentId]] = None
-    wasDerivedFrom: Optional[Union[str, EvidenceId]] = None
+    wasGeneratedBy: Optional[Union[dict, "EvidenceAssessment"]] = None
+    wasDerivedFrom: Optional[Union[dict, Evidence]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, PremiseId):
-            self.id = PremiseId(self.id)
-
         if self._is_empty(self.label):
             self.MissingRequiredField("label")
         if not isinstance(self.label, str):
             self.label = str(self.label)
 
-        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, EvidenceAssessmentId):
-            self.wasGeneratedBy = EvidenceAssessmentId(self.wasGeneratedBy)
+        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, EvidenceAssessment):
+            self.wasGeneratedBy = EvidenceAssessment(**as_dict(self.wasGeneratedBy))
 
-        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, EvidenceId):
-            self.wasDerivedFrom = EvidenceId(self.wasDerivedFrom)
+        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, Evidence):
+            self.wasDerivedFrom = Evidence(**as_dict(self.wasDerivedFrom))
 
         super().__post_init__(**kwargs)
 
@@ -572,35 +397,29 @@ class Dataset(Entity):
     class_name: ClassVar[str] = "Dataset"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Dataset
 
-    id: Union[str, DatasetId] = None
     label: str = None
-    wasGeneratedBy: Optional[Union[str, ExperimentationId]] = None
-    wasDerivedFrom: Optional[Union[str, ExperimentalMethodId]] = None
-    hasUncertainty: Optional[Union[str, UncertaintyModelId]] = None
-    wasAttributedTo: Optional[Union[str, AgentId]] = None
+    wasGeneratedBy: Optional[Union[dict, "Experimentation"]] = None
+    wasDerivedFrom: Optional[Union[dict, ExperimentalMethod]] = None
+    hasUncertainty: Optional[Union[dict, "UncertaintyModel"]] = None
+    wasAttributedTo: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, DatasetId):
-            self.id = DatasetId(self.id)
-
         if self._is_empty(self.label):
             self.MissingRequiredField("label")
         if not isinstance(self.label, str):
             self.label = str(self.label)
 
-        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, ExperimentationId):
-            self.wasGeneratedBy = ExperimentationId(self.wasGeneratedBy)
+        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, Experimentation):
+            self.wasGeneratedBy = Experimentation(**as_dict(self.wasGeneratedBy))
 
-        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, ExperimentalMethodId):
-            self.wasDerivedFrom = ExperimentalMethodId(self.wasDerivedFrom)
+        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, ExperimentalMethod):
+            self.wasDerivedFrom = ExperimentalMethod(**as_dict(self.wasDerivedFrom))
 
-        if self.hasUncertainty is not None and not isinstance(self.hasUncertainty, UncertaintyModelId):
-            self.hasUncertainty = UncertaintyModelId(self.hasUncertainty)
+        if self.hasUncertainty is not None and not isinstance(self.hasUncertainty, UncertaintyModel):
+            self.hasUncertainty = UncertaintyModel(**as_dict(self.hasUncertainty))
 
-        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, AgentId):
-            self.wasAttributedTo = AgentId(self.wasAttributedTo)
+        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, Agent):
+            self.wasAttributedTo = Agent()
 
         super().__post_init__(**kwargs)
 
@@ -617,49 +436,43 @@ class Result(Entity):
     class_name: ClassVar[str] = "Result"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Result
 
-    id: Union[str, ResultId] = None
     label: str = None
-    wasGeneratedBy: Optional[Union[str, AnalysisId]] = None
-    wasDerivedFrom: Optional[Union[str, DatasetId]] = None
-    wasAttributedTo: Optional[Union[str, AgentId]] = None
-    refines: Optional[Union[str, HypothesisId]] = None
-    supports: Optional[Union[str, HypothesisId]] = None
-    contradicts: Optional[Union[str, HypothesisId]] = None
-    hasUncertainty: Optional[Union[str, UncertaintyModelId]] = None
+    wasGeneratedBy: Optional[Union[dict, "Analysis"]] = None
+    wasDerivedFrom: Optional[Union[dict, Dataset]] = None
+    wasAttributedTo: Optional[Union[dict, Agent]] = None
+    refines: Optional[Union[dict, Hypothesis]] = None
+    supports: Optional[Union[dict, Hypothesis]] = None
+    contradicts: Optional[Union[dict, Hypothesis]] = None
+    hasUncertainty: Optional[Union[dict, "UncertaintyModel"]] = None
     value: Optional[str] = None
     unit: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, ResultId):
-            self.id = ResultId(self.id)
-
         if self._is_empty(self.label):
             self.MissingRequiredField("label")
         if not isinstance(self.label, str):
             self.label = str(self.label)
 
-        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, AnalysisId):
-            self.wasGeneratedBy = AnalysisId(self.wasGeneratedBy)
+        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, Analysis):
+            self.wasGeneratedBy = Analysis(**as_dict(self.wasGeneratedBy))
 
-        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, DatasetId):
-            self.wasDerivedFrom = DatasetId(self.wasDerivedFrom)
+        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, Dataset):
+            self.wasDerivedFrom = Dataset(**as_dict(self.wasDerivedFrom))
 
-        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, AgentId):
-            self.wasAttributedTo = AgentId(self.wasAttributedTo)
+        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, Agent):
+            self.wasAttributedTo = Agent()
 
-        if self.refines is not None and not isinstance(self.refines, HypothesisId):
-            self.refines = HypothesisId(self.refines)
+        if self.refines is not None and not isinstance(self.refines, Hypothesis):
+            self.refines = Hypothesis(**as_dict(self.refines))
 
-        if self.supports is not None and not isinstance(self.supports, HypothesisId):
-            self.supports = HypothesisId(self.supports)
+        if self.supports is not None and not isinstance(self.supports, Hypothesis):
+            self.supports = Hypothesis(**as_dict(self.supports))
 
-        if self.contradicts is not None and not isinstance(self.contradicts, HypothesisId):
-            self.contradicts = HypothesisId(self.contradicts)
+        if self.contradicts is not None and not isinstance(self.contradicts, Hypothesis):
+            self.contradicts = Hypothesis(**as_dict(self.contradicts))
 
-        if self.hasUncertainty is not None and not isinstance(self.hasUncertainty, UncertaintyModelId):
-            self.hasUncertainty = UncertaintyModelId(self.hasUncertainty)
+        if self.hasUncertainty is not None and not isinstance(self.hasUncertainty, UncertaintyModel):
+            self.hasUncertainty = UncertaintyModel(**as_dict(self.hasUncertainty))
 
         if self.value is not None and not isinstance(self.value, str):
             self.value = str(self.value)
@@ -682,19 +495,13 @@ class Conclusion(Entity):
     class_name: ClassVar[str] = "Conclusion"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Conclusion
 
-    id: Union[str, ConclusionId] = None
     label: str = None
     content: Optional[str] = None
-    wasGeneratedBy: Optional[Union[str, ResultAssessmentId]] = None
-    wasDerivedFrom: Optional[Union[str, ResultId]] = None
-    wasAttributedTo: Optional[Union[str, AgentId]] = None
+    wasGeneratedBy: Optional[Union[dict, "ResultAssessment"]] = None
+    wasDerivedFrom: Optional[Union[dict, Result]] = None
+    wasAttributedTo: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, ConclusionId):
-            self.id = ConclusionId(self.id)
-
         if self._is_empty(self.label):
             self.MissingRequiredField("label")
         if not isinstance(self.label, str):
@@ -703,19 +510,18 @@ class Conclusion(Entity):
         if self.content is not None and not isinstance(self.content, str):
             self.content = str(self.content)
 
-        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, ResultAssessmentId):
-            self.wasGeneratedBy = ResultAssessmentId(self.wasGeneratedBy)
+        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, ResultAssessment):
+            self.wasGeneratedBy = ResultAssessment(**as_dict(self.wasGeneratedBy))
 
-        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, ResultId):
-            self.wasDerivedFrom = ResultId(self.wasDerivedFrom)
+        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, Result):
+            self.wasDerivedFrom = Result(**as_dict(self.wasDerivedFrom))
 
-        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, AgentId):
-            self.wasAttributedTo = AgentId(self.wasAttributedTo)
+        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, Agent):
+            self.wasAttributedTo = Agent()
 
         super().__post_init__(**kwargs)
 
 
-@dataclass(repr=False)
 class Parameter(Entity):
     """
     A configured parameter within an Experimental Method.
@@ -726,16 +532,6 @@ class Parameter(Entity):
     class_class_curie: ClassVar[str] = "scimantic:Parameter"
     class_name: ClassVar[str] = "Parameter"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Parameter
-
-    id: Union[str, ParameterId] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, ParameterId):
-            self.id = ParameterId(self.id)
-
-        super().__post_init__(**kwargs)
 
 
 @dataclass(repr=False)
@@ -750,25 +546,19 @@ class EvidenceAssessment(Activity):
     class_name: ClassVar[str] = "EvidenceAssessment"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.EvidenceAssessment
 
-    id: Union[str, EvidenceAssessmentId] = None
-    used: Optional[Union[str, EvidenceId]] = None
-    wasInformedBy: Optional[Union[str, LiteratureSearchId]] = None
-    wasAssociatedWith: Optional[Union[str, AgentId]] = None
+    used: Optional[Union[dict, Evidence]] = None
+    wasInformedBy: Optional[Union[dict, LiteratureSearch]] = None
+    wasAssociatedWith: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, EvidenceAssessmentId):
-            self.id = EvidenceAssessmentId(self.id)
+        if self.used is not None and not isinstance(self.used, Evidence):
+            self.used = Evidence(**as_dict(self.used))
 
-        if self.used is not None and not isinstance(self.used, EvidenceId):
-            self.used = EvidenceId(self.used)
+        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, LiteratureSearch):
+            self.wasInformedBy = LiteratureSearch(**as_dict(self.wasInformedBy))
 
-        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, LiteratureSearchId):
-            self.wasInformedBy = LiteratureSearchId(self.wasInformedBy)
-
-        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, AgentId):
-            self.wasAssociatedWith = AgentId(self.wasAssociatedWith)
+        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, Agent):
+            self.wasAssociatedWith = Agent()
 
         super().__post_init__(**kwargs)
 
@@ -785,25 +575,19 @@ class HypothesisFormation(Activity):
     class_name: ClassVar[str] = "HypothesisFormation"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.HypothesisFormation
 
-    id: Union[str, HypothesisFormationId] = None
-    used: Optional[Union[str, PremiseId]] = None
-    wasInformedBy: Optional[Union[str, EvidenceAssessmentId]] = None
-    wasAssociatedWith: Optional[Union[str, AgentId]] = None
+    used: Optional[Union[dict, Premise]] = None
+    wasInformedBy: Optional[Union[dict, EvidenceAssessment]] = None
+    wasAssociatedWith: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, HypothesisFormationId):
-            self.id = HypothesisFormationId(self.id)
+        if self.used is not None and not isinstance(self.used, Premise):
+            self.used = Premise(**as_dict(self.used))
 
-        if self.used is not None and not isinstance(self.used, PremiseId):
-            self.used = PremiseId(self.used)
+        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, EvidenceAssessment):
+            self.wasInformedBy = EvidenceAssessment(**as_dict(self.wasInformedBy))
 
-        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, EvidenceAssessmentId):
-            self.wasInformedBy = EvidenceAssessmentId(self.wasInformedBy)
-
-        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, AgentId):
-            self.wasAssociatedWith = AgentId(self.wasAssociatedWith)
+        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, Agent):
+            self.wasAssociatedWith = Agent()
 
         super().__post_init__(**kwargs)
 
@@ -820,25 +604,19 @@ class DesignOfExperiment(Activity):
     class_name: ClassVar[str] = "DesignOfExperiment"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.DesignOfExperiment
 
-    id: Union[str, DesignOfExperimentId] = None
     used: Optional[str] = None
     wasInformedBy: Optional[str] = None
-    wasAssociatedWith: Optional[Union[str, AgentId]] = None
+    wasAssociatedWith: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, DesignOfExperimentId):
-            self.id = DesignOfExperimentId(self.id)
-
         if self.used is not None and not isinstance(self.used, str):
             self.used = str(self.used)
 
         if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, str):
             self.wasInformedBy = str(self.wasInformedBy)
 
-        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, AgentId):
-            self.wasAssociatedWith = AgentId(self.wasAssociatedWith)
+        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, Agent):
+            self.wasAssociatedWith = Agent()
 
         super().__post_init__(**kwargs)
 
@@ -855,25 +633,19 @@ class Experimentation(Activity):
     class_name: ClassVar[str] = "Experimentation"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Experimentation
 
-    id: Union[str, ExperimentationId] = None
-    used: Optional[Union[str, ExperimentalMethodId]] = None
-    wasInformedBy: Optional[Union[str, DesignOfExperimentId]] = None
-    wasAssociatedWith: Optional[Union[str, AgentId]] = None
+    used: Optional[Union[dict, ExperimentalMethod]] = None
+    wasInformedBy: Optional[Union[dict, DesignOfExperiment]] = None
+    wasAssociatedWith: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, ExperimentationId):
-            self.id = ExperimentationId(self.id)
+        if self.used is not None and not isinstance(self.used, ExperimentalMethod):
+            self.used = ExperimentalMethod(**as_dict(self.used))
 
-        if self.used is not None and not isinstance(self.used, ExperimentalMethodId):
-            self.used = ExperimentalMethodId(self.used)
+        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, DesignOfExperiment):
+            self.wasInformedBy = DesignOfExperiment(**as_dict(self.wasInformedBy))
 
-        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, DesignOfExperimentId):
-            self.wasInformedBy = DesignOfExperimentId(self.wasInformedBy)
-
-        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, AgentId):
-            self.wasAssociatedWith = AgentId(self.wasAssociatedWith)
+        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, Agent):
+            self.wasAssociatedWith = Agent()
 
         super().__post_init__(**kwargs)
 
@@ -890,25 +662,19 @@ class Analysis(Activity):
     class_name: ClassVar[str] = "Analysis"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Analysis
 
-    id: Union[str, AnalysisId] = None
-    used: Optional[Union[str, DatasetId]] = None
-    wasInformedBy: Optional[Union[str, ExperimentationId]] = None
-    wasAssociatedWith: Optional[Union[str, AgentId]] = None
+    used: Optional[Union[dict, Dataset]] = None
+    wasInformedBy: Optional[Union[dict, Experimentation]] = None
+    wasAssociatedWith: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, AnalysisId):
-            self.id = AnalysisId(self.id)
+        if self.used is not None and not isinstance(self.used, Dataset):
+            self.used = Dataset(**as_dict(self.used))
 
-        if self.used is not None and not isinstance(self.used, DatasetId):
-            self.used = DatasetId(self.used)
+        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, Experimentation):
+            self.wasInformedBy = Experimentation(**as_dict(self.wasInformedBy))
 
-        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, ExperimentationId):
-            self.wasInformedBy = ExperimentationId(self.wasInformedBy)
-
-        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, AgentId):
-            self.wasAssociatedWith = AgentId(self.wasAssociatedWith)
+        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, Agent):
+            self.wasAssociatedWith = Agent()
 
         super().__post_init__(**kwargs)
 
@@ -925,25 +691,19 @@ class ResultAssessment(Activity):
     class_name: ClassVar[str] = "ResultAssessment"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.ResultAssessment
 
-    id: Union[str, ResultAssessmentId] = None
-    used: Optional[Union[str, ResultId]] = None
-    wasInformedBy: Optional[Union[str, AnalysisId]] = None
-    wasAssociatedWith: Optional[Union[str, AgentId]] = None
+    used: Optional[Union[dict, Result]] = None
+    wasInformedBy: Optional[Union[dict, Analysis]] = None
+    wasAssociatedWith: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, ResultAssessmentId):
-            self.id = ResultAssessmentId(self.id)
+        if self.used is not None and not isinstance(self.used, Result):
+            self.used = Result(**as_dict(self.used))
 
-        if self.used is not None and not isinstance(self.used, ResultId):
-            self.used = ResultId(self.used)
+        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, Analysis):
+            self.wasInformedBy = Analysis(**as_dict(self.wasInformedBy))
 
-        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, AnalysisId):
-            self.wasInformedBy = AnalysisId(self.wasInformedBy)
-
-        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, AgentId):
-            self.wasAssociatedWith = AgentId(self.wasAssociatedWith)
+        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, Agent):
+            self.wasAssociatedWith = Agent()
 
         super().__post_init__(**kwargs)
 
@@ -960,16 +720,10 @@ class UncertaintyModel(Entity):
     class_name: ClassVar[str] = "UncertaintyModel"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.UncertaintyModel
 
-    id: Union[str, UncertaintyModelId] = None
     natureOfUncertainty: Union[str, "UncertaintyNature"] = None
     derivationOfUncertainty: Optional[Union[dict, "UncertaintyDerivation"]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, UncertaintyModelId):
-            self.id = UncertaintyModelId(self.id)
-
         if self._is_empty(self.natureOfUncertainty):
             self.MissingRequiredField("natureOfUncertainty")
         if not isinstance(self.natureOfUncertainty, UncertaintyNature):
@@ -993,15 +747,9 @@ class Ambiguity(UncertaintyModel):
     class_name: ClassVar[str] = "Ambiguity"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Ambiguity
 
-    id: Union[str, AmbiguityId] = None
     natureOfUncertainty: Union[str, "UncertaintyNature"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, AmbiguityId):
-            self.id = AmbiguityId(self.id)
-
         if self._is_empty(self.natureOfUncertainty):
             self.MissingRequiredField("natureOfUncertainty")
         if not isinstance(self.natureOfUncertainty, UncertaintyNature):
@@ -1022,17 +770,7 @@ class Vagueness(UncertaintyModel):
     class_name: ClassVar[str] = "Vagueness"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Vagueness
 
-    id: Union[str, VaguenessId] = None
     natureOfUncertainty: Union[str, "UncertaintyNature"] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, VaguenessId):
-            self.id = VaguenessId(self.id)
-
-        super().__post_init__(**kwargs)
-
 
 @dataclass(repr=False)
 class Incompleteness(UncertaintyModel):
@@ -1046,17 +784,7 @@ class Incompleteness(UncertaintyModel):
     class_name: ClassVar[str] = "Incompleteness"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Incompleteness
 
-    id: Union[str, IncompletenessId] = None
     natureOfUncertainty: Union[str, "UncertaintyNature"] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, IncompletenessId):
-            self.id = IncompletenessId(self.id)
-
-        super().__post_init__(**kwargs)
-
 
 @dataclass(repr=False)
 class Aleatory(UncertaintyModel):
@@ -1070,17 +798,7 @@ class Aleatory(UncertaintyModel):
     class_name: ClassVar[str] = "Aleatory"
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.Aleatory
 
-    id: Union[str, AleatoryId] = None
     natureOfUncertainty: Union[str, "UncertaintyNature"] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, AleatoryId):
-            self.id = AleatoryId(self.id)
-
-        super().__post_init__(**kwargs)
-
 
 class URREFEvidence(YAMLRoot):
     """
@@ -1190,10 +908,10 @@ slots.wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="wasGeneratedBy", curi
                    model_uri=SCIMANTIC.wasGeneratedBy, domain=None, range=Optional[str])
 
 slots.wasAssociatedWith = Slot(uri=PROV.wasAssociatedWith, name="wasAssociatedWith", curie=PROV.curie('wasAssociatedWith'),
-                   model_uri=SCIMANTIC.wasAssociatedWith, domain=Activity, range=Optional[Union[str, AgentId]])
+                   model_uri=SCIMANTIC.wasAssociatedWith, domain=Activity, range=Optional[Union[dict, "Agent"]])
 
 slots.wasAttributedTo = Slot(uri=PROV.wasAttributedTo, name="wasAttributedTo", curie=PROV.curie('wasAttributedTo'),
-                   model_uri=SCIMANTIC.wasAttributedTo, domain=Entity, range=Optional[Union[str, AgentId]])
+                   model_uri=SCIMANTIC.wasAttributedTo, domain=Entity, range=Optional[Union[dict, "Agent"]])
 
 slots.id = Slot(uri=SCIMANTIC.id, name="id", curie=SCIMANTIC.curie('id'),
                    model_uri=SCIMANTIC.id, domain=None, range=Union[str, IdentifiableId])
@@ -1223,10 +941,10 @@ slots.method = Slot(uri=SCIMANTIC.method, name="method", curie=SCIMANTIC.curie('
                    model_uri=SCIMANTIC.method, domain=ExperimentalMethod, range=Optional[str])
 
 slots.parameter = Slot(uri=SCIMANTIC.parameter, name="parameter", curie=SCIMANTIC.curie('parameter'),
-                   model_uri=SCIMANTIC.parameter, domain=ExperimentalMethod, range=Optional[Union[Union[str, ParameterId], list[Union[str, ParameterId]]]])
+                   model_uri=SCIMANTIC.parameter, domain=ExperimentalMethod, range=Optional[Union[Union[dict, "Parameter"], list[Union[dict, "Parameter"]]]])
 
 slots.hasUncertainty = Slot(uri=SCIMANTIC.hasUncertainty, name="hasUncertainty", curie=SCIMANTIC.curie('hasUncertainty'),
-                   model_uri=SCIMANTIC.hasUncertainty, domain=UncertaintySubject, range=Optional[Union[str, UncertaintyModelId]])
+                   model_uri=SCIMANTIC.hasUncertainty, domain=UncertaintySubject, range=Optional[Union[dict, UncertaintyModel]])
 
 slots.natureOfUncertainty = Slot(uri=URREF.natureOfUncertainty, name="natureOfUncertainty", curie=URREF.curie('natureOfUncertainty'),
                    model_uri=SCIMANTIC.natureOfUncertainty, domain=UncertaintyModel, range=Optional[Union[str, "UncertaintyNature"]])
@@ -1259,85 +977,85 @@ slots.generatedAtTime = Slot(uri=PROV.generatedAtTime, name="generatedAtTime", c
                    model_uri=SCIMANTIC.generatedAtTime, domain=Entity, range=Optional[Union[str, XSDDateTime]])
 
 slots.Question_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="Question_wasGeneratedBy", curie=PROV.curie('wasGeneratedBy'),
-                   model_uri=SCIMANTIC.Question_wasGeneratedBy, domain=Question, range=Optional[Union[str, QuestionFormationId]])
+                   model_uri=SCIMANTIC.Question_wasGeneratedBy, domain=Question, range=Optional[Union[dict, "QuestionFormation"]])
 
 slots.Question_motivates = Slot(uri=SCIMANTIC.motivates, name="Question_motivates", curie=SCIMANTIC.curie('motivates'),
-                   model_uri=SCIMANTIC.Question_motivates, domain=Question, range=Optional[Union[Union[str, LiteratureSearchId], list[Union[str, LiteratureSearchId]]]])
+                   model_uri=SCIMANTIC.Question_motivates, domain=Question, range=Optional[Union[Union[dict, "LiteratureSearch"], list[Union[dict, "LiteratureSearch"]]]])
 
 slots.QuestionFormation_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="QuestionFormation_wasInformedBy", curie=PROV.curie('wasInformedBy'),
-                   model_uri=SCIMANTIC.QuestionFormation_wasInformedBy, domain=QuestionFormation, range=Optional[Union[str, ResultAssessmentId]])
+                   model_uri=SCIMANTIC.QuestionFormation_wasInformedBy, domain=QuestionFormation, range=Optional[Union[dict, "ResultAssessment"]])
 
 slots.LiteratureSearch_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="LiteratureSearch_wasInformedBy", curie=PROV.curie('wasInformedBy'),
-                   model_uri=SCIMANTIC.LiteratureSearch_wasInformedBy, domain=LiteratureSearch, range=Optional[Union[str, QuestionFormationId]])
+                   model_uri=SCIMANTIC.LiteratureSearch_wasInformedBy, domain=LiteratureSearch, range=Optional[Union[dict, QuestionFormation]])
 
 slots.Evidence_wasDerivedFrom = Slot(uri=PROV.wasDerivedFrom, name="Evidence_wasDerivedFrom", curie=PROV.curie('wasDerivedFrom'),
-                   model_uri=SCIMANTIC.Evidence_wasDerivedFrom, domain=Evidence, range=Optional[Union[str, QuestionId]])
+                   model_uri=SCIMANTIC.Evidence_wasDerivedFrom, domain=Evidence, range=Optional[Union[dict, Question]])
 
 slots.Evidence_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="Evidence_wasGeneratedBy", curie=PROV.curie('wasGeneratedBy'),
-                   model_uri=SCIMANTIC.Evidence_wasGeneratedBy, domain=Evidence, range=Optional[Union[str, LiteratureSearchId]])
+                   model_uri=SCIMANTIC.Evidence_wasGeneratedBy, domain=Evidence, range=Optional[Union[dict, LiteratureSearch]])
 
 slots.Evidence_supports = Slot(uri=SCIMANTIC.supports, name="Evidence_supports", curie=SCIMANTIC.curie('supports'),
-                   model_uri=SCIMANTIC.Evidence_supports, domain=Evidence, range=Optional[Union[str, HypothesisId]])
+                   model_uri=SCIMANTIC.Evidence_supports, domain=Evidence, range=Optional[Union[dict, "Hypothesis"]])
 
 slots.Evidence_contradicts = Slot(uri=SCIMANTIC.contradicts, name="Evidence_contradicts", curie=SCIMANTIC.curie('contradicts'),
-                   model_uri=SCIMANTIC.Evidence_contradicts, domain=Evidence, range=Optional[Union[str, HypothesisId]])
+                   model_uri=SCIMANTIC.Evidence_contradicts, domain=Evidence, range=Optional[Union[dict, "Hypothesis"]])
 
 slots.Hypothesis_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="Hypothesis_wasGeneratedBy", curie=PROV.curie('wasGeneratedBy'),
-                   model_uri=SCIMANTIC.Hypothesis_wasGeneratedBy, domain=Hypothesis, range=Optional[Union[str, HypothesisFormationId]])
+                   model_uri=SCIMANTIC.Hypothesis_wasGeneratedBy, domain=Hypothesis, range=Optional[Union[dict, "HypothesisFormation"]])
 
 slots.Hypothesis_wasDerivedFrom = Slot(uri=PROV.wasDerivedFrom, name="Hypothesis_wasDerivedFrom", curie=PROV.curie('wasDerivedFrom'),
-                   model_uri=SCIMANTIC.Hypothesis_wasDerivedFrom, domain=Hypothesis, range=Optional[Union[Union[str, PremiseId], list[Union[str, PremiseId]]]])
+                   model_uri=SCIMANTIC.Hypothesis_wasDerivedFrom, domain=Hypothesis, range=Optional[Union[Union[dict, "Premise"], list[Union[dict, "Premise"]]]])
 
 slots.ExperimentalMethod_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="ExperimentalMethod_wasGeneratedBy", curie=PROV.curie('wasGeneratedBy'),
-                   model_uri=SCIMANTIC.ExperimentalMethod_wasGeneratedBy, domain=ExperimentalMethod, range=Optional[Union[str, DesignOfExperimentId]])
+                   model_uri=SCIMANTIC.ExperimentalMethod_wasGeneratedBy, domain=ExperimentalMethod, range=Optional[Union[dict, "DesignOfExperiment"]])
 
 slots.ExperimentalMethod_wasDerivedFrom = Slot(uri=PROV.wasDerivedFrom, name="ExperimentalMethod_wasDerivedFrom", curie=PROV.curie('wasDerivedFrom'),
                    model_uri=SCIMANTIC.ExperimentalMethod_wasDerivedFrom, domain=ExperimentalMethod, range=Optional[str])
 
 slots.Premise_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="Premise_wasGeneratedBy", curie=PROV.curie('wasGeneratedBy'),
-                   model_uri=SCIMANTIC.Premise_wasGeneratedBy, domain=Premise, range=Optional[Union[str, EvidenceAssessmentId]])
+                   model_uri=SCIMANTIC.Premise_wasGeneratedBy, domain=Premise, range=Optional[Union[dict, "EvidenceAssessment"]])
 
 slots.Premise_wasDerivedFrom = Slot(uri=PROV.wasDerivedFrom, name="Premise_wasDerivedFrom", curie=PROV.curie('wasDerivedFrom'),
-                   model_uri=SCIMANTIC.Premise_wasDerivedFrom, domain=Premise, range=Optional[Union[str, EvidenceId]])
+                   model_uri=SCIMANTIC.Premise_wasDerivedFrom, domain=Premise, range=Optional[Union[dict, Evidence]])
 
 slots.Dataset_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="Dataset_wasGeneratedBy", curie=PROV.curie('wasGeneratedBy'),
-                   model_uri=SCIMANTIC.Dataset_wasGeneratedBy, domain=Dataset, range=Optional[Union[str, ExperimentationId]])
+                   model_uri=SCIMANTIC.Dataset_wasGeneratedBy, domain=Dataset, range=Optional[Union[dict, "Experimentation"]])
 
 slots.Dataset_wasDerivedFrom = Slot(uri=PROV.wasDerivedFrom, name="Dataset_wasDerivedFrom", curie=PROV.curie('wasDerivedFrom'),
-                   model_uri=SCIMANTIC.Dataset_wasDerivedFrom, domain=Dataset, range=Optional[Union[str, ExperimentalMethodId]])
+                   model_uri=SCIMANTIC.Dataset_wasDerivedFrom, domain=Dataset, range=Optional[Union[dict, ExperimentalMethod]])
 
 slots.Result_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="Result_wasGeneratedBy", curie=PROV.curie('wasGeneratedBy'),
-                   model_uri=SCIMANTIC.Result_wasGeneratedBy, domain=Result, range=Optional[Union[str, AnalysisId]])
+                   model_uri=SCIMANTIC.Result_wasGeneratedBy, domain=Result, range=Optional[Union[dict, "Analysis"]])
 
 slots.Result_wasDerivedFrom = Slot(uri=PROV.wasDerivedFrom, name="Result_wasDerivedFrom", curie=PROV.curie('wasDerivedFrom'),
-                   model_uri=SCIMANTIC.Result_wasDerivedFrom, domain=Result, range=Optional[Union[str, DatasetId]])
+                   model_uri=SCIMANTIC.Result_wasDerivedFrom, domain=Result, range=Optional[Union[dict, Dataset]])
 
 slots.Result_refines = Slot(uri=SCIMANTIC.refines, name="Result_refines", curie=SCIMANTIC.curie('refines'),
-                   model_uri=SCIMANTIC.Result_refines, domain=Result, range=Optional[Union[str, HypothesisId]])
+                   model_uri=SCIMANTIC.Result_refines, domain=Result, range=Optional[Union[dict, Hypothesis]])
 
 slots.Result_supports = Slot(uri=SCIMANTIC.supports, name="Result_supports", curie=SCIMANTIC.curie('supports'),
-                   model_uri=SCIMANTIC.Result_supports, domain=Result, range=Optional[Union[str, HypothesisId]])
+                   model_uri=SCIMANTIC.Result_supports, domain=Result, range=Optional[Union[dict, Hypothesis]])
 
 slots.Result_contradicts = Slot(uri=SCIMANTIC.contradicts, name="Result_contradicts", curie=SCIMANTIC.curie('contradicts'),
-                   model_uri=SCIMANTIC.Result_contradicts, domain=Result, range=Optional[Union[str, HypothesisId]])
+                   model_uri=SCIMANTIC.Result_contradicts, domain=Result, range=Optional[Union[dict, Hypothesis]])
 
 slots.Conclusion_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="Conclusion_wasGeneratedBy", curie=PROV.curie('wasGeneratedBy'),
-                   model_uri=SCIMANTIC.Conclusion_wasGeneratedBy, domain=Conclusion, range=Optional[Union[str, ResultAssessmentId]])
+                   model_uri=SCIMANTIC.Conclusion_wasGeneratedBy, domain=Conclusion, range=Optional[Union[dict, "ResultAssessment"]])
 
 slots.Conclusion_wasDerivedFrom = Slot(uri=PROV.wasDerivedFrom, name="Conclusion_wasDerivedFrom", curie=PROV.curie('wasDerivedFrom'),
-                   model_uri=SCIMANTIC.Conclusion_wasDerivedFrom, domain=Conclusion, range=Optional[Union[str, ResultId]])
+                   model_uri=SCIMANTIC.Conclusion_wasDerivedFrom, domain=Conclusion, range=Optional[Union[dict, Result]])
 
 slots.EvidenceAssessment_used = Slot(uri=PROV.used, name="EvidenceAssessment_used", curie=PROV.curie('used'),
-                   model_uri=SCIMANTIC.EvidenceAssessment_used, domain=EvidenceAssessment, range=Optional[Union[str, EvidenceId]])
+                   model_uri=SCIMANTIC.EvidenceAssessment_used, domain=EvidenceAssessment, range=Optional[Union[dict, Evidence]])
 
 slots.EvidenceAssessment_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="EvidenceAssessment_wasInformedBy", curie=PROV.curie('wasInformedBy'),
-                   model_uri=SCIMANTIC.EvidenceAssessment_wasInformedBy, domain=EvidenceAssessment, range=Optional[Union[str, LiteratureSearchId]])
+                   model_uri=SCIMANTIC.EvidenceAssessment_wasInformedBy, domain=EvidenceAssessment, range=Optional[Union[dict, LiteratureSearch]])
 
 slots.HypothesisFormation_used = Slot(uri=PROV.used, name="HypothesisFormation_used", curie=PROV.curie('used'),
-                   model_uri=SCIMANTIC.HypothesisFormation_used, domain=HypothesisFormation, range=Optional[Union[str, PremiseId]])
+                   model_uri=SCIMANTIC.HypothesisFormation_used, domain=HypothesisFormation, range=Optional[Union[dict, Premise]])
 
 slots.HypothesisFormation_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="HypothesisFormation_wasInformedBy", curie=PROV.curie('wasInformedBy'),
-                   model_uri=SCIMANTIC.HypothesisFormation_wasInformedBy, domain=HypothesisFormation, range=Optional[Union[str, EvidenceAssessmentId]])
+                   model_uri=SCIMANTIC.HypothesisFormation_wasInformedBy, domain=HypothesisFormation, range=Optional[Union[dict, EvidenceAssessment]])
 
 slots.DesignOfExperiment_used = Slot(uri=PROV.used, name="DesignOfExperiment_used", curie=PROV.curie('used'),
                    model_uri=SCIMANTIC.DesignOfExperiment_used, domain=DesignOfExperiment, range=Optional[str])
@@ -1346,22 +1064,22 @@ slots.DesignOfExperiment_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="Desi
                    model_uri=SCIMANTIC.DesignOfExperiment_wasInformedBy, domain=DesignOfExperiment, range=Optional[str])
 
 slots.Experimentation_used = Slot(uri=PROV.used, name="Experimentation_used", curie=PROV.curie('used'),
-                   model_uri=SCIMANTIC.Experimentation_used, domain=Experimentation, range=Optional[Union[str, ExperimentalMethodId]])
+                   model_uri=SCIMANTIC.Experimentation_used, domain=Experimentation, range=Optional[Union[dict, ExperimentalMethod]])
 
 slots.Experimentation_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="Experimentation_wasInformedBy", curie=PROV.curie('wasInformedBy'),
-                   model_uri=SCIMANTIC.Experimentation_wasInformedBy, domain=Experimentation, range=Optional[Union[str, DesignOfExperimentId]])
+                   model_uri=SCIMANTIC.Experimentation_wasInformedBy, domain=Experimentation, range=Optional[Union[dict, DesignOfExperiment]])
 
 slots.Analysis_used = Slot(uri=PROV.used, name="Analysis_used", curie=PROV.curie('used'),
-                   model_uri=SCIMANTIC.Analysis_used, domain=Analysis, range=Optional[Union[str, DatasetId]])
+                   model_uri=SCIMANTIC.Analysis_used, domain=Analysis, range=Optional[Union[dict, Dataset]])
 
 slots.Analysis_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="Analysis_wasInformedBy", curie=PROV.curie('wasInformedBy'),
-                   model_uri=SCIMANTIC.Analysis_wasInformedBy, domain=Analysis, range=Optional[Union[str, ExperimentationId]])
+                   model_uri=SCIMANTIC.Analysis_wasInformedBy, domain=Analysis, range=Optional[Union[dict, Experimentation]])
 
 slots.ResultAssessment_used = Slot(uri=PROV.used, name="ResultAssessment_used", curie=PROV.curie('used'),
-                   model_uri=SCIMANTIC.ResultAssessment_used, domain=ResultAssessment, range=Optional[Union[str, ResultId]])
+                   model_uri=SCIMANTIC.ResultAssessment_used, domain=ResultAssessment, range=Optional[Union[dict, Result]])
 
 slots.ResultAssessment_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="ResultAssessment_wasInformedBy", curie=PROV.curie('wasInformedBy'),
-                   model_uri=SCIMANTIC.ResultAssessment_wasInformedBy, domain=ResultAssessment, range=Optional[Union[str, AnalysisId]])
+                   model_uri=SCIMANTIC.ResultAssessment_wasInformedBy, domain=ResultAssessment, range=Optional[Union[dict, Analysis]])
 
 slots.UncertaintyModel_natureOfUncertainty = Slot(uri=URREF.natureOfUncertainty, name="UncertaintyModel_natureOfUncertainty", curie=URREF.curie('natureOfUncertainty'),
                    model_uri=SCIMANTIC.UncertaintyModel_natureOfUncertainty, domain=UncertaintyModel, range=Union[str, "UncertaintyNature"])

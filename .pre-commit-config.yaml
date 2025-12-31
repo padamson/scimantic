@@ -86,6 +86,14 @@ repos:
         pass_filenames: false
         require_serial: true
 
+      - id: test-ext
+        name: Test (scimantic-ext)
+        entry: bash -c 'cd scimantic-ext && CI=true pnpm test'
+        language: system
+        files: ^scimantic-ext/(src/.*\.ts|package\.json)$
+        pass_filenames: false
+        require_serial: true
+
 
 
   # Security: Detect secrets and sensitive data

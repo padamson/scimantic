@@ -36,7 +36,7 @@ export class ScimanticMCPClient {
     } catch (error) {
       // Return empty graph on error for now
       console.error("Error getting provenance graph:", error);
-      return { evidence: [] };
+      return { evidence: [], questions: [] };
     }
   }
 

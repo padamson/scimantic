@@ -45,3 +45,9 @@ public/
 
 # widoco tmp files
 tmp/
+
+# Generated Claude Code workspace files
+examples/*/CLAUDE.md
+examples/*/.mcp.json
+examples/*/claude/
+examples/*/project.ttl

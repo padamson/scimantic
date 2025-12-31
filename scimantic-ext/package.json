@@ -28,6 +28,10 @@
       {
         "command": "scimantic.openSource",
         "title": "Open Source"
+      },
+      {
+        "command": "scimantic.setupClaudeCodeMCP",
+        "title": "Scimantic: Initialize Research Workspace"
       }
     ],
     "viewsContainers": {

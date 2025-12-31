@@ -3,27 +3,72 @@
 ## 📖 User Story
 > **As a** scientist initiating a research line
 > **I want to** formulate clear, testable research questions with AI assistance
-> **So that** I can ground my subsequent literature search and hypothesis formation in specific, well-defined inquiries
+> **So that** I can ground my subsequent literature search and hypothesis formation in specific, well-defined inquiries that remain traceable throughout the research process
 
 ### Narrative
 
-**The Problem**: Research often starts with vague curiosity. Refining this into specific, answerable scientific questions is a critical but difficult creative step. Informal notes about "what I'm wondering" don't connect to the evidence or results that eventually answer them.
+#### The Problem
 
-**The Vision**: Scimantic helps the user brainstorm and refine questions. These questions become first-class entities (`scimantic:Question`) in the knowledge graph, serving as the root of the provenance tree.
+Scientific inquiry begins with curiosity, but curiosity alone doesn't drive systematic research. The critical first step—transforming vague interests into specific, answerable questions—is both essential and challenging:
 
-**Why This Matters**:
-*   Anchors the research: "Why did we gather this evidence? To answer Question X."
-*   Feedback loops: Results can generate *new* Questions (refinement).
-*   AI Context: Clearly defined questions help AI agents filter literature more effectively.
+- **Vagueness hurts focus**: "I wonder about protein folding" doesn't tell you what to measure, what literature to read, or what hypothesis to test
+- **Lost context**: Informal notes ("why does this happen?") written months ago become meaningless when you can't remember what problem prompted them
+- **Broken traceability**: When writing papers, researchers struggle to connect their evidence and conclusions back to the original questions that motivated the work
+- **AI inefficiency**: Generic prompts to AI assistants yield generic results; specific questions enable targeted, valuable responses
 
-### Scientific Method Stage
-- [ ] Literature Review
-- [x] Question Formation (Root of the cycle, often concurrent with Lit Review)
-- [ ] Hypothesis Formation
-- [ ] Experimental Design
-- [ ] Experimentation
-- [ ] Analysis
-- [ ] Publication
+#### The Vision
+
+Scimantic makes research questions first-class citizens of the knowledge graph:
+
+- **AI-assisted refinement**: Start with vague curiosity ("protein folding is weird"), collaborate with AI to refine it into precise questions ("What is the kinetic folding pathway of Protein X under heat stress conditions (T > 45°C)?")
+- **Persistent knowledge**: Questions are stored as semantic entities that persist throughout the research lifecycle, not ephemeral chat messages
+- **Provenance root**: Questions anchor the provenance tree—every piece of evidence, hypothesis, and result traces back to the question it helps answer
+- **Workflow catalyst**: Questions motivate literature searches, which generate evidence, which informs hypotheses, creating a connected research narrative
+
+#### Why This Matters
+
+**For Researchers:**
+- Never lose track of why you started investigating something
+- Revisit and refine questions as your understanding deepens
+- Generate comprehensive methods sections automatically from the provenance graph
+
+**For AI Agents:**
+- Well-defined questions provide clear search criteria for literature extraction
+- Questions establish success criteria for evidence relevance
+- Multi-turn conversations maintain context across sessions
+
+**For the Scientific Method:**
+- Explicit questions enforce the discipline of hypothesis-driven research
+- Feedback loops: Results from one investigation can generate refined questions for the next iteration
+- Reproducibility: Other researchers can see exactly what questions motivated each investigation
+
+### Position in Scientific Method
+
+Question Formation sits at the beginning of the research cycle but isn't strictly linear—results often prompt new questions:
+
+```
+┌──────────────────┐
+│ Question         │ ← You are here
+│ Formation        │
+└────────┬─────────┘
+         │ motivates
+         ▼
+┌──────────────────┐
+│ Literature       │
+│ Search           │
+└────────┬─────────┘
+         │ generates
+         ▼
+    Evidence
+         │
+         ▼
+    Hypothesis → Design → Experiment → Analysis → Results
+         │                                             │
+         │            ┌────────────────────────────────┘
+         │            │ (new questions emerge)
+         │            ▼
+         └──────── Question Formation (refined)
+```
 
 ---
 
@@ -42,11 +87,14 @@
 6.  User: "Yes, add that."
 7.  AI calls `add_question` tool.
 
-45: **Acceptance Criteria**:
-46: - [x] User can brainstorm via chat.
-47: - [x] AI suggests refined, precise questions.
-48: - [x] `scimantic:Question` entity created in `project.ttl`.
-49: - [ ] Tree view displays the Question.
+**Acceptance Criteria**:
+- [x] User can brainstorm research questions conversationally with AI
+- [x] AI refines vague prompts into specific, answerable questions
+- [x] Refined questions are persisted to knowledge graph
+- [x] Questions are attributed to the creating agent (human or AI)
+- [x] Questions include timestamps showing when they were formulated
+- [ ] Questions appear in VS Code tree view sidebar
+- [ ] User can review question history across sessions
 
 ### Slice 2: Question Visualization & Context
 
@@ -80,25 +128,13 @@
 
 ## 🎯 Success Metrics
 
-- **Clarity**: Questions stored in the graph are more specific than user's initial prompt.
-- **Connectivity**: Future Evidence and Hypotheses link back to these Questions.
+**Qualitative:**
+- **Clarity**: Questions stored in the graph are more specific and actionable than user's initial prompts
+- **Connectivity**: Evidence and Hypotheses link back to Questions, creating traceable research narratives
+- **Persistence**: Questions remain accessible across sessions, maintaining research context
+- **Refinement**: Users iteratively improve questions based on preliminary findings
 
-## 🔗 Dependencies
-
-- **Ontology**: `scimantic:Question` class, `scimantic:QuestionFormation` activity.
-- **MCP**: `add_question` tool.
-
-## Expected RDF Structure
-
-```turtle
-@prefix scimantic: <http://scimantic.io/ontology#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
-
-:question_001 a scimantic:Question, prov:Entity ;
-    rdfs:label "What is the kinetic folding pathway of Protein X under heat stress?" ;
-    prov:wasGeneratedBy :question_formation_001 ;
-    prov:generatedAtTime "2025-10-27T10:00:00Z"^^xsd:dateTime .
-
-:question_formation_001 a scimantic:QuestionFormation, prov:Activity ;
-    prov:wasAssociatedWith :researcher, :ai_assistant .
-```
+**Quantitative:**
+- Reduction in "what was I investigating?" moments (tracked via user surveys)
+- Number of Questions that successfully motivate Literature Searches
+- Percentage of Evidence entities that trace back to a Question

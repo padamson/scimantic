@@ -15,8 +15,18 @@ export interface Evidence {
 }
 
 /**
+ * Question entity from the knowledge graph
+ */
+export interface Question {
+  uri: string;
+  label: string;
+  agent?: string;
+}
+
+/**
  * Graph response from scimantic-core MCP server
  */
 export interface GraphResponse {
   evidence: Evidence[];
+  questions: Question[];
 }
