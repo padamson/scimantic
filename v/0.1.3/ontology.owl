@@ -1,0 +1,2699 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://scimantic.io/"
+     xml:base="http://scimantic.io/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:pav="http://purl.org/pav/"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:linkml="https://w3id.org/linkml/">
+    <owl:Ontology rdf:about="http://scimantic.io/">
+        <owl:versionIRI rdf:resource="http://scimantic.io/v/0.1.3/ontology.ttl"/>
+        <terms:license>https://creativecommons.org/licenses/by/4.0/</terms:license>
+        <pav:version>0.1.3</pav:version>
+        <rdfs:label>scimantic</rdfs:label>
+        <skos:definition>A minimal domain ontology for representing the scientific method as provenance chains.</skos:definition>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- http://purl.org/dc/terms/license -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/license"/>
+    
+
+
+    <!-- http://purl.org/pav/version -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/pav/version"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#definition -->
+
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#definition"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#exactMatch -->
+
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#exactMatch"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#inScheme -->
+
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#inScheme"/>
+    
+
+
+    <!-- https://w3id.org/linkml/permissible_values -->
+
+
+    <owl:AnnotationProperty rdf:about="https://w3id.org/linkml/permissible_values"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- http://scimantic.io/derivationOfUncertainty -->
+
+
+    <owl:ObjectProperty rdf:about="http://scimantic.io/derivationOfUncertainty">
+        <rdfs:domain rdf:resource="http://scimantic.io/UncertaintyModel"/>
+        <rdfs:range rdf:resource="http://scimantic.io/UncertaintyDerivation"/>
+        <rdfs:label>derivationOfUncertainty</rdfs:label>
+        <skos:definition>How the uncertainty was derived.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://scimantic.io/hasUncertainty -->
+
+
+    <owl:ObjectProperty rdf:about="http://scimantic.io/hasUncertainty">
+        <rdfs:domain rdf:resource="http://scimantic.io/UncertaintySubject"/>
+        <rdfs:range rdf:resource="http://scimantic.io/UncertaintyModel"/>
+        <rdfs:label>hasUncertainty</rdfs:label>
+        <skos:definition>Links an entity to its reified uncertainty model.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://scimantic.io/natureOfUncertainty -->
+
+
+    <owl:ObjectProperty rdf:about="http://scimantic.io/natureOfUncertainty">
+        <rdfs:domain rdf:resource="http://scimantic.io/UncertaintyModel"/>
+        <rdfs:range rdf:resource="http://scimantic.io/UncertaintyNature"/>
+        <rdfs:label>natureOfUncertainty</rdfs:label>
+        <skos:definition>The nature of the uncertainty (Aleatory or Epistemic).</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://scimantic.io/parameter -->
+
+
+    <owl:ObjectProperty rdf:about="http://scimantic.io/parameter">
+        <rdfs:domain rdf:resource="http://scimantic.io/ExperimentalMethod"/>
+        <rdfs:range rdf:resource="http://scimantic.io/Parameter"/>
+        <rdfs:label>parameter</rdfs:label>
+        <skos:definition>Structured configuration parameter.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://scimantic.io/wasAssociatedWith -->
+
+
+    <owl:ObjectProperty rdf:about="http://scimantic.io/wasAssociatedWith">
+        <rdfs:domain rdf:resource="http://scimantic.io/Activity"/>
+        <rdfs:range rdf:resource="http://scimantic.io/Agent"/>
+        <rdfs:label>wasAssociatedWith</rdfs:label>
+        <skos:definition>The agent associated with an activity.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://scimantic.io/wasAttributedTo -->
+
+
+    <owl:ObjectProperty rdf:about="http://scimantic.io/wasAttributedTo">
+        <rdfs:domain rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:range rdf:resource="http://scimantic.io/Agent"/>
+        <rdfs:label>wasAttributedTo</rdfs:label>
+        <skos:definition>The agent who attributed this entity (Agent).</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- http://scimantic.io/accessLevel -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/accessLevel">
+        <rdfs:domain rdf:resource="http://scimantic.io/Nanopublication"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>accessLevel</rdfs:label>
+        <skos:definition>Publishing scope (e.g., local, institutional, public).</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/citation -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/citation">
+        <rdfs:domain rdf:resource="http://scimantic.io/Evidence"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>citation</rdfs:label>
+        <skos:definition>Bibliographic reference.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/content -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/content">
+        <rdfs:domain rdf:resource="http://scimantic.io/Evidence"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>content</rdfs:label>
+        <skos:definition>The actual text content of the evidence.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/contradicts -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/contradicts"/>
+    
+
+
+    <!-- http://scimantic.io/endOffset -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/endOffset">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>endOffset</rdfs:label>
+        <skos:definition>Character offset where the selection ends.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/exact -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/exact">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>exact</rdfs:label>
+        <skos:definition>The exact text that was selected/highlighted.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/generatedAtTime -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/generatedAtTime">
+        <rdfs:domain rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>generatedAtTime</rdfs:label>
+        <skos:definition>Time of generation.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/hasBody -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/hasBody">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>hasBody</rdfs:label>
+        <skos:definition>The content or comment of the annotation (optional for highlights).</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/hasSelector -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/hasSelector"/>
+    
+
+
+    <!-- http://scimantic.io/hasTarget -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/hasTarget">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>hasTarget</rdfs:label>
+        <skos:definition>The source being annotated (DOI, URL, or file reference).</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/id -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/id">
+        <rdfs:domain rdf:resource="http://scimantic.io/Identifiable"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>id</rdfs:label>
+        <skos:definition>Unique identifier (URI) for this node.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/label -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/label">
+        <rdfs:label>label</rdfs:label>
+        <skos:definition>The human-readable label or text.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/method -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/method">
+        <rdfs:domain rdf:resource="http://scimantic.io/ExperimentalMethod"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>method</rdfs:label>
+        <skos:definition>Name or description of the method.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/motivates -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/motivates"/>
+    
+
+
+    <!-- http://scimantic.io/pageNumber -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/pageNumber">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>pageNumber</rdfs:label>
+        <skos:definition>Page number in PDF documents where the selection appears.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/prefix -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/prefix">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>prefix</rdfs:label>
+        <skos:definition>Text immediately before the selection (for disambiguation).</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/publishable -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/publishable">
+        <rdfs:domain rdf:resource="http://scimantic.io/Nanopublication"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:label>publishable</rdfs:label>
+        <skos:definition>Flag indicating if this is ready for public promotion.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/refines -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/refines"/>
+    
+
+
+    <!-- http://scimantic.io/source -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/source">
+        <rdfs:domain rdf:resource="http://scimantic.io/Evidence"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>source</rdfs:label>
+        <skos:definition>Source URL or identifier.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/startOffset -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/startOffset">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>startOffset</rdfs:label>
+        <skos:definition>Character offset where the selection starts (within the target or page).</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/suffix -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/suffix">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>suffix</rdfs:label>
+        <skos:definition>Text immediately after the selection (for disambiguation).</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/supports -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/supports"/>
+    
+
+
+    <!-- http://scimantic.io/unit -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/unit">
+        <rdfs:domain rdf:resource="http://scimantic.io/Result"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>unit</rdfs:label>
+        <skos:definition>Unit of measurement.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/used -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/used"/>
+    
+
+
+    <!-- http://scimantic.io/value -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/value">
+        <rdfs:domain rdf:resource="http://scimantic.io/Result"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>value</rdfs:label>
+        <skos:definition>The numeric or categorical result.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://scimantic.io/wasDerivedFrom -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/wasDerivedFrom"/>
+    
+
+
+    <!-- http://scimantic.io/wasGeneratedBy -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/wasGeneratedBy"/>
+    
+
+
+    <!-- http://scimantic.io/wasInformedBy -->
+
+
+    <owl:DatatypeProperty rdf:about="http://scimantic.io/wasInformedBy"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- http://scimantic.io/Activity -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Activity">
+        <rdfs:label>Activity</rdfs:label>
+        <skos:definition>A provenance activity. Identified by its RDF URI.</skos:definition>
+        <skos:exactMatch rdf:resource="http://www.w3.org/ns/prov#Activity"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Agent -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Agent">
+        <rdfs:label>Agent</rdfs:label>
+        <skos:definition>A provenance agent. Identified by its RDF URI.</skos:definition>
+        <skos:exactMatch rdf:resource="http://www.w3.org/ns/prov#Agent"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Aleatory -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Aleatory">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/UncertaintyModel"/>
+        <rdfs:label>Aleatory</rdfs:label>
+        <skos:definition>Aleatory uncertainty entities must have nature Aleatory.</skos:definition>
+        <skos:exactMatch rdf:resource="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Aleatory"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Ambiguity -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Ambiguity">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/UncertaintyModel"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/natureOfUncertainty"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/UncertaintyNature"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/natureOfUncertainty"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/natureOfUncertainty"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Ambiguity</rdfs:label>
+        <skos:definition>Ambiguity is inherently Epistemic uncertainty.</skos:definition>
+        <skos:exactMatch rdf:resource="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Ambiguity"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Analysis -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Analysis">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Dataset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Experimentation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Analysis</rdfs:label>
+        <skos:definition>The activity of processing a Dataset to produce a Result.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/Analysis"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Annotation -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Annotation">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasSelector"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/TextSelector"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/LiteratureSearch"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/generatedAtTime"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasBody"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasTarget"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/generatedAtTime"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasBody"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasSelector"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasTarget"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/generatedAtTime"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasBody"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasSelector"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasTarget"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Annotation</rdfs:label>
+        <skos:definition>A text annotation or highlight that grounds Questions or Evidence in specific source text. Follows W3C Web Annotation Data Model.</skos:definition>
+        <skos:exactMatch rdf:resource="http://www.w3.org/ns/oa#Annotation"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Conclusion -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Conclusion">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Nanopublication"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Result"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/ResultAssessment"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/content"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/content"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/content"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Conclusion</rdfs:label>
+        <skos:definition>The final claim or decision derived from the ResultAssessment.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/Conclusion"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/DCATDataset -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/DCATDataset">
+        <rdfs:label>DCATDataset</rdfs:label>
+        <skos:definition>A collection of data, published or curated by a single agent.</skos:definition>
+        <skos:exactMatch rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Dataset -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Dataset">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/DCATDataset"/>
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/UncertaintySubject"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasUncertainty"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/UncertaintyModel"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/ExperimentalMethod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Experimentation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasUncertainty"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasUncertainty"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Dataset</rdfs:label>
+        <skos:definition>Raw data, observations, or measurements produced by experimentation.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/Dataset"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/DesignOfExperiment -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/DesignOfExperiment">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://scimantic.io/Evidence"/>
+                            <rdf:Description rdf:about="http://scimantic.io/Hypothesis"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://scimantic.io/HypothesisFormation"/>
+                            <rdf:Description rdf:about="http://scimantic.io/LiteratureSearch"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>DesignOfExperiment</rdfs:label>
+        <skos:definition>The activity of creating an ExperimentalMethod from a Hypothesis.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/DesignOfExperiment"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Entity -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Entity">
+        <rdfs:label>Entity</rdfs:label>
+        <skos:definition>A provenance entity. Identified by its RDF URI.</skos:definition>
+        <skos:exactMatch rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Evidence -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Evidence">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Nanopublication"/>
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/URREFEvidence"/>
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/UncertaintySubject"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/contradicts"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Hypothesis"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasUncertainty"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/UncertaintyModel"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/supports"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Hypothesis"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://scimantic.io/Annotation"/>
+                            <rdf:Description rdf:about="http://scimantic.io/Question"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/EvidenceExtraction"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasUncertainty"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasUncertainty"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/accessLevel"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/citation"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/content"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/publishable"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/source"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/accessLevel"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/citation"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/content"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/contradicts"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/publishable"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/source"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/supports"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/accessLevel"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/citation"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/content"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/contradicts"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/publishable"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/source"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/supports"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Evidence</rdfs:label>
+        <skos:definition>A factual claim extracted from a source.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/Evidence"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/EvidenceAssessment -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/EvidenceAssessment">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Evidence"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/EvidenceExtraction"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>EvidenceAssessment</rdfs:label>
+        <skos:definition>The activity of evaluating credibility or relevance of Evidence.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/EvidenceAssessment"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/EvidenceExtraction -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/EvidenceExtraction">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Annotation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/LiteratureSearch"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>EvidenceExtraction</rdfs:label>
+        <skos:definition>The activity of articulating Evidence claims from one or more Annotations. Separates the act of reading/highlighting from the act of formulating evidence statements.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/EvidenceExtraction"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/ExperimentalMethod -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/ExperimentalMethod">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/parameter"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Parameter"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://scimantic.io/Evidence"/>
+                            <rdf:Description rdf:about="http://scimantic.io/Hypothesis"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/DesignOfExperiment"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/parameter"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/method"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/method"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/method"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>ExperimentalMethod</rdfs:label>
+        <skos:definition>A specification of the experimental or computational method.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/ExperimentalMethod"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Experimentation -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Experimentation">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/ExperimentalMethod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/DesignOfExperiment"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Experimentation</rdfs:label>
+        <skos:definition>The activity of running an ExperimentalMethod to produce a Dataset.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/Experimentation"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Hypothesis -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Hypothesis">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Nanopublication"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Premise"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/HypothesisFormation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Hypothesis</rdfs:label>
+        <skos:definition>A testable claim derived from evidence.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/Hypothesis"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/HypothesisFormation -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/HypothesisFormation">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Premise"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/EvidenceAssessment"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>HypothesisFormation</rdfs:label>
+        <skos:definition>The activity of synthesizing Evidence into a Hypothesis.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/HypothesisFormation"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Identifiable -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Identifiable">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/id"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/id"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/id"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Identifiable</rdfs:label>
+        <skos:definition>A mixin for objects that have a unique identifier.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/Identifiable"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Incompleteness -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Incompleteness">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/UncertaintyModel"/>
+        <rdfs:label>Incompleteness</rdfs:label>
+        <skos:definition>Incompleteness is inherently Epistemic uncertainty.</skos:definition>
+        <skos:exactMatch rdf:resource="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Incompleteness"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/LiteratureSearch -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/LiteratureSearch">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/QuestionFormation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>LiteratureSearch</rdfs:label>
+        <skos:definition>The activity of searching literature and creating Annotations (highlights, notes) on source text.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/LiteratureSearch"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Nanopublication -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Nanopublication">
+        <rdfs:label>Nanopublication</rdfs:label>
+        <skos:definition>A nanopublication object.</skos:definition>
+        <skos:exactMatch rdf:resource="http://www.nanopub.org/nschema#Nanopublication"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Parameter -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Parameter">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:label>Parameter</rdfs:label>
+        <skos:definition>A configured parameter within an Experimental Method.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/Parameter"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Premise -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Premise">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Evidence"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/EvidenceAssessment"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Premise</rdfs:label>
+        <skos:definition>An evaluated proposition or insight derived from Evidence.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/Premise"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Question -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Question">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/motivates"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/LiteratureSearch"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://scimantic.io/Annotation"/>
+                            <rdf:Description rdf:about="http://scimantic.io/Evidence"/>
+                            <rdf:Description rdf:about="http://scimantic.io/Question"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/QuestionFormation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/motivates"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Question</rdfs:label>
+        <skos:definition>An interrogative sentence representing the research query.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/Question"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/QuestionFormation -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/QuestionFormation">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://scimantic.io/LiteratureSearch"/>
+                            <rdf:Description rdf:about="http://scimantic.io/ResultAssessment"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>QuestionFormation</rdfs:label>
+        <skos:definition>The activity of creating or refining a Research Question. Can be informed by prior results (iterating on findings) or by literature search (refining questions based on discovered evidence).</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/QuestionFormation"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Result -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Result">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Nanopublication"/>
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/URREFEvidence"/>
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/UncertaintySubject"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/contradicts"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Hypothesis"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasUncertainty"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/UncertaintyModel"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/refines"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Hypothesis"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/supports"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Hypothesis"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Dataset"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Analysis"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasUncertainty"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/hasUncertainty"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAttributedTo"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/unit"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/value"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/contradicts"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/refines"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/supports"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/unit"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/value"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/contradicts"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/label"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/refines"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/supports"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/unit"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/value"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasDerivedFrom"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasGeneratedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Result</rdfs:label>
+        <skos:definition>The outcome of an analysis activity.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/Result"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/ResultAssessment -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/ResultAssessment">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Result"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/Analysis"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasAssociatedWith"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/used"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/wasInformedBy"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>ResultAssessment</rdfs:label>
+        <skos:definition>The activity of comparing a Result to the original Hypothesis.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/ResultAssessment"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/TextSelector -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/TextSelector">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/endOffset"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/exact"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/pageNumber"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/prefix"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/startOffset"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/suffix"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/endOffset"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/exact"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/pageNumber"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/prefix"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/startOffset"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/suffix"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/endOffset"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/exact"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/pageNumber"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/prefix"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/startOffset"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/suffix"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>TextSelector</rdfs:label>
+        <skos:definition>A selector that identifies text by exact quote with surrounding context. Follows W3C Web Annotation TextQuoteSelector.</skos:definition>
+        <skos:exactMatch rdf:resource="http://www.w3.org/ns/oa#TextQuoteSelector"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/URREFEvidence -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/URREFEvidence">
+        <rdfs:label>URREFEvidence</rdfs:label>
+        <skos:definition>Root evidence class from URREF ontology.</skos:definition>
+        <skos:exactMatch rdf:resource="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Evidence"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/UncertaintyDerivation -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/UncertaintyDerivation">
+        <rdfs:label>UncertaintyDerivation</rdfs:label>
+        <skos:definition>Describes how the uncertainty was assessed.</skos:definition>
+        <skos:exactMatch rdf:resource="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyDerivation"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/UncertaintyModel -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/UncertaintyModel">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/Entity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/derivationOfUncertainty"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/UncertaintyDerivation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/natureOfUncertainty"/>
+                <owl:allValuesFrom rdf:resource="http://scimantic.io/UncertaintyNature"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/derivationOfUncertainty"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/natureOfUncertainty"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/derivationOfUncertainty"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://scimantic.io/natureOfUncertainty"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>UncertaintyModel</rdfs:label>
+        <skos:definition>A reified uncertainty model.</skos:definition>
+        <skos:exactMatch rdf:resource="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#UncertaintyModel"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/UncertaintyNature -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/UncertaintyNature">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://scimantic.io/UncertaintyNature#Aleatory"/>
+                    <rdf:Description rdf:about="http://scimantic.io/UncertaintyNature#Epistemic"/>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:label>UncertaintyNature</rdfs:label>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+        <linkml:permissible_values rdf:resource="http://scimantic.io/UncertaintyNature#Aleatory"/>
+        <linkml:permissible_values rdf:resource="http://scimantic.io/UncertaintyNature#Epistemic"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/UncertaintySubject -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/UncertaintySubject">
+        <rdfs:label>UncertaintySubject</rdfs:label>
+        <skos:definition>A mixin for objects that can have a reified uncertainty model.</skos:definition>
+        <skos:exactMatch rdf:resource="http://scimantic.io/UncertaintySubject"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/Vagueness -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/Vagueness">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/UncertaintyModel"/>
+        <rdfs:label>Vagueness</rdfs:label>
+        <skos:definition>Vagueness is inherently Epistemic uncertainty.</skos:definition>
+        <skos:exactMatch rdf:resource="https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#Vagueness"/>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/UncertaintyNature#Aleatory -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/UncertaintyNature#Aleatory">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/UncertaintyNature"/>
+        <rdfs:label>Aleatory</rdfs:label>
+        <skos:definition>Uncertainty due to inherent randomness.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- http://scimantic.io/UncertaintyNature#Epistemic -->
+
+
+    <owl:Class rdf:about="http://scimantic.io/UncertaintyNature#Epistemic">
+        <rdfs:subClassOf rdf:resource="http://scimantic.io/UncertaintyNature"/>
+        <rdfs:label>Epistemic</rdfs:label>
+        <skos:definition>Uncertainty due to lack of knowledge.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    <rdf:Description rdf:about="http://scimantic.io/contradicts">
+        <rdfs:label>contradicts</rdfs:label>
+        <skos:definition>An Entity (Evidence/Result) that provides negative evidence against a Hypothesis.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://scimantic.io/hasSelector">
+        <rdfs:label>hasSelector</rdfs:label>
+        <skos:definition>The selector identifying the specific part of the target.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://scimantic.io/motivates">
+        <rdfs:label>motivates</rdfs:label>
+        <skos:definition>A Question that triggers or motivates an Activity.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://scimantic.io/refines">
+        <rdfs:label>refines</rdfs:label>
+        <skos:definition>A Result that suggests a specific modification to a Hypothesis.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://scimantic.io/supports">
+        <rdfs:label>supports</rdfs:label>
+        <skos:definition>An Entity (Evidence/Result) that provides positive evidence for a Hypothesis.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://scimantic.io/used">
+        <rdfs:label>used</rdfs:label>
+        <skos:definition>Entity used by an Activity.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://scimantic.io/wasDerivedFrom">
+        <rdfs:label>wasDerivedFrom</rdfs:label>
+        <skos:definition>Entity derived from another Entity.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://scimantic.io/wasGeneratedBy">
+        <rdfs:label>wasGeneratedBy</rdfs:label>
+        <skos:definition>The activity that generated this entity.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://scimantic.io/wasInformedBy">
+        <rdfs:label>wasInformedBy</rdfs:label>
+        <skos:definition>Activity that informed this Activity.</skos:definition>
+        <skos:inScheme rdf:resource="http://scimantic.io/schema"/>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/ -->
+
+
