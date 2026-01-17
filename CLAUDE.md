@@ -16,7 +16,7 @@ Scimantic uses a **multi-layered documentation approach** to separate concerns:
 - Scimantic's unique approach: Semantic-first, not semantic-retrofitted
 - User personas and pain points
 - Success metrics and guiding principles
-- **Four-tier publishing model**: Legal/copyright considerations for extracted evidence
+- **Selective subset publishing**: Maintain private master KG, publish curated subsets for specific purposes
 - Future vision: Collaborative extraction with publisher consent
 
 **Audience**: Potential users, collaborators, funders
@@ -33,8 +33,8 @@ Scimantic uses a **multi-layered documentation approach** to separate concerns:
 - Research entity types (Evidence, Hypothesis, Design, Analysis) with examples
 - Provenance patterns (extraction, hypothesis formation, computation)
 - Uncertainty representation and propagation rules
-- **Four-tier publishing model**: Technical implementation with tier-agnostic schema
-- **Tier mobility**: How evidence moves between tiers as contexts change
+- **Master KG and subset publishing**: One private master KG, SPARQL-based subset generation, license-based management
+- **Publishing destinations**: Nanopub servers, GitHub Pages, scimantic.io, Zenodo, institutional repos
 - MCP integration architecture
 - Design decisions and trade-offs
 
@@ -98,12 +98,12 @@ Scimantic is built on the principle that **the entire scientific research proces
 3. **Uncertainty is Explicit**: All measurements, hypotheses, and conclusions carry uncertainty metadata
 4. **Nanopublications are Atomic**: The smallest publishable unit is a nanopublication (assertion + provenance + metadata)
 5. **AI as Research Partner**: MCP integration allows AI agents to participate in the research process
-6. **Four-Tier Publishing**: Balance open science with legal/copyright realities
-   - **Tier 1**: Local (private, always safe)
-   - **Tier 2**: Institutional (controlled sharing, low risk)
-   - **Tier 3**: Public (original contributions, no risk)
-   - **Tier 4**: Public essential evidence (selective, medium risk with safeguards)
-7. **Tier Mobility**: Evidence can move between tiers as contexts change (data model stays constant)
+6. **Selective Subset Publishing**: Researchers maintain one comprehensive private master KG and publish curated subsets for specific purposes
+   - **Master KG**: Comprehensive private RDF graph (`project.ttl`), source of truth
+   - **Subset Definitions**: SPARQL CONSTRUCT queries in `.scimantic/subsets/*.yaml`
+   - **Generated Subsets**: Read-only snapshots in `subsets/*.ttl` (version controlled)
+   - **License Management**: Every entity has `dcterms:license`, automatic analysis during generation
+   - **Multi-Destination**: Publish to nanopub servers, GitHub Pages, scimantic.io, Zenodo, institutional repos
 
 ## Architecture
 
@@ -117,6 +117,7 @@ scimantic/                   # Monorepo root
 │   │       ├── models.py      # Evidence, Hypothesis, Design, Entity classes
 │   │       ├── provenance.py  # W3C PROV-O tracker and decorators
 │   │       ├── publish.py     # Nanopublication generation
+│   │       ├── subset.py      # Subset definition, generation, license analysis
 │   │       └── mcp.py         # MCP server for AI agent integration
 │   ├── tests/
 │   │   ├── test_models.py
@@ -534,4 +535,25 @@ cd scimantic-core && uv run black src/scimantic tests/
 
 # Lint code
 cd scimantic-core && uv run flake8 src/scimantic tests/
+
+# Generate ontology artifacts (TTL, SHACL shapes)
+cd scimantic-core && uv run gen-all
+```
+
+### Documentation & Visualization Scripts
+
+See [scripts/README.md](scripts/README.md) for full details.
+
+```bash
+# Build ontology documentation (requires Java 17+)
+./scripts/build-docs.sh
+
+# Build and preview documentation at http://localhost:8000
+./scripts/preview-docs.sh
+
+# Watch for schema changes, auto-rebuild, and serve
+./scripts/watch-docs.sh
+
+# Generate Mermaid diagram of ontology
+cd scimantic-core && uv run python ../scripts/visualize_ontology.py
 ```

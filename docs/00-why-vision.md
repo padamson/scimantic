@@ -318,9 +318,12 @@ Scimantic integrates into the researcher's workflow at every stage of the reason
 **6. Iterative Refinement**
 - The system naturally tracks feedback loops: evaluating evidence can trigger new questions, and analyzing results can refine hypotheses.
 
-**7. Flexible Publishing**
-- Work can start private and local, then easily be promoted to institutional or public scopes without changing the data format.
-- You control what stays private (e.g., copyright evidence) and what goes public (e.g., results).
+**7. Selective Subset Publishing**
+- Maintain **one comprehensive private master KG** (your complete research database).
+- Generate **curated subsets** for specific purposes (paper supplements, grant proposals, collaboration).
+- Publish subsets to **multiple destinations**: nanopub servers, GitHub Pages, scimantic.io, institutional repos.
+- License-based management ensures publishable entities are included, proprietary data excluded.
+- Subsets are **generated from queries**, not edited directly—perfect provenance and reproducibility.
 
 **Key Differentiator:** Other tools capture *what happened* (code ran, data produced). Scimantic captures *why it happened* (hypothesis motivated experiment, evidence supported hypothesis). The reasoning chain becomes a queryable knowledge graph, not narrative text.
 

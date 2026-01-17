@@ -2,7 +2,7 @@ id: http://scimantic.io/schema
 name: scimantic
 description: A minimal domain ontology for representing the scientific method as provenance chains.
 license: https://creativecommons.org/licenses/by/4.0/
-version: 0.1.2
+version: 0.1.3
 
 prefixes:
   scimantic: http://scimantic.io/
@@ -14,6 +14,7 @@ prefixes:
   urref: https://raw.githubusercontent.com/adelphi23/urref/469137/URREF.ttl#
   np: http://www.nanopub.org/nschema#
   dcat: http://www.w3.org/ns/dcat#
+  oa: http://www.w3.org/ns/oa#
 
 default_prefix: scimantic
 default_range: string
@@ -58,6 +59,13 @@ classes:
         required: false
       motivates:
         range: LiteratureSearch
+      wasDerivedFrom:
+        any_of:
+          - range: Question
+          - range: Annotation
+          - range: Evidence
+        multivalued: true
+        description: Questions can be derived from prior questions (refinement), annotations/highlights in literature, or evidence claims.
 
   # ---------------------------------------------------------
   # Scimantic Activities
@@ -65,25 +73,43 @@ classes:
   QuestionFormation:
     is_a: Activity
     class_uri: scimantic:QuestionFormation
-    description: The activity of creating a Research Question.
+    description: The activity of creating or refining a Research Question. Can be informed by prior results (iterating on findings) or by literature search (refining questions based on discovered evidence).
     slots:
       - wasAssociatedWith
       - wasInformedBy
     slot_usage:
       wasInformedBy:
-        range: ResultAssessment
+        any_of:
+          - range: ResultAssessment
+          - range: LiteratureSearch
         required: false
 
   LiteratureSearch:
     is_a: Activity
     class_uri: scimantic:LiteratureSearch
-    description: The activity of searching for and extracting Evidence.
+    description: The activity of searching literature and creating Annotations (highlights, notes) on source text.
     slots:
       - wasAssociatedWith
       - wasInformedBy
     slot_usage:
       wasInformedBy:
         range: QuestionFormation
+
+  EvidenceExtraction:
+    is_a: Activity
+    class_uri: scimantic:EvidenceExtraction
+    description: The activity of articulating Evidence claims from one or more Annotations. Separates the act of reading/highlighting from the act of formulating evidence statements.
+    slots:
+      - used
+      - wasAssociatedWith
+      - wasInformedBy
+    slot_usage:
+      used:
+        range: Annotation
+        multivalued: true
+        description: The annotations from which evidence is extracted.
+      wasInformedBy:
+        range: LiteratureSearch
 
   Evidence:
     is_a: Entity
@@ -108,9 +134,13 @@ classes:
       - hasUncertainty
     slot_usage:
       wasDerivedFrom:
-        range: Question
+        any_of:
+          - range: Question
+          - range: Annotation
+        multivalued: true
+        description: Evidence can be derived from research questions or from annotations/highlights in literature.
       wasGeneratedBy:
-        range: LiteratureSearch
+        range: EvidenceExtraction
       supports:
         range: Hypothesis
       contradicts:
@@ -243,6 +273,44 @@ classes:
     class_uri: scimantic:Parameter
     description: A configured parameter within an Experimental Method.
 
+  # ---------------------------------------------------------
+  # Web Annotation Entities (W3C Open Annotation)
+  # ---------------------------------------------------------
+  Annotation:
+    is_a: Entity
+    class_uri: oa:Annotation
+    description: A text annotation or highlight that grounds Questions or Evidence in specific source text. Follows W3C Web Annotation Data Model.
+    slots:
+      - label
+      - hasBody
+      - hasTarget
+      - hasSelector
+      - wasAttributedTo
+      - wasGeneratedBy
+      - generatedAtTime
+    slot_usage:
+      hasTarget:
+        description: The source document being annotated (DOI, URL, or local file reference).
+        required: true
+      hasSelector:
+        range: TextSelector
+        description: The selector specifying which part of the target is annotated.
+      wasGeneratedBy:
+        range: LiteratureSearch
+        description: The literature search activity that produced this annotation.
+
+  TextSelector:
+    is_a: Entity
+    class_uri: oa:TextQuoteSelector
+    description: A selector that identifies text by exact quote with surrounding context. Follows W3C Web Annotation TextQuoteSelector.
+    slots:
+      - exact
+      - prefix
+      - suffix
+      - startOffset
+      - endOffset
+      - pageNumber
+
   EvidenceAssessment:
     is_a: Activity
     class_uri: scimantic:EvidenceAssessment
@@ -255,7 +323,7 @@ classes:
       used:
         range: Evidence
       wasInformedBy:
-        range: LiteratureSearch
+        range: EvidenceExtraction
 
   HypothesisFormation:
     is_a: Activity
@@ -551,7 +619,53 @@ slots:
     range: datetime
     domain: Entity
 
+  # ---------------------------------------------------------
+  # Web Annotation Slots
+  # ---------------------------------------------------------
+  hasBody:
+    slot_uri: oa:hasBody
+    description: The content or comment of the annotation (optional for highlights).
+    range: string
 
+  hasTarget:
+    slot_uri: oa:hasTarget
+    description: The source being annotated (DOI, URL, or file reference).
+    range: string
+
+  hasSelector:
+    slot_uri: oa:hasSelector
+    description: The selector identifying the specific part of the target.
+
+  exact:
+    slot_uri: oa:exact
+    description: The exact text that was selected/highlighted.
+    range: string
+    required: true
+
+  prefix:
+    slot_uri: oa:prefix
+    description: Text immediately before the selection (for disambiguation).
+    range: string
+
+  suffix:
+    slot_uri: oa:suffix
+    description: Text immediately after the selection (for disambiguation).
+    range: string
+
+  startOffset:
+    slot_uri: oa:start
+    description: Character offset where the selection starts (within the target or page).
+    range: integer
+
+  endOffset:
+    slot_uri: oa:end
+    description: Character offset where the selection ends.
+    range: integer
+
+  pageNumber:
+    slot_uri: scimantic:pageNumber
+    description: Page number in PDF documents where the selection appears.
+    range: integer
 
 enums:
   UncertaintyNature:

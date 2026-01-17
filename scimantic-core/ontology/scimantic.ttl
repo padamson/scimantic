@@ -48,18 +48,11 @@ scimantic:Vagueness a owl:Class ;
     skos:exactMatch urref:Vagueness ;
     skos:inScheme scimantic:schema .
 
-scimantic:generatedAtTime a owl:DatatypeProperty ;
-    rdfs:label "generatedAtTime" ;
-    rdfs:domain scimantic:Entity ;
-    rdfs:range xsd:dateTime ;
-    skos:definition "Time of generation." ;
-    skos:inScheme scimantic:schema .
-
 <http://scimantic.io/>
-    owl:versionIRI <http://scimantic.io/v/0.1.2/ontology.ttl> ; a owl:Ontology ;
+    owl:versionIRI <http://scimantic.io/v/0.1.3/ontology.ttl> ; a owl:Ontology ;
     rdfs:label "scimantic" ;
     dcterms:license "https://creativecommons.org/licenses/by/4.0/" ;
-    pav:version "0.1.2" ;
+    pav:version "0.1.3" ;
     skos:definition "A minimal domain ontology for representing the scientific method as provenance chains." .
 
 scimantic:Conclusion a owl:Class ;
@@ -121,6 +114,67 @@ scimantic:DCATDataset a owl:Class ;
     skos:exactMatch dcat:Dataset ;
     skos:inScheme scimantic:schema .
 
+scimantic:TextSelector a owl:Class ;
+    rdfs:label "TextSelector" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:startOffset ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:prefix ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:suffix ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:endOffset ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:prefix ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:suffix ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:startOffset ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:prefix ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:suffix ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:endOffset ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:pageNumber ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty scimantic:startOffset ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty scimantic:endOffset ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:pageNumber ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:exact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:exact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty scimantic:pageNumber ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty scimantic:exact ],
+        scimantic:Entity ;
+    skos:definition "A selector that identifies text by exact quote with surrounding context. Follows W3C Web Annotation TextQuoteSelector." ;
+    skos:exactMatch <http://www.w3.org/ns/oa#TextQuoteSelector> ;
+    skos:inScheme scimantic:schema .
+
 scimantic:Identifiable a owl:Class ;
     rdfs:label "Identifiable" ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -134,55 +188,6 @@ scimantic:Identifiable a owl:Class ;
             owl:onProperty scimantic:id ] ;
     skos:definition "A mixin for objects that have a unique identifier." ;
     skos:exactMatch scimantic:Identifiable ;
-    skos:inScheme scimantic:schema .
-
-scimantic:Question a owl:Class ;
-    rdfs:label "Question" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasAttributedTo ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasDerivedFrom ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasAttributedTo ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Agent ;
-            owl:onProperty scimantic:wasAttributedTo ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty scimantic:wasDerivedFrom ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasDerivedFrom ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:motivates ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:QuestionFormation ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:LiteratureSearch ;
-            owl:onProperty scimantic:motivates ],
-        scimantic:Entity ;
-    skos:definition "An interrogative sentence representing the research query." ;
-    skos:exactMatch scimantic:Question ;
     skos:inScheme scimantic:schema .
 
 scimantic:URREFEvidence a owl:Class ;
@@ -251,6 +256,76 @@ scimantic:Analysis a owl:Class ;
         scimantic:Activity ;
     skos:definition "The activity of processing a Dataset to produce a Result." ;
     skos:exactMatch scimantic:Analysis ;
+    skos:inScheme scimantic:schema .
+
+scimantic:Annotation a owl:Class ;
+    rdfs:label "Annotation" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasAttributedTo ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:hasSelector ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasAttributedTo ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Agent ;
+            owl:onProperty scimantic:wasAttributedTo ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:hasSelector ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:hasBody ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:TextSelector ;
+            owl:onProperty scimantic:hasSelector ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:LiteratureSearch ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:generatedAtTime ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:hasBody ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:hasBody ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:hasTarget ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:hasTarget ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:generatedAtTime ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:dateTime ;
+            owl:onProperty scimantic:generatedAtTime ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty scimantic:hasTarget ],
+        scimantic:Entity ;
+    skos:definition "A text annotation or highlight that grounds Questions or Evidence in specific source text. Follows W3C Web Annotation Data Model." ;
+    skos:exactMatch <http://www.w3.org/ns/oa#Annotation> ;
     skos:inScheme scimantic:schema .
 
 scimantic:Dataset a owl:Class ;
@@ -368,11 +443,42 @@ scimantic:EvidenceAssessment a owl:Class ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:wasInformedBy ],
         [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:LiteratureSearch ;
+            owl:allValuesFrom scimantic:EvidenceExtraction ;
             owl:onProperty scimantic:wasInformedBy ],
         scimantic:Activity ;
     skos:definition "The activity of evaluating credibility or relevance of Evidence." ;
     skos:exactMatch scimantic:EvidenceAssessment ;
+    skos:inScheme scimantic:schema .
+
+scimantic:EvidenceExtraction a owl:Class ;
+    rdfs:label "EvidenceExtraction" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:used ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Annotation ;
+            owl:onProperty scimantic:used ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasAssociatedWith ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasAssociatedWith ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Agent ;
+            owl:onProperty scimantic:wasAssociatedWith ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:LiteratureSearch ;
+            owl:onProperty scimantic:wasInformedBy ],
+        scimantic:Activity ;
+    skos:definition "The activity of articulating Evidence claims from one or more Annotations. Separates the act of reading/highlighting from the act of formulating evidence statements." ;
+    skos:exactMatch scimantic:EvidenceExtraction ;
     skos:inScheme scimantic:schema .
 
 scimantic:Experimentation a owl:Class ;
@@ -484,6 +590,52 @@ scimantic:Premise a owl:Class ;
     skos:exactMatch scimantic:Premise ;
     skos:inScheme scimantic:schema .
 
+scimantic:Question a owl:Class ;
+    rdfs:label "Question" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasAttributedTo ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( scimantic:Question scimantic:Annotation scimantic:Evidence ) ] ;
+            owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasAttributedTo ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Agent ;
+            owl:onProperty scimantic:wasAttributedTo ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:motivates ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:QuestionFormation ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:LiteratureSearch ;
+            owl:onProperty scimantic:motivates ],
+        scimantic:Entity ;
+    skos:definition "An interrogative sentence representing the research query." ;
+    skos:exactMatch scimantic:Question ;
+    skos:inScheme scimantic:schema .
+
 scimantic:QuestionFormation a owl:Class ;
     rdfs:label "QuestionFormation" ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -491,9 +643,6 @@ scimantic:QuestionFormation a owl:Class ;
             owl:onProperty scimantic:wasAssociatedWith ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasInformedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:ResultAssessment ;
             owl:onProperty scimantic:wasInformedBy ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
@@ -504,8 +653,11 @@ scimantic:QuestionFormation a owl:Class ;
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( scimantic:ResultAssessment scimantic:LiteratureSearch ) ] ;
+            owl:onProperty scimantic:wasInformedBy ],
         scimantic:Activity ;
-    skos:definition "The activity of creating a Research Question." ;
+    skos:definition "The activity of creating or refining a Research Question. Can be informed by prior results (iterating on findings) or by literature search (refining questions based on discovered evidence)." ;
     skos:exactMatch scimantic:QuestionFormation ;
     skos:inScheme scimantic:schema .
 
@@ -564,6 +716,42 @@ scimantic:derivationOfUncertainty a owl:ObjectProperty ;
     skos:definition "How the uncertainty was derived." ;
     skos:inScheme scimantic:schema .
 
+scimantic:endOffset a owl:DatatypeProperty ;
+    rdfs:label "endOffset" ;
+    rdfs:range xsd:integer ;
+    skos:definition "Character offset where the selection ends." ;
+    skos:inScheme scimantic:schema .
+
+scimantic:exact a owl:DatatypeProperty ;
+    rdfs:label "exact" ;
+    rdfs:range xsd:string ;
+    skos:definition "The exact text that was selected/highlighted." ;
+    skos:inScheme scimantic:schema .
+
+scimantic:generatedAtTime a owl:DatatypeProperty ;
+    rdfs:label "generatedAtTime" ;
+    rdfs:domain scimantic:Entity ;
+    rdfs:range xsd:dateTime ;
+    skos:definition "Time of generation." ;
+    skos:inScheme scimantic:schema .
+
+scimantic:hasBody a owl:DatatypeProperty ;
+    rdfs:label "hasBody" ;
+    rdfs:range xsd:string ;
+    skos:definition "The content or comment of the annotation (optional for highlights)." ;
+    skos:inScheme scimantic:schema .
+
+scimantic:hasSelector a owl:DatatypeProperty ;
+    rdfs:label "hasSelector" ;
+    skos:definition "The selector identifying the specific part of the target." ;
+    skos:inScheme scimantic:schema .
+
+scimantic:hasTarget a owl:DatatypeProperty ;
+    rdfs:label "hasTarget" ;
+    rdfs:range xsd:string ;
+    skos:definition "The source being annotated (DOI, URL, or file reference)." ;
+    skos:inScheme scimantic:schema .
+
 scimantic:id a owl:DatatypeProperty ;
     rdfs:label "id" ;
     rdfs:domain scimantic:Identifiable ;
@@ -576,6 +764,18 @@ scimantic:method a owl:DatatypeProperty ;
     rdfs:domain scimantic:ExperimentalMethod ;
     rdfs:range xsd:string ;
     skos:definition "Name or description of the method." ;
+    skos:inScheme scimantic:schema .
+
+scimantic:pageNumber a owl:DatatypeProperty ;
+    rdfs:label "pageNumber" ;
+    rdfs:range xsd:integer ;
+    skos:definition "Page number in PDF documents where the selection appears." ;
+    skos:inScheme scimantic:schema .
+
+scimantic:prefix a owl:DatatypeProperty ;
+    rdfs:label "prefix" ;
+    rdfs:range xsd:string ;
+    skos:definition "Text immediately before the selection (for disambiguation)." ;
     skos:inScheme scimantic:schema .
 
 scimantic:publishable a owl:DatatypeProperty ;
@@ -595,6 +795,18 @@ scimantic:source a owl:DatatypeProperty ;
     rdfs:domain scimantic:Evidence ;
     rdfs:range xsd:string ;
     skos:definition "Source URL or identifier." ;
+    skos:inScheme scimantic:schema .
+
+scimantic:startOffset a owl:DatatypeProperty ;
+    rdfs:label "startOffset" ;
+    rdfs:range xsd:integer ;
+    skos:definition "Character offset where the selection starts (within the target or page)." ;
+    skos:inScheme scimantic:schema .
+
+scimantic:suffix a owl:DatatypeProperty ;
+    rdfs:label "suffix" ;
+    rdfs:range xsd:string ;
+    skos:definition "Text immediately after the selection (for disambiguation)." ;
     skos:inScheme scimantic:schema .
 
 scimantic:unit a owl:DatatypeProperty ;
@@ -667,31 +879,6 @@ scimantic:ExperimentalMethod a owl:Class ;
         scimantic:Entity ;
     skos:definition "A specification of the experimental or computational method." ;
     skos:exactMatch scimantic:ExperimentalMethod ;
-    skos:inScheme scimantic:schema .
-
-scimantic:LiteratureSearch a owl:Class ;
-    rdfs:label "LiteratureSearch" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasAssociatedWith ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasInformedBy ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasAssociatedWith ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Agent ;
-            owl:onProperty scimantic:wasAssociatedWith ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasInformedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:QuestionFormation ;
-            owl:onProperty scimantic:wasInformedBy ],
-        scimantic:Activity ;
-    skos:definition "The activity of searching for and extracting Evidence." ;
-    skos:exactMatch scimantic:LiteratureSearch ;
     skos:inScheme scimantic:schema .
 
 scimantic:Result a owl:Class ;
@@ -807,6 +994,31 @@ scimantic:UncertaintySubject a owl:Class ;
     skos:exactMatch scimantic:UncertaintySubject ;
     skos:inScheme scimantic:schema .
 
+scimantic:LiteratureSearch a owl:Class ;
+    rdfs:label "LiteratureSearch" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasAssociatedWith ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasAssociatedWith ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Agent ;
+            owl:onProperty scimantic:wasAssociatedWith ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasInformedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:QuestionFormation ;
+            owl:onProperty scimantic:wasInformedBy ],
+        scimantic:Activity ;
+    skos:definition "The activity of searching literature and creating Annotations (highlights, notes) on source text." ;
+    skos:exactMatch scimantic:LiteratureSearch ;
+    skos:inScheme scimantic:schema .
+
 scimantic:Nanopublication a owl:Class ;
     rdfs:label "Nanopublication" ;
     skos:definition "A nanopublication object." ;
@@ -837,6 +1049,47 @@ scimantic:supports a owl:DatatypeProperty ;
     skos:definition "An Entity (Evidence/Result) that provides positive evidence for a Hypothesis." ;
     skos:inScheme scimantic:schema .
 
+scimantic:Hypothesis a owl:Class ;
+    rdfs:label "Hypothesis" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasAttributedTo ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasAttributedTo ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Agent ;
+            owl:onProperty scimantic:wasAttributedTo ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:Premise ;
+            owl:onProperty scimantic:wasDerivedFrom ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom scimantic:HypothesisFormation ;
+            owl:onProperty scimantic:wasGeneratedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty scimantic:label ],
+        scimantic:Entity,
+        scimantic:Nanopublication ;
+    skos:definition "A testable claim derived from evidence." ;
+    skos:exactMatch scimantic:Hypothesis ;
+    skos:inScheme scimantic:schema .
+
 scimantic:Evidence a owl:Class ;
     rdfs:label "Evidence" ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -848,9 +1101,6 @@ scimantic:Evidence a owl:Class ;
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:publishable ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Question ;
-            owl:onProperty scimantic:wasDerivedFrom ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:wasGeneratedBy ],
@@ -876,8 +1126,8 @@ scimantic:Evidence a owl:Class ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:wasGeneratedBy ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasDerivedFrom ],
+            owl:allValuesFrom scimantic:EvidenceExtraction ;
+            owl:onProperty scimantic:wasGeneratedBy ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
             owl:onProperty scimantic:publishable ],
@@ -900,14 +1150,14 @@ scimantic:Evidence a owl:Class ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty scimantic:label ],
         [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:LiteratureSearch ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:hasUncertainty ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty scimantic:label ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( scimantic:Question scimantic:Annotation ) ] ;
+            owl:onProperty scimantic:wasDerivedFrom ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty scimantic:citation ],
@@ -955,58 +1205,17 @@ scimantic:Evidence a owl:Class ;
     skos:exactMatch scimantic:Evidence ;
     skos:inScheme scimantic:schema .
 
-scimantic:Hypothesis a owl:Class ;
-    rdfs:label "Hypothesis" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasAttributedTo ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty scimantic:wasDerivedFrom ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasAttributedTo ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Agent ;
-            owl:onProperty scimantic:wasAttributedTo ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty scimantic:label ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:Premise ;
-            owl:onProperty scimantic:wasDerivedFrom ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom scimantic:HypothesisFormation ;
-            owl:onProperty scimantic:wasGeneratedBy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty scimantic:label ],
-        scimantic:Entity,
-        scimantic:Nanopublication ;
-    skos:definition "A testable claim derived from evidence." ;
-    skos:exactMatch scimantic:Hypothesis ;
+scimantic:hasUncertainty a owl:ObjectProperty ;
+    rdfs:label "hasUncertainty" ;
+    rdfs:domain scimantic:UncertaintySubject ;
+    rdfs:range scimantic:UncertaintyModel ;
+    skos:definition "Links an entity to its reified uncertainty model." ;
     skos:inScheme scimantic:schema .
 
 scimantic:Activity a owl:Class ;
     rdfs:label "Activity" ;
     skos:definition "A provenance activity. Identified by its RDF URI." ;
     skos:exactMatch prov:Activity ;
-    skos:inScheme scimantic:schema .
-
-scimantic:hasUncertainty a owl:ObjectProperty ;
-    rdfs:label "hasUncertainty" ;
-    rdfs:domain scimantic:UncertaintySubject ;
-    rdfs:range scimantic:UncertaintyModel ;
-    skos:definition "Links an entity to its reified uncertainty model." ;
     skos:inScheme scimantic:schema .
 
 scimantic:UncertaintyModel a owl:Class ;
@@ -1051,16 +1260,16 @@ scimantic:used a owl:DatatypeProperty ;
     skos:definition "Entity used by an Activity." ;
     skos:inScheme scimantic:schema .
 
+scimantic:wasDerivedFrom a owl:DatatypeProperty ;
+    rdfs:label "wasDerivedFrom" ;
+    skos:definition "Entity derived from another Entity." ;
+    skos:inScheme scimantic:schema .
+
 scimantic:wasAttributedTo a owl:ObjectProperty ;
     rdfs:label "wasAttributedTo" ;
     rdfs:domain scimantic:Entity ;
     rdfs:range scimantic:Agent ;
     skos:definition "The agent who attributed this entity (Agent)." ;
-    skos:inScheme scimantic:schema .
-
-scimantic:wasDerivedFrom a owl:DatatypeProperty ;
-    rdfs:label "wasDerivedFrom" ;
-    skos:definition "Entity derived from another Entity." ;
     skos:inScheme scimantic:schema .
 
 scimantic:label a owl:DatatypeProperty ;

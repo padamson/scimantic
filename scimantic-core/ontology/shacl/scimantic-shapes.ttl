@@ -86,7 +86,7 @@ prov:Activity a sh:NodeShape ;
 prov:Entity a sh:NodeShape ;
     sh:closed true ;
     sh:description "A provenance entity. Identified by its RDF URI." ;
-    sh:ignoredProperties ( dcterms:bibliographicCitation dcterms:source scimantic:accessLevel scimantic:content scimantic:contradicts scimantic:hasUncertainty scimantic:method scimantic:motivates scimantic:parameter scimantic:publishable scimantic:refines scimantic:supports scimantic:unit scimantic:value rdf:type rdfs:label prov:wasAttributedTo prov:wasDerivedFrom prov:wasGeneratedBy urref:derivationOfUncertainty urref:natureOfUncertainty ) ;
+    sh:ignoredProperties ( dcterms:bibliographicCitation dcterms:source scimantic:accessLevel scimantic:content scimantic:contradicts scimantic:hasUncertainty scimantic:method scimantic:motivates scimantic:pageNumber scimantic:parameter scimantic:publishable scimantic:refines scimantic:supports scimantic:unit scimantic:value rdf:type rdfs:label <http://www.w3.org/ns/oa#end> <http://www.w3.org/ns/oa#exact> <http://www.w3.org/ns/oa#hasBody> <http://www.w3.org/ns/oa#hasSelector> <http://www.w3.org/ns/oa#hasTarget> <http://www.w3.org/ns/oa#prefix> <http://www.w3.org/ns/oa#start> <http://www.w3.org/ns/oa#suffix> prov:generatedAtTime prov:wasAttributedTo prov:wasDerivedFrom prov:wasGeneratedBy urref:derivationOfUncertainty urref:natureOfUncertainty ) ;
     sh:targetClass prov:Entity .
 
 urref:Aleatory a sh:NodeShape ;
@@ -173,41 +173,48 @@ scimantic:Parameter a sh:NodeShape ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:targetClass scimantic:Parameter .
 
-scimantic:Question a sh:NodeShape ;
+<http://www.w3.org/ns/oa#TextQuoteSelector> a sh:NodeShape ;
     sh:closed true ;
-    sh:description "An interrogative sentence representing the research query." ;
+    sh:description "A selector that identifies text by exact quote with surrounding context. Follows W3C Web Annotation TextQuoteSelector." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class scimantic:QuestionFormation ;
-            sh:description "The activity that generated this entity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path prov:wasGeneratedBy ],
-        [ sh:datatype xsd:string ;
-            sh:description "Entity derived from another Entity." ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "Character offset where the selection ends." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:Literal ;
-            sh:order 3 ;
-            sh:path prov:wasDerivedFrom ],
-        [ sh:class prov:Agent ;
-            sh:description "The agent who attributed this entity (Agent)." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 4 ;
-            sh:path prov:wasAttributedTo ],
+            sh:path <http://www.w3.org/ns/oa#end> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Page number in PDF documents where the selection appears." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path scimantic:pageNumber ],
         [ sh:datatype xsd:string ;
-            sh:description "The human-readable label or text." ;
+            sh:description "Text immediately after the selection (for disambiguation)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path <http://www.w3.org/ns/oa#suffix> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The exact text that was selected/highlighted." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:nodeKind sh:Literal ;
             sh:order 0 ;
-            sh:path rdfs:label ],
-        [ sh:class scimantic:LiteratureSearch ;
-            sh:description "A Question that triggers or motivates an Activity." ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 2 ;
-            sh:path scimantic:motivates ] ;
-    sh:targetClass scimantic:Question .
+            sh:path <http://www.w3.org/ns/oa#exact> ],
+        [ sh:datatype xsd:string ;
+            sh:description "Text immediately before the selection (for disambiguation)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path <http://www.w3.org/ns/oa#prefix> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Character offset where the selection starts (within the target or page)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path <http://www.w3.org/ns/oa#start> ] ;
+    sh:targetClass <http://www.w3.org/ns/oa#TextQuoteSelector> .
 
 scimantic:Analysis a sh:NodeShape ;
     sh:closed true ;
@@ -296,7 +303,13 @@ scimantic:EvidenceAssessment a sh:NodeShape ;
     sh:closed true ;
     sh:description "The activity of evaluating credibility or relevance of Evidence." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class prov:Agent ;
+    sh:property [ sh:class scimantic:EvidenceExtraction ;
+            sh:description "Activity that informed this Activity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path prov:wasInformedBy ],
+        [ sh:class prov:Agent ;
             sh:description "The agent associated with an activity." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:BlankNodeOrIRI ;
@@ -307,14 +320,31 @@ scimantic:EvidenceAssessment a sh:NodeShape ;
             sh:maxCount 1 ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 0 ;
-            sh:path prov:used ],
-        [ sh:class scimantic:LiteratureSearch ;
+            sh:path prov:used ] ;
+    sh:targetClass scimantic:EvidenceAssessment .
+
+scimantic:EvidenceExtraction a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "The activity of articulating Evidence claims from one or more Annotations. Separates the act of reading/highlighting from the act of formulating evidence statements." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class scimantic:LiteratureSearch ;
             sh:description "Activity that informed this Activity." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path prov:wasInformedBy ],
+        [ sh:class prov:Agent ;
+            sh:description "The agent associated with an activity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 1 ;
-            sh:path prov:wasInformedBy ] ;
-    sh:targetClass scimantic:EvidenceAssessment .
+            sh:path prov:wasAssociatedWith ],
+        [ sh:class <http://www.w3.org/ns/oa#Annotation> ;
+            sh:description "The annotations from which evidence is extracted." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path prov:used ] ;
+    sh:targetClass scimantic:EvidenceExtraction .
 
 scimantic:ExperimentalMethod a sh:NodeShape ;
     sh:closed true ;
@@ -430,22 +460,55 @@ scimantic:Premise a sh:NodeShape ;
             sh:path rdfs:label ] ;
     sh:targetClass scimantic:Premise .
 
+scimantic:Question a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "An interrogative sentence representing the research query." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class scimantic:QuestionFormation ;
+            sh:description "The activity that generated this entity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path prov:wasGeneratedBy ],
+        [ sh:description "Questions can be derived from prior questions (refinement), annotations/highlights in literature, or evidence claims." ;
+            sh:or ( [ sh:class scimantic:Question ] [ sh:class <http://www.w3.org/ns/oa#Annotation> ] [ sh:class scimantic:Evidence ] ) ;
+            sh:order 3 ;
+            sh:path prov:wasDerivedFrom ],
+        [ sh:class prov:Agent ;
+            sh:description "The agent who attributed this entity (Agent)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path prov:wasAttributedTo ],
+        [ sh:datatype xsd:string ;
+            sh:description "The human-readable label or text." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path rdfs:label ],
+        [ sh:class scimantic:LiteratureSearch ;
+            sh:description "A Question that triggers or motivates an Activity." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path scimantic:motivates ] ;
+    sh:targetClass scimantic:Question .
+
 scimantic:QuestionFormation a sh:NodeShape ;
     sh:closed true ;
-    sh:description "The activity of creating a Research Question." ;
+    sh:description "The activity of creating or refining a Research Question. Can be informed by prior results (iterating on findings) or by literature search (refining questions based on discovered evidence)." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class prov:Agent ;
+    sh:property [ sh:description "Activity that informed this Activity." ;
+            sh:maxCount 1 ;
+            sh:or ( [ sh:class scimantic:ResultAssessment ] [ sh:class scimantic:LiteratureSearch ] ) ;
+            sh:order 1 ;
+            sh:path prov:wasInformedBy ],
+        [ sh:class prov:Agent ;
             sh:description "The agent associated with an activity." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 0 ;
-            sh:path prov:wasAssociatedWith ],
-        [ sh:class scimantic:ResultAssessment ;
-            sh:description "Activity that informed this Activity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path prov:wasInformedBy ] ;
+            sh:path prov:wasAssociatedWith ] ;
     sh:targetClass scimantic:QuestionFormation .
 
 scimantic:Result a sh:NodeShape ;
@@ -539,6 +602,56 @@ scimantic:ResultAssessment a sh:NodeShape ;
             sh:path prov:used ] ;
     sh:targetClass scimantic:ResultAssessment .
 
+<http://www.w3.org/ns/oa#Annotation> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A text annotation or highlight that grounds Questions or Evidence in specific source text. Follows W3C Web Annotation Data Model." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The source document being annotated (DOI, URL, or local file reference)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path <http://www.w3.org/ns/oa#hasTarget> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The content or comment of the annotation (optional for highlights)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path <http://www.w3.org/ns/oa#hasBody> ],
+        [ sh:class prov:Agent ;
+            sh:description "The agent who attributed this entity (Agent)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path prov:wasAttributedTo ],
+        [ sh:class scimantic:LiteratureSearch ;
+            sh:description "The literature search activity that produced this annotation." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path prov:wasGeneratedBy ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "Time of generation." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path prov:generatedAtTime ],
+        [ sh:datatype xsd:string ;
+            sh:description "The human-readable label or text." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path rdfs:label ],
+        [ sh:class <http://www.w3.org/ns/oa#TextQuoteSelector> ;
+            sh:description "The selector specifying which part of the target is annotated." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path <http://www.w3.org/ns/oa#hasSelector> ] ;
+    sh:targetClass <http://www.w3.org/ns/oa#Annotation> .
+
 urref:UncertaintyModel a sh:NodeShape ;
     sh:closed true ;
     sh:description "A reified uncertainty model." ;
@@ -561,12 +674,22 @@ scimantic:Evidence a sh:NodeShape ;
     sh:closed true ;
     sh:description "A factual claim extracted from a source." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:datatype xsd:string ;
+    sh:property [ sh:class scimantic:EvidenceExtraction ;
+            sh:description "The activity that generated this entity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path prov:wasGeneratedBy ],
+        [ sh:datatype xsd:string ;
             sh:description "Bibliographic reference." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:Literal ;
             sh:order 2 ;
             sh:path dcterms:bibliographicCitation ],
+        [ sh:description "Evidence can be derived from research questions or from annotations/highlights in literature." ;
+            sh:or ( [ sh:class scimantic:Question ] [ sh:class <http://www.w3.org/ns/oa#Annotation> ] ) ;
+            sh:order 5 ;
+            sh:path prov:wasDerivedFrom ],
         [ sh:class scimantic:Hypothesis ;
             sh:description "An Entity (Evidence/Result) that provides negative evidence against a Hypothesis." ;
             sh:maxCount 1 ;
@@ -585,12 +708,6 @@ scimantic:Evidence a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 8 ;
             sh:path scimantic:publishable ],
-        [ sh:class scimantic:LiteratureSearch ;
-            sh:description "The activity that generated this entity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 4 ;
-            sh:path prov:wasGeneratedBy ],
         [ sh:class scimantic:Hypothesis ;
             sh:description "An Entity (Evidence/Result) that provides positive evidence for a Hypothesis." ;
             sh:maxCount 1 ;
@@ -616,12 +733,6 @@ scimantic:Evidence a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 11 ;
             sh:path scimantic:hasUncertainty ],
-        [ sh:class scimantic:Question ;
-            sh:description "Entity derived from another Entity." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 5 ;
-            sh:path prov:wasDerivedFrom ],
         [ sh:class prov:Agent ;
             sh:description "The agent who attributed this entity (Agent)." ;
             sh:maxCount 1 ;
@@ -638,7 +749,7 @@ scimantic:Evidence a sh:NodeShape ;
 
 scimantic:LiteratureSearch a sh:NodeShape ;
     sh:closed true ;
-    sh:description "The activity of searching for and extracting Evidence." ;
+    sh:description "The activity of searching literature and creating Annotations (highlights, notes) on source text." ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:property [ sh:class scimantic:QuestionFormation ;
             sh:description "Activity that informed this Activity." ;
@@ -697,5 +808,5 @@ prov:Agent a sh:NodeShape ;
     sh:targetClass prov:Agent .
 
 <http://scimantic.io/shacl/scimantic-shapes.ttl> a owl:Ontology ;
-    owl:versionIRI <http://scimantic.io/v/0.1.2/shacl/scimantic-shapes.ttl> ;
-    owl:versionInfo "0.1.2" .
+    owl:versionIRI <http://scimantic.io/v/0.1.3/shacl/scimantic-shapes.ttl> ;
+    owl:versionInfo "0.1.3" .

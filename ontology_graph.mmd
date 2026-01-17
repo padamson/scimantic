@@ -19,6 +19,7 @@ graph TB
     subgraph Entities ["Entities (Things)"]
     direction TB
         Question[Question]
+        Annotation[Annotation]
         Evidence[Evidence]
         Premise[Premise]
         Hypothesis[Hypothesis]
@@ -26,7 +27,8 @@ graph TB
         Dataset[Dataset]
         Result[Result]
         Conclusion[Conclusion]
-        Question ~~~ Evidence
+        Question ~~~ Annotation
+        Annotation ~~~ Evidence
         Evidence ~~~ Premise
         Premise ~~~ Hypothesis
         Hypothesis ~~~ ExperimentalMethod
@@ -38,6 +40,7 @@ graph TB
     direction TB
         QuestionFormation[QuestionFormation]
         LiteratureSearch[LiteratureSearch]
+        EvidenceExtraction[EvidenceExtraction]
         EvidenceAssessment[EvidenceAssessment]
         HypothesisFormation[HypothesisFormation]
         DesignOfExperiment[DesignOfExperiment]
@@ -45,7 +48,8 @@ graph TB
         Analysis[Analysis]
         ResultAssessment[ResultAssessment]
         QuestionFormation ~~~ LiteratureSearch
-        LiteratureSearch ~~~ EvidenceAssessment
+        LiteratureSearch ~~~ EvidenceExtraction
+        EvidenceExtraction ~~~ EvidenceAssessment
         EvidenceAssessment ~~~ HypothesisFormation
         HypothesisFormation ~~~ DesignOfExperiment
         DesignOfExperiment ~~~ Experimentation
@@ -56,15 +60,20 @@ graph TB
     %% Relationships (Sorted)
     QuestionFormation -->|generates| Question
     QuestionFormation -.->|informs| LiteratureSearch
+    Question -->|derives from| Question
     Question -->|motivates| LiteratureSearch
-    LiteratureSearch -->|generates| Evidence
-    LiteratureSearch -.->|informs| EvidenceAssessment
+    Question -->|derives from| Evidence
+    Question -->|derives from| Annotation
+    LiteratureSearch -.->|informs| QuestionFormation
     LiteratureSearch -.->|informs| DesignOfExperiment
+    LiteratureSearch -->|generates| Annotation
+    LiteratureSearch -.->|informs| EvidenceExtraction
     Evidence -->|derives from| Question
     Evidence -->|input to| EvidenceAssessment
     Evidence -.->|contradicts| Hypothesis
     Evidence -.->|supports| Hypothesis
     Evidence -->|input to| DesignOfExperiment
+    Evidence -->|derives from| Annotation
     EvidenceAssessment -->|generates| Premise
     EvidenceAssessment -.->|informs| HypothesisFormation
     Premise -->|derives from| Evidence
@@ -92,10 +101,13 @@ graph TB
     ResultAssessment -.->|informs| QuestionFormation
     ResultAssessment -->|generates| Conclusion
     Conclusion -->|derives from| Result
+    EvidenceExtraction -->|generates| Evidence
+    EvidenceExtraction -.->|informs| EvidenceAssessment
+    Annotation -->|input to| EvidenceExtraction
     classDef entity fill:#ffffff,stroke:#2563eb,stroke-width:2px,color:black;
     classDef activity fill:#ffffff,stroke:#4b5563,stroke-width:2px,color:black,rx:5,ry:5;
     style Entities fill:#f0f9ff,stroke:#bae6fd,stroke-width:2px,color:black
     style Activities fill:#f3f4f6,stroke:#cbd5e1,stroke-width:2px,color:black
     style Scimantic_Ontology fill:#ffffff,stroke:#94a3b8,stroke-width:2px,color:black
-    class Question,Evidence,Premise,Hypothesis,ExperimentalMethod,Dataset,Result,Conclusion entity;
-    class QuestionFormation,LiteratureSearch,EvidenceAssessment,HypothesisFormation,DesignOfExperiment,Experimentation,Analysis,ResultAssessment activity;
+    class Question,Annotation,Evidence,Premise,Hypothesis,ExperimentalMethod,Dataset,Result,Conclusion entity;
+    class QuestionFormation,LiteratureSearch,EvidenceExtraction,EvidenceAssessment,HypothesisFormation,DesignOfExperiment,Experimentation,Analysis,ResultAssessment activity;

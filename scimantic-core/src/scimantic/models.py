@@ -55,17 +55,18 @@ from rdflib import (
     URIRef
 )
 
-from linkml_runtime.linkml_model.types import Boolean, Datetime, String
+from linkml_runtime.linkml_model.types import Boolean, Datetime, Integer, String
 from linkml_runtime.utils.metamodelcore import Bool, XSDDateTime
 
 metamodel_version = "1.7.0"
-version = "0.1.2"
+version = "0.1.3"
 
 # Namespaces
 DCAT = CurieNamespace('dcat', 'http://www.w3.org/ns/dcat#')
 DCTERMS = CurieNamespace('dcterms', 'http://purl.org/dc/terms/')
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
 NP = CurieNamespace('np', 'http://www.nanopub.org/nschema#')
+OA = CurieNamespace('oa', 'http://www.w3.org/ns/oa#')
 PROV = CurieNamespace('prov', 'http://www.w3.org/ns/prov#')
 RDFS = CurieNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
 SCIMANTIC = CurieNamespace('scimantic', 'http://scimantic.io/')
@@ -132,7 +133,7 @@ class Question(Entity):
     label: str = None
     wasGeneratedBy: Optional[Union[dict, "QuestionFormation"]] = None
     motivates: Optional[Union[Union[dict, "LiteratureSearch"], list[Union[dict, "LiteratureSearch"]]]] = empty_list()
-    wasDerivedFrom: Optional[str] = None
+    wasDerivedFrom: Optional[Union[str, list[str]]] = empty_list()
     wasAttributedTo: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
@@ -148,8 +149,9 @@ class Question(Entity):
             self.motivates = [self.motivates] if self.motivates is not None else []
         self.motivates = [v if isinstance(v, LiteratureSearch) else LiteratureSearch(**as_dict(v)) for v in self.motivates]
 
-        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, str):
-            self.wasDerivedFrom = str(self.wasDerivedFrom)
+        if not isinstance(self.wasDerivedFrom, list):
+            self.wasDerivedFrom = [self.wasDerivedFrom] if self.wasDerivedFrom is not None else []
+        self.wasDerivedFrom = [v if isinstance(v, str) else str(v) for v in self.wasDerivedFrom]
 
         if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, Agent):
             self.wasAttributedTo = Agent()
@@ -160,7 +162,8 @@ class Question(Entity):
 @dataclass(repr=False)
 class QuestionFormation(Activity):
     """
-    The activity of creating a Research Question.
+    The activity of creating or refining a Research Question. Can be informed by prior results (iterating on findings)
+    or by literature search (refining questions based on discovered evidence).
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -170,14 +173,14 @@ class QuestionFormation(Activity):
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.QuestionFormation
 
     wasAssociatedWith: Optional[Union[dict, Agent]] = None
-    wasInformedBy: Optional[Union[dict, "ResultAssessment"]] = None
+    wasInformedBy: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, Agent):
             self.wasAssociatedWith = Agent()
 
-        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, ResultAssessment):
-            self.wasInformedBy = ResultAssessment(**as_dict(self.wasInformedBy))
+        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, str):
+            self.wasInformedBy = str(self.wasInformedBy)
 
         super().__post_init__(**kwargs)
 
@@ -185,7 +188,7 @@ class QuestionFormation(Activity):
 @dataclass(repr=False)
 class LiteratureSearch(Activity):
     """
-    The activity of searching for and extracting Evidence.
+    The activity of searching literature and creating Annotations (highlights, notes) on source text.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -208,6 +211,37 @@ class LiteratureSearch(Activity):
 
 
 @dataclass(repr=False)
+class EvidenceExtraction(Activity):
+    """
+    The activity of articulating Evidence claims from one or more Annotations. Separates the act of
+    reading/highlighting from the act of formulating evidence statements.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = SCIMANTIC["EvidenceExtraction"]
+    class_class_curie: ClassVar[str] = "scimantic:EvidenceExtraction"
+    class_name: ClassVar[str] = "EvidenceExtraction"
+    class_model_uri: ClassVar[URIRef] = SCIMANTIC.EvidenceExtraction
+
+    used: Optional[Union[Union[dict, "Annotation"], list[Union[dict, "Annotation"]]]] = empty_list()
+    wasAssociatedWith: Optional[Union[dict, Agent]] = None
+    wasInformedBy: Optional[Union[dict, LiteratureSearch]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if not isinstance(self.used, list):
+            self.used = [self.used] if self.used is not None else []
+        self.used = [v if isinstance(v, Annotation) else Annotation(**as_dict(v)) for v in self.used]
+
+        if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, Agent):
+            self.wasAssociatedWith = Agent()
+
+        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, LiteratureSearch):
+            self.wasInformedBy = LiteratureSearch(**as_dict(self.wasInformedBy))
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
 class Evidence(Entity):
     """
     A factual claim extracted from a source.
@@ -223,8 +257,8 @@ class Evidence(Entity):
     content: Optional[str] = None
     citation: Optional[str] = None
     source: Optional[str] = None
-    wasGeneratedBy: Optional[Union[dict, LiteratureSearch]] = None
-    wasDerivedFrom: Optional[Union[dict, Question]] = None
+    wasGeneratedBy: Optional[Union[dict, EvidenceExtraction]] = None
+    wasDerivedFrom: Optional[Union[str, list[str]]] = empty_list()
     wasAttributedTo: Optional[Union[dict, Agent]] = None
     accessLevel: Optional[str] = None
     publishable: Optional[Union[bool, Bool]] = None
@@ -247,11 +281,12 @@ class Evidence(Entity):
         if self.source is not None and not isinstance(self.source, str):
             self.source = str(self.source)
 
-        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, LiteratureSearch):
-            self.wasGeneratedBy = LiteratureSearch(**as_dict(self.wasGeneratedBy))
+        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, EvidenceExtraction):
+            self.wasGeneratedBy = EvidenceExtraction(**as_dict(self.wasGeneratedBy))
 
-        if self.wasDerivedFrom is not None and not isinstance(self.wasDerivedFrom, Question):
-            self.wasDerivedFrom = Question(**as_dict(self.wasDerivedFrom))
+        if not isinstance(self.wasDerivedFrom, list):
+            self.wasDerivedFrom = [self.wasDerivedFrom] if self.wasDerivedFrom is not None else []
+        self.wasDerivedFrom = [v if isinstance(v, str) else str(v) for v in self.wasDerivedFrom]
 
         if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, Agent):
             self.wasAttributedTo = Agent()
@@ -535,6 +570,100 @@ class Parameter(Entity):
 
 
 @dataclass(repr=False)
+class Annotation(Entity):
+    """
+    A text annotation or highlight that grounds Questions or Evidence in specific source text. Follows W3C Web
+    Annotation Data Model.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = OA["Annotation"]
+    class_class_curie: ClassVar[str] = "oa:Annotation"
+    class_name: ClassVar[str] = "Annotation"
+    class_model_uri: ClassVar[URIRef] = SCIMANTIC.Annotation
+
+    label: str = None
+    hasTarget: str = None
+    hasBody: Optional[str] = None
+    hasSelector: Optional[Union[dict, "TextSelector"]] = None
+    wasAttributedTo: Optional[Union[dict, Agent]] = None
+    wasGeneratedBy: Optional[Union[dict, LiteratureSearch]] = None
+    generatedAtTime: Optional[Union[str, XSDDateTime]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.label):
+            self.MissingRequiredField("label")
+        if not isinstance(self.label, str):
+            self.label = str(self.label)
+
+        if self._is_empty(self.hasTarget):
+            self.MissingRequiredField("hasTarget")
+        if not isinstance(self.hasTarget, str):
+            self.hasTarget = str(self.hasTarget)
+
+        if self.hasBody is not None and not isinstance(self.hasBody, str):
+            self.hasBody = str(self.hasBody)
+
+        if self.hasSelector is not None and not isinstance(self.hasSelector, TextSelector):
+            self.hasSelector = TextSelector(**as_dict(self.hasSelector))
+
+        if self.wasAttributedTo is not None and not isinstance(self.wasAttributedTo, Agent):
+            self.wasAttributedTo = Agent()
+
+        if self.wasGeneratedBy is not None and not isinstance(self.wasGeneratedBy, LiteratureSearch):
+            self.wasGeneratedBy = LiteratureSearch(**as_dict(self.wasGeneratedBy))
+
+        if self.generatedAtTime is not None and not isinstance(self.generatedAtTime, XSDDateTime):
+            self.generatedAtTime = XSDDateTime(self.generatedAtTime)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class TextSelector(Entity):
+    """
+    A selector that identifies text by exact quote with surrounding context. Follows W3C Web Annotation
+    TextQuoteSelector.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = OA["TextQuoteSelector"]
+    class_class_curie: ClassVar[str] = "oa:TextQuoteSelector"
+    class_name: ClassVar[str] = "TextSelector"
+    class_model_uri: ClassVar[URIRef] = SCIMANTIC.TextSelector
+
+    exact: str = None
+    prefix: Optional[str] = None
+    suffix: Optional[str] = None
+    startOffset: Optional[int] = None
+    endOffset: Optional[int] = None
+    pageNumber: Optional[int] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.exact):
+            self.MissingRequiredField("exact")
+        if not isinstance(self.exact, str):
+            self.exact = str(self.exact)
+
+        if self.prefix is not None and not isinstance(self.prefix, str):
+            self.prefix = str(self.prefix)
+
+        if self.suffix is not None and not isinstance(self.suffix, str):
+            self.suffix = str(self.suffix)
+
+        if self.startOffset is not None and not isinstance(self.startOffset, int):
+            self.startOffset = int(self.startOffset)
+
+        if self.endOffset is not None and not isinstance(self.endOffset, int):
+            self.endOffset = int(self.endOffset)
+
+        if self.pageNumber is not None and not isinstance(self.pageNumber, int):
+            self.pageNumber = int(self.pageNumber)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
 class EvidenceAssessment(Activity):
     """
     The activity of evaluating credibility or relevance of Evidence.
@@ -547,15 +676,15 @@ class EvidenceAssessment(Activity):
     class_model_uri: ClassVar[URIRef] = SCIMANTIC.EvidenceAssessment
 
     used: Optional[Union[dict, Evidence]] = None
-    wasInformedBy: Optional[Union[dict, LiteratureSearch]] = None
+    wasInformedBy: Optional[Union[dict, EvidenceExtraction]] = None
     wasAssociatedWith: Optional[Union[dict, Agent]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self.used is not None and not isinstance(self.used, Evidence):
             self.used = Evidence(**as_dict(self.used))
 
-        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, LiteratureSearch):
-            self.wasInformedBy = LiteratureSearch(**as_dict(self.wasInformedBy))
+        if self.wasInformedBy is not None and not isinstance(self.wasInformedBy, EvidenceExtraction):
+            self.wasInformedBy = EvidenceExtraction(**as_dict(self.wasInformedBy))
 
         if self.wasAssociatedWith is not None and not isinstance(self.wasAssociatedWith, Agent):
             self.wasAssociatedWith = Agent()
@@ -976,23 +1105,59 @@ slots.source = Slot(uri=DCTERMS.source, name="source", curie=DCTERMS.curie('sour
 slots.generatedAtTime = Slot(uri=PROV.generatedAtTime, name="generatedAtTime", curie=PROV.curie('generatedAtTime'),
                    model_uri=SCIMANTIC.generatedAtTime, domain=Entity, range=Optional[Union[str, XSDDateTime]])
 
+slots.hasBody = Slot(uri=OA.hasBody, name="hasBody", curie=OA.curie('hasBody'),
+                   model_uri=SCIMANTIC.hasBody, domain=None, range=Optional[str])
+
+slots.hasTarget = Slot(uri=OA.hasTarget, name="hasTarget", curie=OA.curie('hasTarget'),
+                   model_uri=SCIMANTIC.hasTarget, domain=None, range=Optional[str])
+
+slots.hasSelector = Slot(uri=OA.hasSelector, name="hasSelector", curie=OA.curie('hasSelector'),
+                   model_uri=SCIMANTIC.hasSelector, domain=None, range=Optional[str])
+
+slots.exact = Slot(uri=OA.exact, name="exact", curie=OA.curie('exact'),
+                   model_uri=SCIMANTIC.exact, domain=None, range=str)
+
+slots.prefix = Slot(uri=OA.prefix, name="prefix", curie=OA.curie('prefix'),
+                   model_uri=SCIMANTIC.prefix, domain=None, range=Optional[str])
+
+slots.suffix = Slot(uri=OA.suffix, name="suffix", curie=OA.curie('suffix'),
+                   model_uri=SCIMANTIC.suffix, domain=None, range=Optional[str])
+
+slots.startOffset = Slot(uri=OA.start, name="startOffset", curie=OA.curie('start'),
+                   model_uri=SCIMANTIC.startOffset, domain=None, range=Optional[int])
+
+slots.endOffset = Slot(uri=OA.end, name="endOffset", curie=OA.curie('end'),
+                   model_uri=SCIMANTIC.endOffset, domain=None, range=Optional[int])
+
+slots.pageNumber = Slot(uri=SCIMANTIC.pageNumber, name="pageNumber", curie=SCIMANTIC.curie('pageNumber'),
+                   model_uri=SCIMANTIC.pageNumber, domain=None, range=Optional[int])
+
 slots.Question_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="Question_wasGeneratedBy", curie=PROV.curie('wasGeneratedBy'),
                    model_uri=SCIMANTIC.Question_wasGeneratedBy, domain=Question, range=Optional[Union[dict, "QuestionFormation"]])
 
 slots.Question_motivates = Slot(uri=SCIMANTIC.motivates, name="Question_motivates", curie=SCIMANTIC.curie('motivates'),
                    model_uri=SCIMANTIC.Question_motivates, domain=Question, range=Optional[Union[Union[dict, "LiteratureSearch"], list[Union[dict, "LiteratureSearch"]]]])
 
+slots.Question_wasDerivedFrom = Slot(uri=PROV.wasDerivedFrom, name="Question_wasDerivedFrom", curie=PROV.curie('wasDerivedFrom'),
+                   model_uri=SCIMANTIC.Question_wasDerivedFrom, domain=Question, range=Optional[Union[str, list[str]]])
+
 slots.QuestionFormation_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="QuestionFormation_wasInformedBy", curie=PROV.curie('wasInformedBy'),
-                   model_uri=SCIMANTIC.QuestionFormation_wasInformedBy, domain=QuestionFormation, range=Optional[Union[dict, "ResultAssessment"]])
+                   model_uri=SCIMANTIC.QuestionFormation_wasInformedBy, domain=QuestionFormation, range=Optional[str])
 
 slots.LiteratureSearch_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="LiteratureSearch_wasInformedBy", curie=PROV.curie('wasInformedBy'),
                    model_uri=SCIMANTIC.LiteratureSearch_wasInformedBy, domain=LiteratureSearch, range=Optional[Union[dict, QuestionFormation]])
 
+slots.EvidenceExtraction_used = Slot(uri=PROV.used, name="EvidenceExtraction_used", curie=PROV.curie('used'),
+                   model_uri=SCIMANTIC.EvidenceExtraction_used, domain=EvidenceExtraction, range=Optional[Union[Union[dict, "Annotation"], list[Union[dict, "Annotation"]]]])
+
+slots.EvidenceExtraction_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="EvidenceExtraction_wasInformedBy", curie=PROV.curie('wasInformedBy'),
+                   model_uri=SCIMANTIC.EvidenceExtraction_wasInformedBy, domain=EvidenceExtraction, range=Optional[Union[dict, LiteratureSearch]])
+
 slots.Evidence_wasDerivedFrom = Slot(uri=PROV.wasDerivedFrom, name="Evidence_wasDerivedFrom", curie=PROV.curie('wasDerivedFrom'),
-                   model_uri=SCIMANTIC.Evidence_wasDerivedFrom, domain=Evidence, range=Optional[Union[dict, Question]])
+                   model_uri=SCIMANTIC.Evidence_wasDerivedFrom, domain=Evidence, range=Optional[Union[str, list[str]]])
 
 slots.Evidence_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="Evidence_wasGeneratedBy", curie=PROV.curie('wasGeneratedBy'),
-                   model_uri=SCIMANTIC.Evidence_wasGeneratedBy, domain=Evidence, range=Optional[Union[dict, LiteratureSearch]])
+                   model_uri=SCIMANTIC.Evidence_wasGeneratedBy, domain=Evidence, range=Optional[Union[dict, EvidenceExtraction]])
 
 slots.Evidence_supports = Slot(uri=SCIMANTIC.supports, name="Evidence_supports", curie=SCIMANTIC.curie('supports'),
                    model_uri=SCIMANTIC.Evidence_supports, domain=Evidence, range=Optional[Union[dict, "Hypothesis"]])
@@ -1045,11 +1210,20 @@ slots.Conclusion_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="Conclusion
 slots.Conclusion_wasDerivedFrom = Slot(uri=PROV.wasDerivedFrom, name="Conclusion_wasDerivedFrom", curie=PROV.curie('wasDerivedFrom'),
                    model_uri=SCIMANTIC.Conclusion_wasDerivedFrom, domain=Conclusion, range=Optional[Union[dict, Result]])
 
+slots.Annotation_hasTarget = Slot(uri=OA.hasTarget, name="Annotation_hasTarget", curie=OA.curie('hasTarget'),
+                   model_uri=SCIMANTIC.Annotation_hasTarget, domain=Annotation, range=str)
+
+slots.Annotation_hasSelector = Slot(uri=OA.hasSelector, name="Annotation_hasSelector", curie=OA.curie('hasSelector'),
+                   model_uri=SCIMANTIC.Annotation_hasSelector, domain=Annotation, range=Optional[Union[dict, "TextSelector"]])
+
+slots.Annotation_wasGeneratedBy = Slot(uri=PROV.wasGeneratedBy, name="Annotation_wasGeneratedBy", curie=PROV.curie('wasGeneratedBy'),
+                   model_uri=SCIMANTIC.Annotation_wasGeneratedBy, domain=Annotation, range=Optional[Union[dict, LiteratureSearch]])
+
 slots.EvidenceAssessment_used = Slot(uri=PROV.used, name="EvidenceAssessment_used", curie=PROV.curie('used'),
                    model_uri=SCIMANTIC.EvidenceAssessment_used, domain=EvidenceAssessment, range=Optional[Union[dict, Evidence]])
 
 slots.EvidenceAssessment_wasInformedBy = Slot(uri=PROV.wasInformedBy, name="EvidenceAssessment_wasInformedBy", curie=PROV.curie('wasInformedBy'),
-                   model_uri=SCIMANTIC.EvidenceAssessment_wasInformedBy, domain=EvidenceAssessment, range=Optional[Union[dict, LiteratureSearch]])
+                   model_uri=SCIMANTIC.EvidenceAssessment_wasInformedBy, domain=EvidenceAssessment, range=Optional[Union[dict, EvidenceExtraction]])
 
 slots.HypothesisFormation_used = Slot(uri=PROV.used, name="HypothesisFormation_used", curie=PROV.curie('used'),
                    model_uri=SCIMANTIC.HypothesisFormation_used, domain=HypothesisFormation, range=Optional[Union[dict, Premise]])

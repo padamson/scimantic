@@ -16,7 +16,8 @@
 			"**/.venv": true,
 			"**/dist": true,
 			"**/out": true
-		}
+		},
+		"workbench.view.alwaysShowHeaderActions": true
 	},
 	"launch": {
 		"version": "0.2.0",

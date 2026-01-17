@@ -25,6 +25,7 @@ def generate_mermaid_v2():
     ordered_activities = [
         "QuestionFormation",
         "LiteratureSearch",
+        "EvidenceExtraction",
         "EvidenceAssessment",
         "HypothesisFormation",
         "DesignOfExperiment",
@@ -36,6 +37,7 @@ def generate_mermaid_v2():
     # 2. Entities (Things) - Right Column(s)
     ordered_entities = [
         "Question",
+        "Annotation",
         "Evidence",
         "Premise",
         "Hypothesis",

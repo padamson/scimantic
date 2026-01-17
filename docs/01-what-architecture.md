@@ -4,7 +4,7 @@ This document specifies the top-level technical architecture of Scimantic: seman
 
 For **WHY** we're building it, see [the vision](./00-why-vision.md).
 For **WHEN** (implementation sequence), see [the roadmap](./02-when-roadmap.md).
-For **HOW** (implementation details), see [specifications](./03-how-specifications/), `scimantic-core`, and `scimantic-ext`.
+For **HOW** (implementation details), see [specifications](./03-how-specifications/), `scimantic-core`, `scimantic-ext`, and `scimantic-server`.
 For **FEATURES** (vertical slices), see [features](./features/).
 
 ## Core Semantic Model
@@ -23,11 +23,11 @@ Scimantic reuses existing W3C and community ontologies wherever possible:
 6.  **PROV-K** (`prov:` extensions): Adds support for scientific discourse (supports, contradicts).
 7.  **Scimantic Ontology** (`scimantic:`): Adds minimal domain-specific extensions for scientific concepts (Hypothesis, ExperimentalMethod, etc.).
 
-For full specification details, see [Ontology Specifications](../docs/03-how-specifications/ontology-spec-v0.1.0.md).
+For full specification details, see [Ontology Specifications](../docs/03-how-specifications/ontology-spec-v0.1.0.md) and [scimantic-core ontolology specification test](../scimantic-core/tests/test_ontology_specification.py).
 
 ## Nanopublication Structure
 
-Every assertion in Scimantic is wrapped as a **nanopublication**, a secure and verifiable data container with three parts:
+Every publishable assertion in Scimantic is wrapped as a **nanopublication**, a secure and verifiable data container with three parts:
 
 1.  **Assertion Graph**: The actual scientific claim (evidence, hypothesis, result).
 2.  **Provenance Graph**: The history of how this claim was created (who, when, using what source).
@@ -41,12 +41,13 @@ Scimantic defines six core entity types that subclass `prov:Entity`, representin
 
 *   **Question**: The research query motivating the work.
 *   **Evidence**: Factual claims extracted from literature or external sources.
+*   **Premise**: An evaluated proposition or insight derived from Evidence.
 *   **Hypothesis**: Testable claims derived from synthesizing evidence.
 *   **ExperimentalMethod**: Specifications for experiments or simulations (maps to `prov:Plan`).
 *   **Dataset**: Raw outputs or measurements from experimentation.
 *   **Result**: Analyzed findings supporting or contradicting hypotheses.
 
-For detailed property definitions and SHACL validation shapes, see [Ontology Specifications](../docs/03-how-specifications/ontology-spec-v0.1.0.md).
+For detailed property definitions and SHACL validation shapes, see [Ontology Specifications](../docs/03-how-specifications/ontology-spec-v0.1.0.md) and [scimantic-core ontolology specification test](../scimantic-core/tests/test_ontology_specification.py).
 
 ## Activity Types
 
@@ -83,7 +84,7 @@ This architecture allows the system to compute confidence scores across the enti
 
 ## MCP Integration Architecture
 
-Scimantic provides an MCP server that exposes research operations as tools:
+Scimantic provides an MCP server that exposes research operations as tools. As the implementation evolves, these may look like:
 
 **Tools**:
 1. `add_evidence`: Create Evidence entity as nanopublication
@@ -124,33 +125,217 @@ MCP Server (Python subprocess via uv)
 scimantic-core (Python)
 ```
 
-## File Structure and Persistence
+## Master Knowledge Graph and Subset Publishing
 
-### Project Knowledge Graph
+Each research project has a master knowledge graph file (`project.ttl` in RDF Turtle format). Scimantic separates **research data collection** (comprehensive, private) from **selective publishing** (curated subsets for specific audiences). This enables researchers to maintain complete provenance while controlling what they share.
 
-Each research project has a `project.ttl` file (RDF Turtle format):
+### Master Knowledge Graph (Private)
 
+**Purpose**: Researcher's comprehensive research database, source of truth for all work.
+
+**Characteristics**:
+- **Location**: Local file system (`project.ttl`), institutional server
+- **Access**: Private by default (researcher controls)
+- **Content**: All entities (questions, evidence, hypotheses, designs, datasets, results)
+- **Editability**: Actively maintained, entities added/updated/removed
+- **Provenance**: Complete PROV-O chains for entire research process
+- **License metadata**: Each entity has `dcterms:license` property
+
+**Example structure**:
+```turtle
+# Master KG includes everything
+:evidence_001 a scimantic:Evidence ;
+    dcterms:license <http://creativecommons.org/licenses/by/4.0/> .
+
+:evidence_002 a scimantic:Evidence ;
+    dcterms:license <http://scimantic.io/license#AllRightsReserved> ;  # Extracted from copyrighted paper
+    scimantic:fairUseJustification "Factual data extraction" .
+
+:evidence_003 a scimantic:Evidence ;
+    dcterms:license <http://scimantic.io/license#Proprietary> ;  # Collaborator data, cannot publish
+    scimantic:sharingRestriction "Lab B consent required" .
 ```
-examples/scimantic-paper/
-├── project.ttl          # Main knowledge graph
-├── data/                # Raw data files (referenced from RDF)
-├── scripts/             # Analysis scripts (decorated for PROV)
-└── nanopubs/            # Exported nanopublications (optional)
+
+### Subset Definitions (Configuration)
+
+**Purpose**: Specify which parts of master KG to publish for specific purposes.
+
+**Storage**: `.scimantic/subsets/*.yaml` files (version controlled)
+
+**Definition methods**:
+1. **SPARQL CONSTRUCT queries**: Flexible, powerful selection
+2. **Entity tags**: Tag entities with project/purpose IDs
+3. **License filters**: Include only entities with compatible licenses
+4. **Provenance closure**: Automatically include supporting evidence
+
+**Example definition** (`.scimantic/subsets/nature-2025.yaml`):
+```yaml
+name: nature-2025
+title: "Supporting Data: Protein X Folding"
+description: "Complete provenance for Nature paper DOI:10.1038/..."
+license: CC-BY-4.0
+
+# SPARQL query defining subset
+query: |
+  CONSTRUCT { ?s ?p ?o } WHERE {
+    ?s scimantic:project 'nature-2025' .
+    ?s (prov:wasDerivedFrom|prov:used)* ?supporting .
+    ?supporting ?p ?o .
+    ?s ?p ?o .
+  }
+
+# License requirements
+license_filter:
+  allow: [CC-BY-4.0, CC0, AllRightsReserved]  # With fair use justification
+  block: [Proprietary]
+
+# Publishing destinations
+destinations:
+  - nanopub_server: https://collaboratory.semanticscience.org
+  - github_pages: padamson/nature-2025-data
+  - zenodo:
+      doi: true
+      communities: [computational-chemistry]
 ```
 
-**project.ttl** contains:
-- All Evidence, Hypothesis, Design, Analysis entities
-- All PROV-O provenance metadata
-- All nanopublications (as named graphs)
+### Generated Subsets (Read-Only Snapshots)
 
-**Size consideration**: For large projects, `project.ttl` can be split into multiple files (e.g., `evidence.ttl`, `hypotheses.ttl`) and loaded as a dataset.
+**Purpose**: Executable output of subset definition applied to master KG.
 
-### Nanopublication Export
+**Storage**: `subsets/*.ttl` files (generated files under version control, DO NOT EDIT)
 
-Nanopublications can be exported to:
-1. **Local files** (`nanopubs/*.trig`): One file per nanopublication in TriG format
-2. **Remote server** (http://nanopub.org or institutional server): HTTP POST
-3. **IPFS**: Content-addressed storage for permanence
+**Generation workflow**:
+1. Execute SPARQL query against master KG
+2. Analyze licenses (warn about incompatibilities)
+3. Include provenance metadata (when generated, from which master KG commit)
+4. Write to `subsets/name.ttl`
+5. Commit snapshot to version control
+
+**Provenance of generated subset**:
+```turtle
+:subset_nature_2025_v1.0 a scimantic:PublishedSubset ;
+    prov:wasGeneratedBy [
+        a prov:Activity ;
+        prov:used :master_kg_commit_abc123 ;  # Git commit SHA
+        prov:used :subset_definition_nature_2025 ;  # SPARQL query
+        prov:startedAtTime "2026-01-15T10:30:00Z"^^xsd:dateTime
+    ] ;
+    scimantic:licenseAnalysis [
+        scimantic:openLicensedEntities 41 ;
+        scimantic:restrictedLicensedEntities 1 ;
+        scimantic:publishable true
+    ] .
+```
+
+**Key principle**: Subsets are **generated artifacts** (like compiled code), not manually edited. Always regenerate from master KG + query.
+
+### License-Based Subset Management
+
+**Every entity carries license metadata**:
+```turtle
+:hypothesis_042 dcterms:license <http://creativecommons.org/licenses/by/4.0/> .
+:evidence_101 dcterms:license <http://scimantic.io/license#AllRightsReserved> ;
+    scimantic:fairUseJustification "Factual extraction for research" .
+```
+
+**Automatic license analysis during subset generation**:
+- Count entities by license type
+- Warn if proprietary data included
+- Block publication if incompatible licenses present
+- Recommend safeguards for copyrighted material
+
+**Output**:
+```
+License Analysis:
+  ✓ 38 entities: CC-BY-4.0 (publishable)
+  ✓ 3 entities: CC0 (publishable)
+  ⚠ 1 entity: All Rights Reserved (requires fair use justification)
+  ✗ 0 entities: Proprietary (would block)
+Overall: PUBLISHABLE with fair use attribution
+```
+
+### Publishing Destinations
+
+Subsets can be published to **multiple destinations** simultaneously.
+
+#### Preconfigured Destinations
+
+1. **Nanopublication Servers** (PRIMARY for semantic web)
+   - **Examples**: https://collaboratory.semanticscience.org, https://nanopub.org
+   - **Benefits**: Trusty URIs, SPARQL federation, semantic web native
+   - **Access**: Public or institutional (ORCID auth)
+
+2. **GitHub Pages** (Static HTML viewer)
+   - **Benefits**: Free hosting, version control, custom domains
+   - **CI/CD**: GitHub Actions generate viewer from subset RDF
+   - **Access**: Public (or private repo with auth)
+
+3. **Scimantic.io** (Interactive web platform)
+   - **Benefits**: SPARQL playground, graph visualization, discovery
+   - **Access**: Public or private (ORCID auth, time-limited links)
+
+4. **Zenodo/Figshare** (Archival with DOI)
+   - **Benefits**: Long-term preservation, DOI for citation
+   - **Access**: Public or embargoed
+
+#### Configurable Destinations
+
+1. **Self-Hosted Scimantic-Server**
+   - **Use case**: Institutional deployment, compliance requirements
+   - **Benefits**: Full control, unlimited scale, SSO integration
+   - **Access**: Configurable (public, institutional, private)
+
+2. **Institutional Repositories**
+   - **Examples**: DSpace, Fedora, Samvera
+   - **Benefits**: Library archival mandates, local discovery
+   - **Access**: Varies by institution
+
+3. **Custom RDF Endpoints**
+   - **Use case**: Custom triple stores, research platforms
+   - **Requirements**: HTTP API for RDF upload
+   - **Access**: Configured per endpoint
+
+### Publishing Workflow Example
+
+```bash
+# 1. Maintain master KG (private)
+scimantic add-evidence --citation "Smith 2024" --license CC-BY-4.0
+
+# 2. Define subset for paper
+scimantic subset define nature-2025 \
+  --query "CONSTRUCT { ... }" \
+  --destinations nanopub-server,github-pages,zenodo
+
+# 3. Generate subset (includes license analysis)
+scimantic subset generate nature-2025
+# Output: ✓ Generated subsets/nature-2025.ttl (42 entities, license: OK)
+
+# 4. Review and commit snapshot
+git add subsets/nature-2025.ttl
+git commit -m "Generate nature-2025 subset v1.0"
+git tag subset-nature-2025-v1.0
+
+# 5. Publish to destinations
+scimantic subset publish nature-2025 --version v1.0
+# Output:
+#   ✓ https://collaboratory.semanticscience.org/np/RAabc123
+#   ✓ https://padamson.github.io/nature-2025-data
+#   ✓ https://doi.org/10.5281/zenodo.7654321
+```
+
+### Access Control Patterns
+
+**Public Destinations**: Anyone can access (GitHub Pages, public nanopub servers)
+
+**Private Destinations**: Authentication required
+- **ORCID**: Researcher identity verification
+- **Institutional SSO**: SAML, LDAP for organization access
+- **Time-Limited Links**: Temporary access for reviewers (grant panels, peer review)
+- **Collaborator Lists**: Explicit ORCID-based access control
+
+**Hybrid**: Same subset published to both public and private destinations
+- Public nanopub server for open science community
+- Private scimantic.io project for collaboration with specific colleagues
 
 ## System Components
 
@@ -160,8 +345,9 @@ Nanopublications can be exported to:
 1. `models.py`: Entity classes (Evidence, Hypothesis, Design, Analysis)
 2. `provenance.py`: PROV-O tracker, `@activity` decorator
 3. `publish.py`: Nanopublication generation, Trusty URIs
-4. `mcp.py`: MCP server exposing research tools
-5. `config.py`: Configuration (namespaces, default uncertainty values)
+4. `subset.py`: Subset definition, generation, license analysis (NEW)
+5. `mcp.py`: MCP server exposing research tools
+6. `config.py`: Configuration (namespaces, default uncertainty values)
 
 **Dependencies**:
 - `rdflib`: RDF graph manipulation, SPARQL, serialization
@@ -173,13 +359,24 @@ Nanopublications can be exported to:
 **Modules**:
 1. `extension.ts`: VS Code extension entry point
 2. `services/mcpClient.ts`: MCP client communicating with scimantic-core
-3. `providers/evidenceTreeProvider.ts`: Tree view for knowledge graph
+3. `providers/knowledgeGraphTreeProvider.ts`: Tree view for knowledge graph
 4. `providers/graphVisualization.ts`: Webview for graph rendering (future)
-5. `commands/*.ts`: Extension commands (refresh, show details, etc.)
+5. `commands/*.ts`: Extension commands (refresh, show details, generate subset, etc.)
 
 **Dependencies**:
 - `vscode`: VS Code extension API
 - (future) `vis.js` or `cytoscape`: Graph visualization
+
+### scimantic-server (Python/TypeScript)
+
+**Purpose**: Host and share subsets (public or private), enable collaboration.
+
+**Components**:
+1. `scimantic-server-api` (Python FastAPI): REST API for subset hosting
+2. `scimantic-server-web` (TypeScript React/Svelte): Interactive viewer
+3. `scimantic-cli` (Python): Git-like commands (`scimantic push`, `pull`, `clone`)
+
+See [scimantic-server roadmap](./02.1-when-scimantic-server-roadmap.md) for details.
 
 ### examples/scimantic-paper
 
@@ -191,26 +388,6 @@ Nanopublications can be exported to:
 - Hypotheses about Scimantic's design
 - Designs for Scimantic features
 - Analyses of implementation trade-offs
-
-## Access-Level Publishing Model
-
-Scimantic supports four access levels for nanopublication publishing, enabling detailed control over what is shared. The access level is determined by metadata properties, allowing data to move between levels without changing structure.
-
-### Access Levels
-
-1.  **Local Scope** (Private Workspace): All data starts here. Safe for fair use of copyrighted materials. Stored in local `project.ttl`.
-2.  **Institutional Scope** (Lab/Team): Shared within a trusted group via a private nanopub server. Good for works-in-progress.
-3.  **Public Scope** (Global Knowledge): Original contributions (hypotheses, results) published to global servers like `nanopub.org`.
-4.  **Public Essential Evidence Scope** (Selective): Minimal evidence necessary to support a claim, published with strict attribution and "fair use" metadata.
-
-### Mobility Principle
-
-Data is not locked to one level. Examples of mobility:
-*   **Promotion**: A private hypothesis becomes public when the paper is submitted.
-*   **Retraction**: If a publisher objects to open evidence, it can be retracted to institutional scope while the derived hypothesis remains public (citing the DOI).
-*   **Sharing**: Works-in-progress can be promoted from local to institutional for collaboration.
-
-Use the VS Code extension to manage these transitions seamlessly.
 
 ## References
 
