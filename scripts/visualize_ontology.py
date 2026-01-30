@@ -16,7 +16,7 @@ def get_name(uri):
 
 def generate_mermaid_v2():
     g = rdflib.Graph()
-    g.parse("scimantic-core/ontology/scimantic.ttl", format="turtle")
+    g.parse("scimantic-ontology/generated/scimantic.ttl", format="turtle")
 
     # --- Configuration: Explicit Include Lists & Order ---
     # These lists define WHAT is shown and the vertical ORDER (Rank).

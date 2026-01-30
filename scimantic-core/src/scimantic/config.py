@@ -12,7 +12,8 @@ FOAF_URI = "http://xmlns.com/foaf/0.1/"
 
 # Default file paths
 DEFAULT_PROJECT_FILE = "project.ttl"
-DEFAULT_ONTOLOGY_FILE = "ontology/scimantic.ttl"
+# Ontology is now in sibling scimantic-ontology package
+DEFAULT_ONTOLOGY_FILE = "../scimantic-ontology/generated/scimantic.ttl"
 
 # Agent URIs
 DEFAULT_AGENT_URI_PREFIX = "http://example.org/agent/"

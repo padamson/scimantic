@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - "scimantic-core/ontology/**"
-      - ".github/workflows/deploy-ontology.yml"
+      - "scimantic-ontology/**"
+      - ".github/workflows/test-ontology.yml"
 
 permissions:
   contents: write
@@ -41,7 +41,7 @@ jobs:
           # Check if there are any changes. If yes, fail.
           # This forces the user to commit their generated artifacts.
           if [ -n "$(git status --porcelain)" ]; then
-            echo "❌ Error: Generated artifacts are out of sync with schema/scimantic.yaml."
+            echo "❌ Error: Generated artifacts are out of sync with scimantic-ontology/schema/scimantic.yaml."
             echo "Please run 'uv run gen-all' locally and commit the changes."
             git status
             git diff
@@ -54,9 +54,9 @@ jobs:
         run: |
           cd scimantic-core
           # Syntax check
-          uv run python -c "from rdflib import Graph; Graph().parse('ontology/scimantic.ttl', format='turtle')"
+          uv run python -c "from rdflib import Graph; Graph().parse('../scimantic-ontology/generated/scimantic.ttl', format='turtle')"
           # SHACL check (Scimantic)
-          uv run pyshacl -s ontology/shacl/scimantic-shapes.ttl -df turtle ontology/scimantic.ttl
+          uv run pyshacl -s ../scimantic-ontology/generated/shacl/scimantic-shapes.ttl -df turtle ../scimantic-ontology/generated/scimantic.ttl
 
       # ------------------------------------------------------------------------
       # 2. Validation Finished

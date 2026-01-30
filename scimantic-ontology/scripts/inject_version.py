@@ -173,10 +173,11 @@ def update_ttl(file_path, version, is_shacl=False):
 
 
 if __name__ == "__main__":
+    # Paths relative to scimantic-ontology directory
     schema_path = "schema/scimantic.yaml"
-    ontology_path = "ontology/scimantic.ttl"
-    shacl_path = "ontology/shacl/scimantic-shapes.ttl"
-    widoco_conf_path = "ontology/widoco.conf"
+    ontology_path = "generated/scimantic.ttl"
+    shacl_path = "generated/shacl/scimantic-shapes.ttl"
+    widoco_conf_path = "generated/widoco.conf"
 
     version = get_version(schema_path)
     print(f"Injecting version {version}...")
@@ -186,5 +187,6 @@ if __name__ == "__main__":
     update_widoco_conf(widoco_conf_path, version)
 
     # Also ensure models.py has a trailing newline
-    models_path = "src/scimantic/models.py"
+    # Path relative to scimantic-ontology, going to sibling scimantic-core
+    models_path = "../scimantic-core/src/scimantic/models.py"
     ensure_newline(models_path)

@@ -7,8 +7,13 @@ from pyshacl import validate
 @pytest.fixture(scope="session")
 def ontology_graph():
     """Load the Scimantic ontology once per session."""
-    # Path relative to tests/ directory
-    ontology_path = Path(__file__).parent.parent / "ontology" / "scimantic.ttl"
+    # Path to scimantic-ontology sibling package
+    ontology_path = (
+        Path(__file__).parent.parent.parent
+        / "scimantic-ontology"
+        / "generated"
+        / "scimantic.ttl"
+    )
     if not ontology_path.exists():
         pytest.fail(f"Ontology file not found at {ontology_path}")
 
@@ -21,7 +26,11 @@ def ontology_graph():
 def shacl_graph():
     """Load the SHACL shapes once per session."""
     shapes_path = (
-        Path(__file__).parent.parent / "ontology" / "shacl" / "scimantic-shapes.ttl"
+        Path(__file__).parent.parent.parent
+        / "scimantic-ontology"
+        / "generated"
+        / "shacl"
+        / "scimantic-shapes.ttl"
     )
     if not shapes_path.exists():
         pytest.fail(f"SHACL shapes file not found at {shapes_path}")

@@ -4,11 +4,13 @@ import os
 from pathlib import Path
 
 # Constants
-SCHEMA_PATH = Path("schema/scimantic.yaml")
+# Paths relative to scimantic-core directory (where this is run from)
+ONTOLOGY_ROOT = Path("..") / "scimantic-ontology"
+SCHEMA_PATH = ONTOLOGY_ROOT / "schema" / "scimantic.yaml"
 PYTHON_DEST = Path("src/scimantic/models.py")
-ONTOLOGY_DEST = Path("ontology/scimantic.ttl")
-SHACL_DEST = Path("ontology/shacl/scimantic-shapes.ttl")
-WIDOCO_CONF = Path("ontology/widoco.conf")
+ONTOLOGY_DEST = ONTOLOGY_ROOT / "generated" / "scimantic.ttl"
+SHACL_DEST = ONTOLOGY_ROOT / "generated" / "shacl" / "scimantic-shapes.ttl"
+WIDOCO_CONF = ONTOLOGY_ROOT / "generated" / "widoco.conf"
 
 
 def run_command(command, cwd=None, env=None, shell=True):
@@ -147,7 +149,7 @@ def main():
     # Check if we are in the right directory
     if not SCHEMA_PATH.exists():
         print(
-            "Error: schema/scimantic.yaml not found. Please run this command from the scimantic-core directory."
+            f"Error: {SCHEMA_PATH} not found. Please run this command from the scimantic-core directory."
         )
         sys.exit(1)
 
@@ -177,7 +179,8 @@ def main():
 
     # 5. Inject Version (Updates IRIs / headers)
     print("Injecting version...")
-    run_command(f"{sys.executable} scripts/inject_version.py")
+    inject_script = ONTOLOGY_ROOT / "scripts" / "inject_version.py"
+    run_command(f"{sys.executable} {inject_script}", cwd=str(ONTOLOGY_ROOT))
 
     # 6. Generate Ontology Graph
     print("Generating ontology graph...")

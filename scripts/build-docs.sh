@@ -5,9 +5,9 @@ set -e
 WIDOCO_VERSION="1.4.25"
 WIDOCO_JAR="widoco-${WIDOCO_VERSION}-jar-with-dependencies_JDK-17.jar"
 WIDOCO_URL="https://github.com/dgarijo/Widoco/releases/download/v${WIDOCO_VERSION}/${WIDOCO_JAR}"
-INPUT_FILE="scimantic-core/ontology/scimantic.ttl"
+INPUT_FILE="scimantic-ontology/generated/scimantic.ttl"
 OUTPUT_FOLDER="public"
-CONF_FILE="scimantic-core/ontology/widoco.conf"
+CONF_FILE="scimantic-ontology/generated/widoco.conf"
 
 # Find suitable Java
 JAVA_CMD="java"
